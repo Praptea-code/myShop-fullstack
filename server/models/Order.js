@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-
 const OrderSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   customerName: String,
   phone: String,
   address: String,
@@ -8,10 +8,9 @@ const OrderSchema = new mongoose.Schema({
   paymentScreenshot: String,
   status: {
     type: String,
-    enum: ['pending', 'verified', 'shipped'],
+    enum: ['pending', 'verified', 'dispatched', 'delivered'],
     default: 'pending'
   },
   createdAt: { type: Date, default: Date.now }
 })
-
 module.exports = mongoose.model('Order', OrderSchema)

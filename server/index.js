@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected!'))
   .catch(err => console.log('DB Error:', err))
 
+app.use('/api/auth', require('./routes/auth'))
 app.use('/api/products', require('./routes/products'))
 app.use('/api/orders', require('./routes/orders'))
 
