@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
@@ -6,14 +6,90 @@ import { useAuth } from '../App'
 
 const API = 'http://localhost:5000/api'
 
+// ── hero slider data ──────────────────────────────────────────
+const SLIDES = [
+  {
+    bg: 'linear-gradient(125deg,#06091a 0%,#0e1e42 40%,#183278 65%,#0e1e42 100%)',
+    blob: '#2050ee',
+    num: '01 / 04',
+    heading: ['Taste the', 'difference.'],
+    body: 'Premium disposable vapes with rich flavours. Delivered discreetly across Nepal — pay with eSewa or Khalti.',
+    cta1: { label: 'Shop all flavours', path: '/products' },
+    cta2: { label: 'Track order →', path: '/track' },
+  },
+  {
+    bg: 'linear-gradient(125deg,#060e08 0%,#0d2218 40%,#174030 65%,#0d2218 100%)',
+    blob: '#18805a',
+    num: '02 / 04',
+    heading: ['20+ flavours,', 'one place.'],
+    body: 'Strawberry, mango, blueberry, menthol and more — all authentic, in stock, ready to ship same day.',
+    cta1: { label: 'Browse collection', path: '/products' },
+    cta2: { label: 'View flavours', path: '/products?filter=flavour' },
+  },
+  {
+    bg: 'linear-gradient(125deg,#0c0612 0%,#1c0c2e 40%,#30164e 65%,#1c0c2e 100%)',
+    blob: '#5012a0',
+    num: '03 / 04',
+    heading: ['Premium quality,', 'always.'],
+    body: 'Every device is 100% authentic. No fakes, no knockoffs — we stand behind everything we stock.',
+    cta1: { label: 'Shop now', path: '/products' },
+    cta2: { label: 'Learn more', path: '/about' },
+  },
+  {
+    bg: 'linear-gradient(125deg,#100e00 0%,#282000 40%,#443600 65%,#282000 100%)',
+    blob: '#806000',
+    num: '04 / 04',
+    heading: ['Buy in bulk,', 'save more.'],
+    body: 'Wholesale pricing for shops and resellers. Tiered discounts, priority dispatch, support in KTM.',
+    cta1: { label: 'Wholesale pricing', path: '/wholesale' },
+    cta2: { label: 'Contact us', path: '/contact' },
+    double: true,
+  },
+]
+
 export default function Home() {
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
   const { user } = useAuth()
 
+  // slider
+  const [current, setCurrent] = useState(0)
+  const [animKey, setAnimKey] = useState(0)
+  const [bars, setBars] = useState(['run', '', '', ''])
+  const timerRef = useRef(null)
+
   useEffect(() => {
     axios.get(`${API}/products/recent`).then(res => setProducts(res.data)).catch(() => {})
   }, [])
+
+  // slider auto-advance
+  useEffect(() => {
+    timerRef.current = setTimeout(() => goTo((current + 1) % SLIDES.length), 4200)
+    return () => clearTimeout(timerRef.current)
+  }, [current])
+
+  // inject keyframes once — only the animations we need
+  useEffect(() => {
+    const id = 'volt-hero-kf'
+    if (!document.getElementById(id)) {
+      const s = document.createElement('style')
+      s.id = id
+      s.textContent = `
+        @keyframes vHeroFadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes vHeroBar    { from{width:0} to{width:100%} }
+        @keyframes vHeroFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+        @keyframes voltTicker  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+      `
+      document.head.appendChild(s)
+    }
+  }, [])
+
+  function goTo(n) {
+    clearTimeout(timerRef.current)
+    setCurrent(n)
+    setAnimKey(k => k + 1)
+    setBars(SLIDES.map((_, i) => i < n ? 'done' : i === n ? 'run' : ''))
+  }
 
   const handleOrder = (productId) => {
     if (user) navigate(`/order/${productId}`)
@@ -26,39 +102,163 @@ export default function Home() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
 
-      {/* HERO */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '540px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ padding: '88px 64px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRight: '1px solid var(--border)', background: 'var(--bg)' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
-            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--navy)', flexShrink: 0 }} />
-            <span style={{ fontSize: '0.68rem', color: 'var(--mid)', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500 }}>
-              Premium disposables · Kathmandu
-            </span>
-          </div>
-          <h1 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(3rem,5.5vw,4.6rem)', fontWeight: 200, lineHeight: 1.06, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: '22px' }}>
-            Taste the<br />
-            <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>difference.</i>
-          </h1>
-          <p style={{ fontSize: '0.92rem', color: 'var(--mid)', lineHeight: 1.8, maxWidth: '380px', marginBottom: '40px', fontWeight: 400 }}>
-            Premium disposable vapes with rich flavours and satisfying draws. Delivered discreetly across Nepal — pay with eSewa or Khalti.
-          </p>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button className="btn btn-navy" onClick={() => navigate('/products')}>Shop all flavours</button>
-            <button className="btn btn-outline" onClick={() => navigate('/track')}>Track order →</button>
-          </div>
-        </div>
+      {/* ══════════════════════════════════════════
+          HERO SLIDER  (replaces old split hero)
+      ══════════════════════════════════════════ */}
+      <section style={{ position: 'relative', height: 460, overflow: 'hidden', background: '#080c16' }}>
+        {SLIDES.map((s, i) => (
+          <div key={i} style={{
+            position: 'absolute', inset: 0, display: 'flex', alignItems: 'center',
+            opacity: current === i ? 1 : 0,
+            transition: 'opacity 0.7s',
+            pointerEvents: current === i ? 'all' : 'none',
+          }}>
+            {/* gradient bg */}
+            <div style={{ position: 'absolute', inset: 0, background: s.bg }} />
+            {/* glow blob */}
+            <div style={{
+              position: 'absolute', borderRadius: '50%', filter: 'blur(75px)',
+              width: 300, height: 300, right: '6%', top: '-25%',
+              background: s.blob, opacity: 0.12,
+              animation: 'vHeroFloat 4s ease-in-out infinite',
+            }} />
+            {/* left-to-right dark overlay */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.04) 100%)',
+            }} />
 
-        {/* Hero right — replace the inner div with your actual vape image */}
-        <div style={{ background: 'var(--navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(140deg,#0f1f3d 0%,#1e3570 60%,#0f1f3d 100%)' }}>
-            {/* 👇 Replace this entire div with: <img src="/your-vape.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}} /> */}
-            <div style={{ width: '190px', height: '270px', borderRadius: '20px', background: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}>Your vape image</span>
-              <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.3)', textAlign: 'center', padding: '0 16px', lineHeight: 1.5 }}>Replace with your product photo</span>
+            {/* slide text */}
+            <div
+              key={current === i ? animKey : i}
+              style={{
+                position: 'relative', zIndex: 2,
+                padding: '0 76px', maxWidth: 530,
+                animation: current === i ? 'vHeroFadeUp .55s ease both' : 'none',
+              }}
+            >
+              <div style={{
+                fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,.3)', marginBottom: 20,
+                display: 'flex', alignItems: 'center', gap: 10,
+              }}>
+                <span style={{ display: 'block', width: 22, height: 1, background: 'rgba(255,255,255,.3)', flexShrink: 0 }} />
+                {s.num}
+              </div>
+              <h1 style={{
+                fontFamily: 'var(--serif)', fontSize: 50, fontWeight: 200,
+                color: '#fff', lineHeight: 1.03, letterSpacing: '-0.025em', marginBottom: 16,
+              }}>
+                {s.heading[0]}<br />
+                <i style={{ fontStyle: 'italic', fontWeight: 500 }}>{s.heading[1]}</i>
+              </h1>
+              <p style={{
+                fontSize: 11, color: 'rgba(255,255,255,.45)', lineHeight: 1.9,
+                maxWidth: 330, marginBottom: 30, fontWeight: 300,
+              }}>{s.body}</p>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button
+                  onClick={() => navigate(s.cta1.path)}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  style={{
+                    fontSize: 9, padding: '12px 28px', borderRadius: 100,
+                    background: '#fff', color: '#0c1628', border: 'none', cursor: 'pointer',
+                    letterSpacing: '0.09em', textTransform: 'uppercase', fontWeight: 600,
+                    transition: 'transform .22s',
+                  }}
+                >{s.cta1.label}</button>
+                <button
+                  onClick={() => navigate(s.cta2.path)}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.5)'; e.currentTarget.style.color = '#fff' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.22)'; e.currentTarget.style.color = 'rgba(255,255,255,.6)' }}
+                  style={{
+                    fontSize: 9, padding: '12px 28px', borderRadius: 100,
+                    background: 'transparent', color: 'rgba(255,255,255,.6)',
+                    border: '1px solid rgba(255,255,255,.22)', cursor: 'pointer',
+                    letterSpacing: '0.09em', textTransform: 'uppercase', transition: 'all .22s',
+                  }}
+                >{s.cta2.label}</button>
+              </div>
+            </div>
+
+            {/* vape image area — replace the inner div/span with <img> when you have photos */}
+            <div style={{
+              position: 'absolute', right: 0, top: 0, bottom: 0, width: '40%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              zIndex: 1, gap: s.double ? 12 : 0,
+            }}>
+              {s.double ? (
+                <>
+                  {[0, 28].map((mt, idx) => (
+                    <div key={idx} onClick={() => navigate('/products')} style={{
+                      width: 76, height: 200, borderRadius: 22,
+                      background: 'rgba(255,255,255,.06)', border: '1px dashed rgba(255,255,255,.15)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      animation: `vHeroFloat 4s ease-in-out ${idx * 0.5}s infinite`,
+                      cursor: 'pointer', marginTop: mt,
+                    }}>
+                      <span style={{ fontSize: 8, color: 'rgba(255,255,255,.2)', textTransform: 'uppercase', writingMode: 'vertical-rl', letterSpacing: '0.08em' }}>product</span>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div onClick={() => navigate('/products')} style={{
+                  width: 90, height: 245, borderRadius: 22,
+                  background: 'rgba(255,255,255,.06)', border: '1px dashed rgba(255,255,255,.15)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  animation: 'vHeroFloat 4s ease-in-out infinite', cursor: 'pointer',
+                }}>
+                  <span style={{ fontSize: 8, color: 'rgba(255,255,255,.2)', textTransform: 'uppercase', writingMode: 'vertical-rl', letterSpacing: '0.08em' }}>your image</span>
+                </div>
+              )}
             </div>
           </div>
+        ))}
+
+        {/* progress bars */}
+        <div style={{ position: 'absolute', bottom: 26, left: 76, display: 'flex', alignItems: 'center', gap: 14, zIndex: 10 }}>
+          <div style={{ display: 'flex', gap: 6 }}>
+            {bars.map((state, i) => (
+              <div
+                key={i} onClick={() => goTo(i)}
+                style={{ width: 38, height: 2, background: 'rgba(255,255,255,.15)', borderRadius: 1, overflow: 'hidden', cursor: 'pointer' }}
+              >
+                <div style={{
+                  height: '100%', borderRadius: 1, background: 'rgba(255,255,255,.8)',
+                  width: state === 'done' ? '100%' : 0,
+                  animation: state === 'run' ? 'vHeroBar 4.2s linear forwards' : 'none',
+                }} />
+              </div>
+            ))}
+          </div>
+          <span style={{ fontSize: 9, color: 'rgba(255,255,255,.22)', letterSpacing: '0.1em' }}>{SLIDES[current].num}</span>
         </div>
-      </div>
+
+        {/* prev / next arrows */}
+        <div style={{ position: 'absolute', bottom: 18, right: 60, display: 'flex', gap: 8, zIndex: 10 }}>
+          {['‹', '›'].map((ch, idx) => (
+            <button
+              key={ch}
+              onClick={() => goTo(idx === 0 ? (current - 1 + SLIDES.length) % SLIDES.length : (current + 1) % SLIDES.length)}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.14)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.4)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.05)'; e.currentTarget.style.color = 'rgba(255,255,255,.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.15)' }}
+              style={{
+                width: 36, height: 36, borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,.15)', background: 'rgba(255,255,255,.05)',
+                color: 'rgba(255,255,255,.5)', fontSize: 14, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'all .22s',
+              }}
+            >{ch}</button>
+          ))}
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          Everything below is UNCHANGED from your
+          original Home.jsx
+      ══════════════════════════════════════════ */}
 
       {/* TICKER */}
       <div style={{ overflow: 'hidden', padding: '12px 0', background: 'var(--navy)' }}>
@@ -66,13 +266,12 @@ export default function Home() {
           {['Discreet delivery', 'eSewa · Khalti accepted', 'Same day dispatch · KTM', '20+ flavours in stock', 'Wholesale available', 'Track your order anytime',
             'Discreet delivery', 'eSewa · Khalti accepted', 'Same day dispatch · KTM', '20+ flavours in stock', 'Wholesale available', 'Track your order anytime'
           ].map((t, i) => (
-            <span key={i} style={{ padding: '0 28px', color: i % 2 === 0 ? 'rgba(255,255,255,0.82)' : 'rgba(255,255,255,0.38)', borderRight: '1px solid rgba(255,255,255,0.1)', fontWeight: i % 2 === 0 ? 500 : 300 }}>{t}</span>
+            <span key={i} style={{ padding: '0 28px', color: i % 2 === 0 ? 'rgba(255,255,255,.82)' : 'rgba(255,255,255,.38)', borderRight: '1px solid rgba(255,255,255,.1)', fontWeight: i % 2 === 0 ? 500 : 300 }}>{t}</span>
           ))}
         </div>
-        <style>{`@keyframes voltTicker { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
       </div>
 
-      {/* RECENTLY ADDED — 3 products */}
+      {/* RECENTLY ADDED */}
       <div style={{ padding: '88px 56px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', paddingBottom: '24px', borderBottom: '1px solid var(--border)' }}>
           <div>
