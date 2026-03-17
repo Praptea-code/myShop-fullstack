@@ -102,10 +102,8 @@ export default function Home() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
 
-      {/* ══════════════════════════════════════════
-          HERO SLIDER  (replaces old split hero)
-      ══════════════════════════════════════════ */}
-      <section style={{ position: 'relative', height: 460, overflow: 'hidden', background: '#080c16' }}>
+      {/* hero section*/}
+      <section style={{ position: 'relative', height: 650, overflow: 'hidden', background: '#080c16' }}>
         {SLIDES.map((s, i) => (
           <div key={i} style={{
             position: 'absolute', inset: 0, display: 'flex', alignItems: 'center',
@@ -133,7 +131,7 @@ export default function Home() {
               key={current === i ? animKey : i}
               style={{
                 position: 'relative', zIndex: 2,
-                padding: '0 76px', maxWidth: 530,
+                padding: '0 106px', maxWidth: 530,
                 animation: current === i ? 'vHeroFadeUp .55s ease both' : 'none',
               }}
             >
