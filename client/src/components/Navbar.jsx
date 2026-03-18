@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <>
       <div style={{ background:'var(--navy-dark)', padding:'7px 40px', textAlign:'center', fontSize:'0.7rem', color:'rgba(255,255,255,0.45)', letterSpacing:'0.05em' }}>
-        Same day dispatch in Kathmandu &nbsp;·&nbsp; eSewa &amp; Khalti accepted &nbsp;·&nbsp; 100% authentic products
+        Same day dispatch in Dhangadhi &nbsp;·&nbsp; eSewa &amp; Khalti accepted &nbsp;·&nbsp; 100% authentic products
       </div>
 
       <nav style={{ background:'var(--navy)', padding:'0 40px', display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>

@@ -34,7 +34,7 @@ export default function Login() {
         <div style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 200, marginBottom: '8px', color: 'var(--ink)' }}>
           Welcome <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>back.</i>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px' }}>Sign in to your VOLT Vapour account</p>
+        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px' }}>Sign in to your Puff Diaries account</p>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <input style={inp} placeholder="Email or phone number" value={identifier} onChange={e => setIdentifier(e.target.value)} required />
           <input style={inp} type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />

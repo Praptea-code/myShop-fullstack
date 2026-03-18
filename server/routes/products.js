@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/recent', async (req, res) => {
-  const products = await Product.find().sort({ createdAt: -1 }).limit(3)
+  const products = await Product.find().sort({ createdAt: -1 }).limit(4)
   res.json(products)
 })
 

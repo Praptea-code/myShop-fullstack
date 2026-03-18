@@ -115,7 +115,7 @@ function WhyVolt({ navigate }) {
 
   const handleClick = (i) => {
     setActive(i)
-    startAuto() // reset timer on manual click
+    startAuto()
   }
 
   const item = TRUST_ITEMS[active]
@@ -123,7 +123,6 @@ function WhyVolt({ navigate }) {
   return (
     <section style={{ background: '#fff', borderTop: '1px solid var(--border)', padding: '80px 40px' }}>
       <div>
-        {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px' }}>
           <div>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '8px' }}>Why choose us</div>
@@ -137,7 +136,6 @@ function WhyVolt({ navigate }) {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '32px', alignItems: 'stretch' }}>
-          {/* Left — clickable tabs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {TRUST_ITEMS.map((t, i) => (
               <div
@@ -175,7 +173,6 @@ function WhyVolt({ navigate }) {
             ))}
           </div>
 
-          {/* Right — expanded detail panel */}
           <div style={{
             background: 'var(--navy)',
             borderRadius: '14px',
@@ -187,7 +184,6 @@ function WhyVolt({ navigate }) {
             position: 'relative',
             overflow: 'hidden',
           }}>
-            {/* BG accent */}
             <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '180px', height: '180px', borderRadius: '50%', background: 'rgba(232,65,74,0.08)', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(232,65,74,0.05)', pointerEvents: 'none' }} />
 
@@ -203,13 +199,11 @@ function WhyVolt({ navigate }) {
               </p>
             </div>
 
-            {/* Big stat */}
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', marginTop: '36px', paddingTop: '28px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ fontFamily: 'var(--serif)', fontSize: '3rem', fontWeight: 700, color: 'var(--red)', lineHeight: 1 }}>{item.stat}</div>
               <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', textTransform: 'uppercase', letterSpacing: '0.1em', paddingBottom: '6px' }}>{item.statLabel}</div>
             </div>
 
-            {/* Dot indicators */}
             <div style={{ display: 'flex', gap: '6px', marginTop: '20px' }}>
               {TRUST_ITEMS.map((_, i) => (
                 <div key={i} onClick={() => handleClick(i)} style={{ width: i === active ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === active ? 'var(--red)' : 'rgba(255,255,255,0.2)', cursor: 'pointer', transition: 'all 0.3s' }} />
@@ -234,14 +228,11 @@ function WholesalePromo({ navigate }) {
 
   return (
     <section style={{ background: 'var(--navy)', padding: '100px 40px', position: 'relative', overflow: 'hidden' }}>
-      {/* Background decorations */}
       <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '400px', height: '400px', borderRadius: '50%', background: 'rgba(232,65,74,0.05)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: '-60px', left: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(255,255,255,0.02)', pointerEvents: 'none' }} />
 
       <div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-
-          {/* Left */}
           <div>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '20px', height: '1px', background: 'var(--red)' }} />
@@ -251,7 +242,7 @@ function WholesalePromo({ navigate }) {
               Buy in Bulk,<br /><em style={{ fontStyle: 'italic', color: '#f4868c' }}>Save More.</em>
             </div>
             <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.45)', lineHeight: 1.8, marginBottom: '36px', maxWidth: '380px' }}>
-              Running a shop in KTM? We work directly with resellers — tiered pricing, priority dispatch, and a team that actually picks up the phone.
+              Running a shop in Dhangadhi? We work directly with resellers — tiered pricing, priority dispatch, and a team that actually picks up the phone.
             </p>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button
@@ -269,7 +260,6 @@ function WholesalePromo({ navigate }) {
             </div>
           </div>
 
-          {/* Right — perk cards */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             {perks.map((p, i) => (
               <div
@@ -298,12 +288,36 @@ function WholesalePromo({ navigate }) {
 }
 
 function Footer() {
+  const navigate = typeof window !== 'undefined' ? null : null
+
+  const shopLinks = [
+    { label: 'All Products', path: '/products' },
+    { label: 'Disposables', path: '/products' },
+    { label: 'Pod Kits', path: '/products' },
+    { label: 'E-Liquids', path: '/products' },
+  ]
+
+  const companyLinks = [
+    { label: 'About Us', path: '/about' },
+    { label: 'Contact Us', path: '/contact' },
+    { label: 'Wholesale', path: '/contact' },
+    { label: 'Track Order', path: '/track' },
+  ]
+
+  const helpItems = [
+    { label: 'puffdiaries9@gmail.com', href: 'mailto:puffdiaries9@gmail.com' },
+    { label: '+977 9842195574', href: 'tel:+9779842195574' },
+    { label: '+977 9824847086', href: 'tel:+9779824847086' },
+    { label: 'Dhangadhi, Nepal', href: null },
+    { label: '@puffdiaries_9', href: 'https://instagram.com/puffdiaries_9' },
+  ]
+
   return (
     <footer style={{ background: 'var(--navy)', padding: '36px 40px 20px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '28px', marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
-            Volt<span style={{ color: 'var(--red)', fontStyle: 'italic' }}>vapour</span>
+            Puff<span style={{ color: 'var(--red)', fontStyle: 'italic' }}>Diaries</span>
           </div>
           <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.36)', lineHeight: 1.8, maxWidth: '180px', marginBottom: '12px' }}>
             Nepal's trusted source for authentic disposable vapes. Retail and wholesale available.
@@ -314,24 +328,47 @@ function Footer() {
             ))}
           </div>
         </div>
-        {[
-          { title: 'Shop', links: ['All Products','Disposables','Pod Kits','E-Liquids'] },
-          { title: 'Company', links: ['About Us','Contact Us','Wholesale','Track Order'] },
-          { title: 'Help', links: ['volt@gmail.com','+977 98XXXXXXXX','Kathmandu, Nepal','Instagram'] },
-        ].map(col => (
-          <div key={col.title}>
-            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>{col.title}</div>
-            {col.links.map(l => (
-              <span key={l} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px', cursor: 'pointer' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.46)'}
-              >{l}</span>
-            ))}
-          </div>
-        ))}
+
+        {/* Shop */}
+        <div>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Shop</div>
+          {shopLinks.map(l => (
+            <a key={l.label} href={l.path}
+              style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px', cursor: 'pointer', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.46)'}
+            >{l.label}</a>
+          ))}
+        </div>
+
+        {/* Company */}
+        <div>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Company</div>
+          {companyLinks.map(l => (
+            <a key={l.label} href={l.path}
+              style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px', cursor: 'pointer', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.46)'}
+            >{l.label}</a>
+          ))}
+        </div>
+
+        {/* Help */}
+        <div>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Help</div>
+          {helpItems.map(l => (
+            l.href
+              ? <a key={l.label} href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
+                  style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px', cursor: 'pointer', textDecoration: 'none', transition: 'color 0.15s' }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.46)'}
+                >{l.label}</a>
+              : <span key={l.label} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px' }}>{l.label}</span>
+          ))}
+        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: 'rgba(255,255,255,0.18)' }}>
-        <span>© 2025 Puff Diaries · Kathmandu, Nepal. All rights reserved.</span>
+        <span>© 2025 Puff Diaries · Dhangadhi, Nepal. All rights reserved.</span>
         <span>Retail &amp; Wholesale</span>
       </div>
     </footer>
@@ -377,7 +414,6 @@ export default function Home() {
     return () => { clearTimeout(timerRef.current); clearInterval(progRef.current) }
   }, [])
 
-  // ticker
   useEffect(() => {
     const el = document.getElementById('ticker-inner')
     if (!el) return
@@ -400,13 +436,11 @@ export default function Home() {
       {/* ── HERO ── */}
       <section style={{ position: 'relative', height: '760px', overflow: 'hidden', display: 'flex' }}>
 
-        {/* LEFT: dark text panel */}
         <div style={{
           width: '52%', background: 'var(--navy)',
           display: 'flex', flexDirection: 'column', justifyContent: 'center',
           padding: '0 52px', position: 'relative', zIndex: 4, flexShrink: 0,
         }}>
-          {/* diagonal cut */}
           <div style={{ position: 'absolute', right: '-50px', top: 0, bottom: 0, width: '100px', background: 'var(--navy)', transform: 'skewX(-5deg)', zIndex: 1 }} />
 
           <div key={animKey} style={{ position: 'relative', zIndex: 3 }}>
@@ -458,12 +492,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* RIGHT: dark bg + floating vape */}
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', transition: 'background 1.2s ease', background: s.bg }}>
-          {/* left blend */}
           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', background: 'linear-gradient(to right, var(--navy), transparent)', zIndex: 4, pointerEvents: 'none' }} />
 
-          {/* smoke particles */}
           {[
             { w:18,h:18,l:'52%',t:'20%',d:'0s',dur:'3.5s' },
             { w:12,h:12,l:'57%',t:'17%',d:'1s',dur:'4s' },
@@ -472,25 +503,22 @@ export default function Home() {
             <div key={i} style={{ position: 'absolute', borderRadius: '50%', background: 'rgba(255,255,255,0.06)', width: p.w, height: p.h, left: p.l, top: p.t, animation: `smokePuff ${p.dur} ease-out infinite`, animationDelay: p.d }} />
           ))}
 
-          {/* glow shadow */}
           <div style={{ position: 'absolute', bottom: '20%', left: '50%', transform: 'translateX(-45%)', width: '110px', height: '22px', borderRadius: '50%', filter: 'blur(18px)', opacity: 0.5, zIndex: 2, background: s.shadow, transition: 'background 1.2s ease' }} />
 
-          {/* vape SVG */}
           <div style={{ position: 'absolute', top: '85%', left: '68%', zIndex: 3, animation: 'floatUD 7.8s ease-in-out infinite', transform: 'translateY(-50%)' }}>
-                     <img
-                key={cur}
-                src={s.img}
-                alt="vape"
-                style={{
-                    width: '340px',
-                    objectFit: 'contain',
-                    animation: 'floatUD 2.8s ease-in-out infinite',
-                }}
-                />
+            <img
+              key={cur}
+              src={s.img}
+              alt="vape"
+              style={{
+                width: '340px',
+                objectFit: 'contain',
+                animation: 'floatUD 2.8s ease-in-out infinite',
+              }}
+            />
           </div>
         </div>
 
-        {/* Right counter panel */}
         <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '58px', background: 'rgba(0,0,0,0.38)', borderLeft: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '9px', zIndex: 10 }}>
           <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{String(cur+1).padStart(2,'0')}</span>
           <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.15)' }} />
@@ -502,14 +530,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Slide indicators bottom */}
         <div style={{ position: 'absolute', bottom: '20px', right: '70px', display: 'flex', gap: '5px', zIndex: 10 }}>
           {SLIDES.map((_,i) => (
             <button key={i} onClick={() => goTo(i)} style={{ width: i === cur ? '36px' : '22px', height: '3px', borderRadius: '2px', background: i === cur ? 'var(--red)' : 'rgba(255,255,255,0.22)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s' }} />
           ))}
         </div>
 
-        {/* Progress bar */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: '58px', height: '3px', background: 'rgba(255,255,255,0.08)', zIndex: 11 }}>
           <div style={{ height: '100%', background: 'var(--red)', width: `${progW}%`, transition: 'width 0.08s linear' }} />
         </div>
@@ -546,7 +572,10 @@ export default function Home() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px' }}>
           {(products.length === 0 ? [{},{},{},{}] : products.slice(0,4)).map((p, i) => (
-            <div key={p._id || i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
+            <div key={p._id || i} onClick={() => p._id && navigate(`/products/${p._id}`)} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: p._id ? 'pointer' : 'default', transition: 'box-shadow 0.18s' }}
+              onMouseEnter={e => { if (p._id) e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)' }}
+              onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+            >
               <div style={{ height: '220px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: '0.72rem', color: '#bbb' }}>
                 {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : 'Product photo'}
                 {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
@@ -564,7 +593,7 @@ export default function Home() {
                   <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price || '—'}</span>
                   {p._id && (
                     <button
-                      onClick={() => user ? addToCart(p) : navigate('/login')}
+                      onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
                       style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
                       onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
@@ -595,9 +624,9 @@ export default function Home() {
               onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--red)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
             >
-            <div style={{ height: '160px', background: f.bg, overflow: 'hidden' }}>
+              <div style={{ height: '160px', background: f.bg, overflow: 'hidden' }}>
                 {f.img && <img src={f.img} alt={f.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
-            </div>
+              </div>
               <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)' }}>{f.label}</div>
             </div>
           ))}
@@ -607,35 +636,33 @@ export default function Home() {
       {/* ── ABOUT + CONTACT BANNERS ── */}
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '0 40px 80px', background: 'var(--bg)' }}>
         {[
-            {
-                bg: 'linear-gradient(135deg,#111827,#1a2744)',
-                bgImg: '/vapebg1.jpg',
-                pattern: "url(\"/about-bg.jpg\")",
-                tag: 'Our story',
-                h: 'Who is',
-                em: 'Puff Diaries?',
-                sub: 'Built in KTM out of frustration with fakes. Learn our story, mission and why authenticity is everything.',
-                cta: 'Read about us →',
-                cta2: 'Our values',
-                path: '/about',
-            },
-            {
-                bg: 'linear-gradient(135deg,#0f3460,#111827)',
-                bgImg: '/vapebg2.jpg',
-                pattern: "url(\"/contact-bg.jpg\")",
-                tag: 'Get in touch',
-                h: 'Questions or',
-                em: 'Wholesale?',
-                sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing — just reach out.",
-                cta: 'Contact us →',
-                cta2: 'Wholesale pricing',
-                path: '/contact',
-            },
-            ].map((b, i) => (
-            <div key={i}
-                onClick={() => navigate(b.path)}
-                style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg, backgroundImage: `url(${b.bgImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-            >
+          {
+            bg: 'linear-gradient(135deg,#111827,#1a2744)',
+            bgImg: '/vapebg1.jpg',
+            tag: 'Our story',
+            h: 'Who is',
+            em: 'Puff Diaries?',
+            sub: 'Built in Dhangadhi out of passion for authentic vapes. Learn our story, mission and why authenticity is everything.',
+            cta: 'Read about us →',
+            cta2: 'Our values',
+            path: '/about',
+          },
+          {
+            bg: 'linear-gradient(135deg,#0f3460,#111827)',
+            bgImg: '/vapebg2.jpg',
+            tag: 'Get in touch',
+            h: 'Questions or',
+            em: 'Wholesale?',
+            sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing — just reach out.",
+            cta: 'Contact us →',
+            cta2: 'Wholesale pricing',
+            path: '/contact',
+          },
+        ].map((b, i) => (
+          <div key={i}
+            onClick={() => navigate(b.path)}
+            style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg, backgroundImage: `url(${b.bgImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          >
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.97) 0%, rgba(10,14,22,.4) 60%, transparent 100%)' }} />
             <div style={{ position: 'absolute', bottom: '22px', left: '24px', right: '24px', zIndex: 2 }}>
               <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '7px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -656,10 +683,8 @@ export default function Home() {
       {/* ── WHOLESALE PROMO ── */}
       <WholesalePromo navigate={navigate} />
 
-      {/* ── WHY VOLT — interactive trust cards ── */}
+      {/* ── WHY PUFF DIARIES — interactive trust cards ── */}
       <WhyVolt navigate={navigate} />
-
-
 
       {/* ── LOGIN CALLOUT ── */}
       {!user && (
