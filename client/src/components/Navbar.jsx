@@ -23,7 +23,7 @@ export default function Navbar() {
 
       <nav style={{ background:'var(--navy)', padding:'0 40px', display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>
         <Link to="/" style={{ fontFamily:'var(--serif)', fontSize:'1.45rem', fontWeight:700, color:'#fff', letterSpacing:'0.02em' }}>
-          Volt<span style={{ color:'var(--red)', fontStyle:'italic' }}>vapour</span>
+          Puff<span style={{ color:'var(--red)', fontStyle:'italic' }}>Diaries</span>
         </Link>
 
         <div style={{ display:'flex', height:'100%' }}>

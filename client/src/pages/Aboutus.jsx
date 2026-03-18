@@ -117,7 +117,7 @@ export default function AboutUs() {
         </div>
 
         <div style={{ position: 'absolute', right: '-10px', top: '50%', transform: 'translateY(-50%)', fontFamily: 'var(--serif)', fontSize: 'clamp(120px, 16vw, 200px)', fontWeight: 700, color: 'rgba(255,255,255,0.025)', lineHeight: 1, userSelect: 'none', zIndex: 2, whiteSpace: 'nowrap', letterSpacing: '-0.04em' }}>
-          VOLT
+          Puff
         </div>
 
         {/* Vape smoke cloud — right side */}

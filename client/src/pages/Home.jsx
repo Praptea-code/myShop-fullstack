@@ -331,7 +331,7 @@ function Footer() {
         ))}
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: 'rgba(255,255,255,0.18)' }}>
-        <span>© 2025 Volt Vapour · Kathmandu, Nepal. All rights reserved.</span>
+        <span>© 2025 Puff Diaries · Kathmandu, Nepal. All rights reserved.</span>
         <span>Retail &amp; Wholesale</span>
       </div>
     </footer>
@@ -613,7 +613,7 @@ export default function Home() {
                 pattern: "url(\"/about-bg.jpg\")",
                 tag: 'Our story',
                 h: 'Who is',
-                em: 'Volt Vapour?',
+                em: 'Puff Diaries?',
                 sub: 'Built in KTM out of frustration with fakes. Learn our story, mission and why authenticity is everything.',
                 cta: 'Read about us →',
                 cta2: 'Our values',
