@@ -58,14 +58,14 @@ const TICKER = [
 ]
 
 const FLAVOURS = [
-  { label: 'Strawberry', bg: 'linear-gradient(135deg,#ffd6d6,#ff8a8a)' },
-  { label: 'Mango', bg: 'linear-gradient(135deg,#ffe8b3,#ffb347)' },
-  { label: 'Blueberry', bg: 'linear-gradient(135deg,#d6d6ff,#8a8aff)' },
-  { label: 'Menthol', bg: 'linear-gradient(135deg,#d6f5e8,#4CAF7D)' },
-  { label: 'Watermelon', bg: 'linear-gradient(135deg,#ffd6e8,#ff6699)' },
-  { label: 'Grape', bg: 'linear-gradient(135deg,#e8d6ff,#9966ff)' },
-  { label: 'Lemon', bg: 'linear-gradient(135deg,#fffbd6,#ffe066)' },
-  { label: 'Cool Mint', bg: 'linear-gradient(135deg,#d6f5ff,#66ccff)' },
+  { label: 'Strawberry', bg: 'linear-gradient(135deg,#ffd6d6,#ff8a8a)', img: '/strawberry.jpg' },
+  { label: 'Mango', bg: 'linear-gradient(135deg,#ffe8b3,#ffb347)', img: '/mango.jpg' },
+  { label: 'Blueberry', bg: 'linear-gradient(135deg,#d6d6ff,#8a8aff)', img: '/blueberry.jpg' },
+  { label: 'Menthol', bg: 'linear-gradient(135deg,#d6f5e8,#4CAF7D)', img: '/menthol.jpg' },
+  { label: 'Watermelon', bg: 'linear-gradient(135deg,#ffd6e8,#ff6699)', img: '/watermelon.jpg' },
+  { label: 'Grape', bg: 'linear-gradient(135deg,#e8d6ff,#9966ff)', img: '/grape.jpg' },
+  { label: 'Lemon', bg: 'linear-gradient(135deg,#fffbd6,#ffe066)', img: '/lemon.jpg' },
+  { label: 'Cool Mint', bg: 'linear-gradient(135deg,#d6f5ff,#66ccff)', img: '/coolmint.jpg' },
 ]
 
 const CARD_BG = ['#f5e8e8','#fdf3e0','#eae8f5','#e8f5ea']
@@ -595,7 +595,9 @@ export default function Home() {
               onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--red)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
             >
-              <div style={{ height: '160px', background: f.bg }} />
+            <div style={{ height: '160px', background: f.bg, overflow: 'hidden' }}>
+                {f.img && <img src={f.img} alt={f.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+            </div>
               <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)' }}>{f.label}</div>
             </div>
           ))}
@@ -605,33 +607,35 @@ export default function Home() {
       {/* ── ABOUT + CONTACT BANNERS ── */}
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '0 40px 80px', background: 'var(--bg)' }}>
         {[
-          {
-            bg: 'linear-gradient(135deg,#111827,#1a2744)',
-            tag: 'Our story',
-            h: 'Who is',
-            em: 'Volt Vapour?',
-            sub: 'Built in KTM out of frustration with fakes. Learn our story, mission and why authenticity is everything.',
-            cta: 'Read about us →',
-            cta2: 'Our values',
-            path: '/about',
-          },
-          {
-            bg: 'linear-gradient(135deg,#0f3460,#111827)',
-            tag: 'Get in touch',
-            h: 'Questions or',
-            em: 'Wholesale?',
-            sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing — just reach out.",
-            cta: 'Contact us →',
-            cta2: 'Wholesale pricing',
-            path: '/contact',
-          },
-        ].map((b, i) => (
-          <div key={i}
-            onClick={() => navigate(b.path)}
-            style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg }}
-            onMouseEnter={e => e.currentTarget.querySelector('img') && (e.currentTarget.querySelector('img').style.transform = 'scale(1.05)')}
-            onMouseLeave={e => e.currentTarget.querySelector('img') && (e.currentTarget.querySelector('img').style.transform = 'scale(1)')}
-          >
+            {
+                bg: 'linear-gradient(135deg,#111827,#1a2744)',
+                bgImg: '/vapebg1.jpg',
+                pattern: "url(\"/about-bg.jpg\")",
+                tag: 'Our story',
+                h: 'Who is',
+                em: 'Volt Vapour?',
+                sub: 'Built in KTM out of frustration with fakes. Learn our story, mission and why authenticity is everything.',
+                cta: 'Read about us →',
+                cta2: 'Our values',
+                path: '/about',
+            },
+            {
+                bg: 'linear-gradient(135deg,#0f3460,#111827)',
+                bgImg: '/vapebg2.jpg',
+                pattern: "url(\"/contact-bg.jpg\")",
+                tag: 'Get in touch',
+                h: 'Questions or',
+                em: 'Wholesale?',
+                sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing — just reach out.",
+                cta: 'Contact us →',
+                cta2: 'Wholesale pricing',
+                path: '/contact',
+            },
+            ].map((b, i) => (
+            <div key={i}
+                onClick={() => navigate(b.path)}
+                style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg, backgroundImage: `url(${b.bgImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            >
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.97) 0%, rgba(10,14,22,.4) 60%, transparent 100%)' }} />
             <div style={{ position: 'absolute', bottom: '22px', left: '24px', right: '24px', zIndex: 2 }}>
               <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '7px', display: 'flex', alignItems: 'center', gap: '6px' }}>
