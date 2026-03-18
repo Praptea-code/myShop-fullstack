@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
-import { useAuth } from '../App'
+import { useAuth, useCart } from '../App'
 import { Footer } from './Home'
 
 const CARD_BG = ['#f5e8e8','#fdf3e0','#eae8f5','#e8f5ea','#e8f5f5','#f5e8f5','#fdf5e0','#e8eaf5']
@@ -14,6 +14,7 @@ export default function Products() {
   const [filters, setFilters] = useState({ flavours: [], maxPrice: 5000, puffs: [], nicotine: [] })
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { addToCart } = useCart()
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/products').then(r => setProducts(r.data)).catch(() => {})
@@ -131,7 +132,7 @@ export default function Products() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '12px' }}>
               {filtered.map((p, i) => (
                 <div key={p._id} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
-                  <div style={{ height: '130px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ height: '220px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                     {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: '0.72rem', color: '#bbb' }}>Product photo</span>}
                     {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
                   </div>
@@ -148,7 +149,7 @@ export default function Products() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '9px', borderTop: '1px solid #f0f2f5' }}>
                       <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price}</span>
                       <button
-                        onClick={() => user ? navigate(`/order/${p._id}`) : navigate('/login')}
+                        onClick={() => user ? addToCart(p) : navigate('/login')}
                         style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
                         onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
                         onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
-import { useAuth } from '../App'
+import { useAuth, useCart } from '../App'
 
 const API = 'http://localhost:5000/api'
 
@@ -341,6 +341,7 @@ export default function Home() {
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { addToCart } = useCart()
   const [cur, setCur] = useState(0)
   const [animKey, setAnimKey] = useState(0)
   const [progW, setProgW] = useState(0)
@@ -571,7 +572,7 @@ export default function Home() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px' }}>
           {(products.length === 0 ? [{},{},{},{}] : products.slice(0,4)).map((p, i) => (
             <div key={p._id || i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
-              <div style={{ height: '130px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: '0.72rem', color: '#bbb' }}>
+              <div style={{ height: '220px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: '0.72rem', color: '#bbb' }}>
                 {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : 'Product photo'}
                 {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
               </div>
@@ -588,7 +589,7 @@ export default function Home() {
                   <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price || '—'}</span>
                   {p._id && (
                     <button
-                      onClick={() => user ? navigate(`/order/${p._id}`) : navigate('/login')}
+                      onClick={() => user ? addToCart(p) : navigate('/login')}
                       style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
                       onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
                       onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
@@ -619,7 +620,7 @@ export default function Home() {
               onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--red)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
             >
-              <div style={{ height: '120px', background: f.bg }} />
+              <div style={{ height: '160px', background: f.bg }} />
               <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)' }}>{f.label}</div>
             </div>
           ))}
@@ -644,7 +645,7 @@ export default function Home() {
             tag: 'Get in touch',
             h: 'Questions or',
             em: 'Wholesale?',
-            sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing  just reach out.",
+            sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing — just reach out.",
             cta: 'Contact us →',
             cta2: 'Wholesale pricing',
             path: '/contact',
