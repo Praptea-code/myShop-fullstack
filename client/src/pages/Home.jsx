@@ -19,6 +19,7 @@ const SLIDES = [
     bg: 'radial-gradient(ellipse at 65% 45%, #1e2d55 0%, #111827 55%, #080c14 100%)',
     shadow: '#3b6ccc',
     scrId: 'sc_g0',
+    img: '/blueVape.png',
   },
   {
     tag: '20+ flavours in stock',
@@ -32,6 +33,7 @@ const SLIDES = [
     bg: 'radial-gradient(ellipse at 65% 45%, #122a1e 0%, #0d1f14 55%, #060e09 100%)',
     shadow: '#2da05a',
     scrId: 'sc_g1',
+    img: '/greenVape.png',
   },
   {
     tag: 'Wholesale available',
@@ -45,6 +47,7 @@ const SLIDES = [
     bg: 'radial-gradient(ellipse at 65% 45%, #22103a 0%, #160920 55%, #0a0510 100%)',
     shadow: '#8b3db8',
     scrId: 'sc_g2',
+    img: '/purpleVape.png',
   },
 ]
 
@@ -473,45 +476,17 @@ export default function Home() {
           <div style={{ position: 'absolute', bottom: '20%', left: '50%', transform: 'translateX(-45%)', width: '110px', height: '22px', borderRadius: '50%', filter: 'blur(18px)', opacity: 0.5, zIndex: 2, background: s.shadow, transition: 'background 1.2s ease' }} />
 
           {/* vape SVG */}
-          <div style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 3, animation: 'floatUD 2.8s ease-in-out infinite' }}>
-            <svg width="100" height="290" viewBox="0 0 100 290" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="42" y="0" width="16" height="10" rx="5" fill="url(#mt)"/>
-              <rect x="34" y="9" width="32" height="18" rx="7" fill="url(#mb)"/>
-              <rect x="16" y="25" width="68" height="242" rx="16" fill="url(#db)"/>
-              <rect x="78" y="34" width="3" height="200" rx="1.5" fill="rgba(255,255,255,.07)"/>
-              <rect x="18" y="34" width="4" height="150" rx="2" fill="rgba(255,255,255,.1)"/>
-              <rect x="24" y="40" width="52" height="48" rx="7" fill="rgba(0,0,0,.5)"/>
-              <rect x="27" y="43" width="46" height="42" rx="5" fill={`url(#${s.scrId})`}/>
-              <rect x="33" y="51" width="25" height="2.5" rx="1.2" fill="rgba(255,255,255,.6)"/>
-              <rect x="33" y="57" width="18" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-              <rect x="33" y="62" width="22" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
-              <rect x="33" y="67" width="14" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
-              <rect x="33" y="72" width="19" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-              <rect x="27" y="99" width="46" height="19" rx="4" fill="rgba(0,0,0,.32)"/>
-              <text x="50" y="112" fontSize="8" fill="rgba(255,255,255,.8)" textAnchor="middle" fontFamily="sans-serif" fontWeight="700" letterSpacing="3">VOLT</text>
-              <circle cx="50" cy="130" r="3.5" fill="#e8414a"/>
-              <circle cx="50" cy="130" r="7" fill="#e8414a" opacity=".14"/>
-              <rect x="24" y="146" width="52" height="1" rx=".5" fill="rgba(255,255,255,.06)"/>
-              <rect x="24" y="205" width="52" height="1" rx=".5" fill="rgba(255,255,255,.06)"/>
-              <rect x="10" y="112" width="7" height="32" rx="3.5" fill="url(#sb)"/>
-              <rect x="10" y="152" width="7" height="16" rx="3.5" fill="url(#sb)"/>
-              <rect x="35" y="258" width="30" height="5" rx="2.5" fill="rgba(0,0,0,.5)"/>
-              <rect x="41" y="259" width="18" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
-              <circle cx="34" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
-              <circle cx="40" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
-              <circle cx="50" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
-              <circle cx="60" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
-              <circle cx="66" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
-              <defs>
-                <linearGradient id="mt" x1="42" y1="0" x2="58" y2="10" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#5a6478"/><stop offset="100%" stopColor="#2d3748"/></linearGradient>
-                <linearGradient id="mb" x1="34" y1="9" x2="66" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#4a5568"/><stop offset="100%" stopColor="#2d3748"/></linearGradient>
-                <linearGradient id="db" x1="16" y1="25" x2="84" y2="267" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2d3748"/><stop offset="35%" stopColor="#1e2535"/><stop offset="100%" stopColor="#0d1117"/></linearGradient>
-                <linearGradient id="sb" x1="10" y1="112" x2="17" y2="144" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#4a5568"/><stop offset="100%" stopColor="#1e2535"/></linearGradient>
-                <linearGradient id="sc_g0" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#3b6ccc"/><stop offset="100%" stopColor="#1e3a7a"/></linearGradient>
-                <linearGradient id="sc_g1" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2da05a"/><stop offset="100%" stopColor="#145a2e"/></linearGradient>
-                <linearGradient id="sc_g2" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#8b3db8"/><stop offset="100%" stopColor="#4a1a6e"/></linearGradient>
-              </defs>
-            </svg>
+          <div style={{ position: 'absolute', top: '85%', left: '68%', zIndex: 3, animation: 'floatUD 7.8s ease-in-out infinite', transform: 'translateY(-50%)' }}>
+                     <img
+                key={cur}
+                src={s.img}
+                alt="vape"
+                style={{
+                    width: '340px',
+                    objectFit: 'contain',
+                    animation: 'floatUD 2.8s ease-in-out infinite',
+                }}
+                />
           </div>
         </div>
 

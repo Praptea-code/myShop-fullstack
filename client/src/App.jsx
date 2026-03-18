@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/Contactus'
 import Cart from './pages/Cart'
+import ProductDetail from './pages/Productdetail'
 
 export const AuthContext = createContext(null)
 export const CartContext = createContext(null)
@@ -113,6 +114,7 @@ export default function App() {
             <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/products/:productId" element={<ProductDetail />} />
           </Routes>
         </BrowserRouter>
       </CartContext.Provider>

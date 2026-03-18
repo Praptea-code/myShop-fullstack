@@ -42,71 +42,69 @@ export default function Products() {
       return new Date(b.createdAt) - new Date(a.createdAt)
     })
 
-  const inp = { width: '100%', padding: '9px 12px', background: '#fff', border: '1px solid var(--border)', borderRadius: '4px', fontSize: '0.8rem', color: 'var(--ink)', outline: 'none', fontFamily: 'var(--sans)' }
-
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
 
-      {/* Header */}
-      <div style={{ background: 'var(--navy)', padding: '28px 40px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-        <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '5px' }}>Browse</div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>
-          All <em style={{ fontStyle: 'italic', color: '#f9a8ac' }}>Products</em>
-        </div>
-      </div>
+     
 
-      <div style={{ padding: '24px 40px', display: 'grid', gridTemplateColumns: '185px 1fr', gap: '20px' }}>
+      <div style={{ padding: '32px 48px', display: 'grid', gridTemplateColumns: '260px 1fr', gap: '28px', alignItems: 'start' }}>
 
         {/* Filter sidebar */}
-        <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', padding: '14px', height: 'fit-content' }}>
-          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '11px', paddingBottom: '9px', borderBottom: '1px solid #f0f2f5', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '10px', padding: '24px', position: 'sticky', top: '80px' }}>
+          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '18px', paddingBottom: '14px', borderBottom: '1px solid #f0f2f5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             Filters
             <span style={{ fontSize: '0.62rem', color: 'var(--red)', cursor: 'pointer', fontWeight: 600 }} onClick={() => setFilters({ flavours:[], maxPrice:5000, puffs:[], nicotine:[] })}>Clear all</span>
           </div>
 
-          {[
-            { label: 'Flavour', key: 'flavours', opts: ['Strawberry','Mango','Blueberry','Menthol','Watermelon','Grape'] },
-          ].map(g => (
-            <div key={g.label} style={{ marginBottom: '13px' }}>
-              <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '7px' }}>{g.label}</div>
-              {g.opts.map(opt => (
-                <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.72rem', color: '#555', marginBottom: '4px', cursor: 'pointer' }}>
-                  <input type="checkbox" checked={filters[g.key].includes(opt)} onChange={() => toggleFilter(g.key, opt)} style={{ accentColor: 'var(--red)' }} />
-                  {opt}
-                </label>
-              ))}
-            </div>
-          ))}
+          {/* Flavour */}
+          <div style={{ marginBottom: '22px' }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Flavour</div>
+            {['Strawberry','Mango','Blueberry','Menthol','Watermelon','Grape'].map(opt => (
+              <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.78rem', color: '#555', marginBottom: '10px', cursor: 'pointer' }}>
+                <input type="checkbox" checked={filters.flavours.includes(opt)} onChange={() => toggleFilter('flavours', opt)} style={{ accentColor: 'var(--red)', width: '14px', height: '14px', flexShrink: 0 }} />
+                {opt}
+              </label>
+            ))}
+          </div>
 
-          <div style={{ marginBottom: '13px' }}>
-            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '7px' }}>Price Range</div>
-            <input type="range" min="500" max="5000" value={filters.maxPrice} onChange={e => setFilters(f => ({ ...f, maxPrice: Number(e.target.value) }))} style={{ width: '100%', accentColor: 'var(--red)', marginBottom: '3px' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#888' }}>
+          {/* Price Range */}
+          <div style={{ marginBottom: '22px' }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Price Range</div>
+            <input type="range" min="500" max="5000" value={filters.maxPrice} onChange={e => setFilters(f => ({ ...f, maxPrice: Number(e.target.value) }))} style={{ width: '100%', accentColor: 'var(--red)', marginBottom: '8px' }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#888' }}>
               <span>Rs. 500</span>
-              <span>Rs. {filters.maxPrice.toLocaleString()}</span>
+              <span style={{ fontWeight: 600, color: 'var(--ink)' }}>Rs. {filters.maxPrice.toLocaleString()}</span>
             </div>
           </div>
 
-          {[
-            { label: 'Puffs', key: 'puffs', opts: ['5000','6000','10000','12000'] },
-            { label: 'Nicotine', key: 'nicotine', opts: ['2%','5%'] },
-          ].map(g => (
-            <div key={g.label} style={{ marginBottom: '13px' }}>
-              <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '7px' }}>{g.label}</div>
-              {g.opts.map(opt => (
-                <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.72rem', color: '#555', marginBottom: '4px', cursor: 'pointer' }}>
-                  <input type="checkbox" checked={filters[g.key].includes(opt)} onChange={() => toggleFilter(g.key, opt)} style={{ accentColor: 'var(--red)' }} />
-                  {opt} {g.label === 'Puffs' ? 'puffs' : 'nic'}
-                </label>
-              ))}
-            </div>
-          ))}
+          {/* Puffs */}
+          <div style={{ marginBottom: '22px' }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Puffs</div>
+            {['5000','6000','10000','12000'].map(opt => (
+              <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.78rem', color: '#555', marginBottom: '10px', cursor: 'pointer' }}>
+                <input type="checkbox" checked={filters.puffs.includes(opt)} onChange={() => toggleFilter('puffs', opt)} style={{ accentColor: 'var(--red)', width: '14px', height: '14px', flexShrink: 0 }} />
+                {opt} puffs
+              </label>
+            ))}
+          </div>
+
+          {/* Nicotine */}
+          <div>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Nicotine</div>
+            {['2%','5%'].map(opt => (
+              <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.78rem', color: '#555', marginBottom: '10px', cursor: 'pointer' }}>
+                <input type="checkbox" checked={filters.nicotine.includes(opt)} onChange={() => toggleFilter('nicotine', opt)} style={{ accentColor: 'var(--red)', width: '14px', height: '14px', flexShrink: 0 }} />
+                {opt} nic
+              </label>
+            ))}
+          </div>
         </div>
 
-        {/* Products grid */}
+        {/* Products area */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+          {/* Toolbar */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <span style={{ fontSize: '0.75rem', color: '#888' }}>Showing {filtered.length} product{filtered.length !== 1 ? 's' : ''}</span>
             <div style={{ display: 'flex', gap: 0, alignItems: 'center' }}>
               <input
@@ -129,28 +127,40 @@ export default function Products() {
           {filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--light)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>No products match your filters.</div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
               {filtered.map((p, i) => (
-                <div key={p._id} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
-                  <div style={{ height: '220px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                    {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: '0.72rem', color: '#bbb' }}>Product photo</span>}
-                    {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
+                <div key={p._id}
+                  onClick={() => navigate(`/products/${p._id}`)}
+                  style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', transition: 'box-shadow 0.18s' }}
+                  onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+                  onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+                >
+                  <div style={{ height: '155px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+                    {p.image
+                      ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      : <span style={{ fontSize: '0.68rem', color: '#bbb' }}>Product photo</span>
+                    }
+                    {p.badge && (
+                      <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>
+                    )}
                   </div>
-                  <div style={{ padding: '11px 13px 13px' }}>
+                  <div style={{ padding: '12px 14px 14px' }}>
                     {(p.flavour || p.puffs) && (
-                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '5px' }}>
-                        {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((t,ti) => (
-                          <span key={ti} style={{ fontSize: '0.56rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '2px 6px', borderRadius: '2px' }}>{t}</span>
+                      <div style={{ display: 'flex', gap: '3px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                        {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((t, ti) => (
+                          <span key={ti} style={{ fontSize: '0.52rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '2px 5px', borderRadius: '2px' }}>{t}</span>
                         ))}
                       </div>
                     )}
-                    <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '9px', lineHeight: 1.3 }}>{p.name}</div>
-                    {p.description && <div style={{ fontSize: '0.7rem', color: 'var(--mid)', lineHeight: 1.6, marginBottom: '8px' }}>{p.description}</div>}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '9px', borderTop: '1px solid #f0f2f5' }}>
-                      <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price}</span>
+                    <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px', lineHeight: 1.35 }}>{p.name}</div>
+                    {p.description && (
+                      <div style={{ fontSize: '0.64rem', color: 'var(--mid)', lineHeight: 1.5, marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.description}</div>
+                    )}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid #f0f2f5' }}>
+                      <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price}</span>
                       <button
-                        onClick={() => user ? addToCart(p) : navigate('/login')}
-                        style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
+                        onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
+                        style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 10px', cursor: 'pointer', transition: 'background 0.18s', whiteSpace: 'nowrap' }}
                         onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
                         onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
                       >Add to cart</button>
