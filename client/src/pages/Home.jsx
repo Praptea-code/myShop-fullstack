@@ -6,467 +6,700 @@ import { useAuth } from '../App'
 
 const API = 'http://localhost:5000/api'
 
-// ── hero slider data ──────────────────────────────────────────
 const SLIDES = [
   {
-    bg: 'linear-gradient(125deg,#06091a 0%,#0e1e42 40%,#183278 65%,#0e1e42 100%)',
-    blob: '#2050ee',
-    num: '01 / 04',
-    heading: ['Taste the', 'difference.'],
-    body: 'Premium disposable vapes with rich flavours. Delivered discreetly across Nepal — pay with eSewa or Khalti.',
-    cta1: { label: 'Shop all flavours', path: '/products' },
-    cta2: { label: 'Track order →', path: '/track' },
+    tag: "Nepal's no.1 vape shop",
+    h1: 'Premium Vapes,',
+    em: 'Discreetly Delivered.',
+    sub: 'Authentic disposables with 20+ flavours. eSewa & Khalti accepted. Same day dispatch in KTM.',
+    cta: 'Shop Collection',
+    ctaPath: '/products',
+    cta2: 'About Us',
+    cta2Path: '/about',
+    bg: 'radial-gradient(ellipse at 65% 45%, #1e2d55 0%, #111827 55%, #080c14 100%)',
+    shadow: '#3b6ccc',
+    scrId: 'sc_g0',
   },
   {
-    bg: 'linear-gradient(125deg,#060e08 0%,#0d2218 40%,#174030 65%,#0d2218 100%)',
-    blob: '#18805a',
-    num: '02 / 04',
-    heading: ['20+ flavours,', 'one place.'],
-    body: 'Strawberry, mango, blueberry, menthol and more — all authentic, in stock, ready to ship same day.',
-    cta1: { label: 'Browse collection', path: '/products' },
-    cta2: { label: 'View flavours', path: '/products?filter=flavour' },
+    tag: '20+ flavours in stock',
+    h1: 'Every Flavour',
+    em: 'You Crave.',
+    sub: 'Mango, strawberry, menthol, blueberry — all 100% authentic, ready to ship today.',
+    cta: 'Browse Flavours',
+    ctaPath: '/products',
+    cta2: 'Contact Us',
+    cta2Path: '/contact',
+    bg: 'radial-gradient(ellipse at 65% 45%, #122a1e 0%, #0d1f14 55%, #060e09 100%)',
+    shadow: '#2da05a',
+    scrId: 'sc_g1',
   },
   {
-    bg: 'linear-gradient(125deg,#0c0612 0%,#1c0c2e 40%,#30164e 65%,#1c0c2e 100%)',
-    blob: '#5012a0',
-    num: '03 / 04',
-    heading: ['Premium quality,', 'always.'],
-    body: 'Every device is 100% authentic. No fakes, no knockoffs — we stand behind everything we stock.',
-    cta1: { label: 'Shop now', path: '/products' },
-    cta2: { label: 'Learn more', path: '/about' },
-  },
-  {
-    bg: 'linear-gradient(125deg,#100e00 0%,#282000 40%,#443600 65%,#282000 100%)',
-    blob: '#806000',
-    num: '04 / 04',
-    heading: ['Buy in bulk,', 'save more.'],
-    body: 'Wholesale pricing for shops and resellers. Tiered discounts, priority dispatch, support in KTM.',
-    cta1: { label: 'Wholesale pricing', path: '/wholesale' },
-    cta2: { label: 'Contact us', path: '/contact' },
-    double: true,
+    tag: 'Wholesale available',
+    h1: 'Buy in Bulk,',
+    em: 'Save More.',
+    sub: 'Tiered wholesale pricing for shops and resellers. Priority dispatch. Best prices in KTM.',
+    cta: 'Get Pricing',
+    ctaPath: '/contact',
+    cta2: 'Our Story',
+    cta2Path: '/about',
+    bg: 'radial-gradient(ellipse at 65% 45%, #22103a 0%, #160920 55%, #0a0510 100%)',
+    shadow: '#8b3db8',
+    scrId: 'sc_g2',
   },
 ]
+
+const TICKER = [
+  '★ Free delivery over Rs. 3000', 'eSewa & Khalti', '★ Same day dispatch KTM',
+  '20+ flavours', '★ 100% authentic', 'Wholesale pricing',
+  '★ Discreet packaging', 'Order before 3 PM',
+]
+
+const FLAVOURS = [
+  { label: 'Strawberry', bg: 'linear-gradient(135deg,#ffd6d6,#ff8a8a)' },
+  { label: 'Mango', bg: 'linear-gradient(135deg,#ffe8b3,#ffb347)' },
+  { label: 'Blueberry', bg: 'linear-gradient(135deg,#d6d6ff,#8a8aff)' },
+  { label: 'Menthol', bg: 'linear-gradient(135deg,#d6f5e8,#4CAF7D)' },
+  { label: 'Watermelon', bg: 'linear-gradient(135deg,#ffd6e8,#ff6699)' },
+  { label: 'Grape', bg: 'linear-gradient(135deg,#e8d6ff,#9966ff)' },
+  { label: 'Lemon', bg: 'linear-gradient(135deg,#fffbd6,#ffe066)' },
+  { label: 'Cool Mint', bg: 'linear-gradient(135deg,#d6f5ff,#66ccff)' },
+]
+
+const CARD_BG = ['#f5e8e8','#fdf3e0','#eae8f5','#e8f5ea']
+
+const TRUST_ITEMS = [
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>,
+    title: '100% Authentic',
+    sub: 'Every single device is sourced directly and verified before it hits our shelves. Zero fakes. Zero exceptions.',
+    stat: '0 fakes', statLabel: 'ever sold',
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>,
+    title: 'Same Day Dispatch',
+    sub: 'Order before 3 PM and your package leaves the same day. We know you don\'t want to wait.',
+    stat: '3 PM', statLabel: 'cutoff in KTM',
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>,
+    title: 'eSewa & Khalti',
+    sub: 'Pay the way you already do. Every major digital wallet accepted — no cash, no hassle.',
+    stat: '3+', statLabel: 'payment methods',
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9.1 8V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>,
+    title: 'Discreet Packaging',
+    sub: 'Plain, unmarked box. No logos, no hints. Your order looks like everything else on the doorstep.',
+    stat: '100%', statLabel: 'plain packaging',
+  },
+]
+
+function WhyVolt({ navigate }) {
+  const [active, setActive] = useState(0)
+  const intervalRef = useRef(null)
+
+  const startAuto = () => {
+    clearInterval(intervalRef.current)
+    intervalRef.current = setInterval(() => {
+      setActive(a => (a + 1) % TRUST_ITEMS.length)
+    }, 3000)
+  }
+
+  useEffect(() => {
+    startAuto()
+    return () => clearInterval(intervalRef.current)
+  }, [])
+
+  const handleClick = (i) => {
+    setActive(i)
+    startAuto() // reset timer on manual click
+  }
+
+  const item = TRUST_ITEMS[active]
+
+  return (
+    <section style={{ background: '#fff', borderTop: '1px solid var(--border)', padding: '80px 40px' }}>
+      <div>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px' }}>
+          <div>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '8px' }}>Why choose us</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: '1.6rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.15 }}>
+              Built different.<br /><em style={{ fontStyle: 'italic', color: 'var(--red)' }}>On purpose.</em>
+            </div>
+          </div>
+          <button onClick={() => navigate('/about')} style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--red)', border: '1px solid var(--red)', borderRadius: '3px', padding: '8px 16px', background: 'transparent', cursor: 'pointer' }}>
+            Our story →
+          </button>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '32px', alignItems: 'stretch' }}>
+          {/* Left — clickable tabs */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {TRUST_ITEMS.map((t, i) => (
+              <div
+                key={i}
+                onClick={() => handleClick(i)}
+                style={{
+                  padding: '20px 22px',
+                  borderRadius: '10px',
+                  border: `1.5px solid ${i === active ? 'var(--red)' : 'var(--border)'}`,
+                  background: i === active ? '#fff8f8' : '#fff',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                }}
+                onMouseEnter={e => { if (i !== active) e.currentTarget.style.borderColor = '#f4a0a5' }}
+                onMouseLeave={e => { if (i !== active) e.currentTarget.style.borderColor = 'var(--border)' }}
+              >
+                <div style={{
+                  width: '46px', height: '46px', borderRadius: '10px', flexShrink: 0,
+                  background: i === active ? 'var(--red)' : '#f0f2f5',
+                  color: i === active ? '#fff' : 'var(--light)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  transition: 'all 0.2s',
+                }}>
+                  {t.icon}
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: i === active ? 'var(--ink)' : 'var(--mid)', marginBottom: '2px', transition: 'color 0.2s' }}>{t.title}</div>
+                  <div style={{ fontSize: '0.62rem', color: 'var(--light)', letterSpacing: '0.04em' }}>Click to learn more</div>
+                </div>
+                <div style={{ marginLeft: 'auto', color: i === active ? 'var(--red)' : 'transparent', fontSize: '1rem', transition: 'color 0.2s' }}>→</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right — expanded detail panel */}
+          <div style={{
+            background: 'var(--navy)',
+            borderRadius: '14px',
+            padding: '48px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '360px',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            {/* BG accent */}
+            <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '180px', height: '180px', borderRadius: '50%', background: 'rgba(232,65,74,0.08)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(232,65,74,0.05)', pointerEvents: 'none' }} />
+
+            <div>
+              <div style={{ width: '56px', height: '56px', borderRadius: '12px', background: 'var(--red)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '28px' }}>
+                {item.icon}
+              </div>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', fontWeight: 700, color: '#fff', marginBottom: '14px', lineHeight: 1.2 }}>
+                {item.title}
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, maxWidth: '380px' }}>
+                {item.sub}
+              </p>
+            </div>
+
+            {/* Big stat */}
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', marginTop: '36px', paddingTop: '28px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '3rem', fontWeight: 700, color: 'var(--red)', lineHeight: 1 }}>{item.stat}</div>
+              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', textTransform: 'uppercase', letterSpacing: '0.1em', paddingBottom: '6px' }}>{item.statLabel}</div>
+            </div>
+
+            {/* Dot indicators */}
+            <div style={{ display: 'flex', gap: '6px', marginTop: '20px' }}>
+              {TRUST_ITEMS.map((_, i) => (
+                <div key={i} onClick={() => handleClick(i)} style={{ width: i === active ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === active ? 'var(--red)' : 'rgba(255,255,255,0.2)', cursor: 'pointer', transition: 'all 0.3s' }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WholesalePromo({ navigate }) {
+  const [hovered, setHovered] = useState(null)
+
+  const perks = [
+    { n: 'Tiered pricing', sub: 'Better rates as you order more' },
+    { n: 'Priority dispatch', sub: 'Your orders ship first, always' },
+    { n: 'Dedicated support', sub: 'Direct line to our team' },
+    { n: 'No minimums', sub: 'Start small, scale up freely' },
+  ]
+
+  return (
+    <section style={{ background: 'var(--navy)', padding: '100px 40px', position: 'relative', overflow: 'hidden' }}>
+      {/* Background decorations */}
+      <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '400px', height: '400px', borderRadius: '50%', background: 'rgba(232,65,74,0.05)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '-60px', left: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(255,255,255,0.02)', pointerEvents: 'none' }} />
+
+      <div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+
+          {/* Left */}
+          <div>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '20px', height: '1px', background: 'var(--red)' }} />
+              For resellers &amp; shops
+            </div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 700, color: '#fff', lineHeight: 1.1, marginBottom: '18px' }}>
+              Buy in Bulk,<br /><em style={{ fontStyle: 'italic', color: '#f4868c' }}>Save More.</em>
+            </div>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.45)', lineHeight: 1.8, marginBottom: '36px', maxWidth: '380px' }}>
+              Running a shop in KTM? We work directly with resellers — tiered pricing, priority dispatch, and a team that actually picks up the phone.
+            </p>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                onClick={() => navigate('/contact')}
+                style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '4px', padding: '14px 28px', cursor: 'pointer', transition: 'background 0.18s' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--red-dark)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--red)'}
+              >Get wholesale pricing →</button>
+              <button
+                onClick={() => navigate('/contact')}
+                style={{ fontSize: '0.75rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '4px', padding: '14px 24px', cursor: 'pointer', transition: 'all 0.18s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = 'rgba(255,255,255,0.55)' }}
+              >Contact us</button>
+            </div>
+          </div>
+
+          {/* Right — perk cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            {perks.map((p, i) => (
+              <div
+                key={i}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  background: hovered === i ? 'rgba(232,65,74,0.12)' : 'rgba(255,255,255,0.04)',
+                  border: `1px solid ${hovered === i ? 'rgba(232,65,74,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                  borderRadius: '10px',
+                  padding: '24px 20px',
+                  cursor: 'default',
+                  transition: 'all 0.22s',
+                }}
+              >
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: hovered === i ? 'var(--red)' : 'rgba(255,255,255,0.2)', marginBottom: '14px', transition: 'background 0.22s' }} />
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>{p.n}</div>
+                <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>{p.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: 'var(--navy)', padding: '36px 40px 20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '28px', marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
+            Volt<span style={{ color: 'var(--red)', fontStyle: 'italic' }}>vapour</span>
+          </div>
+          <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.36)', lineHeight: 1.8, maxWidth: '180px', marginBottom: '12px' }}>
+            Nepal's trusted source for authentic disposable vapes. Retail and wholesale available.
+          </p>
+          <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+            {['eSewa','Khalti','Bank Transfer'].map(t => (
+              <span key={t} style={{ fontSize: '0.62rem', fontWeight: 600, color: 'rgba(255,255,255,0.48)', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', padding: '3px 9px', borderRadius: '3px' }}>{t}</span>
+            ))}
+          </div>
+        </div>
+        {[
+          { title: 'Shop', links: ['All Products','Disposables','Pod Kits','E-Liquids'] },
+          { title: 'Company', links: ['About Us','Contact Us','Wholesale','Track Order'] },
+          { title: 'Help', links: ['volt@gmail.com','+977 98XXXXXXXX','Kathmandu, Nepal','Instagram'] },
+        ].map(col => (
+          <div key={col.title}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>{col.title}</div>
+            {col.links.map(l => (
+              <span key={l} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.46)', display: 'block', marginBottom: '7px', cursor: 'pointer' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.46)'}
+              >{l}</span>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: 'rgba(255,255,255,0.18)' }}>
+        <span>© 2025 Volt Vapour · Kathmandu, Nepal. All rights reserved.</span>
+        <span>Retail &amp; Wholesale</span>
+      </div>
+    </footer>
+  )
+}
+
+export { Footer }
 
 export default function Home() {
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
   const { user } = useAuth()
-
-  // slider
-  const [current, setCurrent] = useState(0)
+  const [cur, setCur] = useState(0)
   const [animKey, setAnimKey] = useState(0)
-  const [bars, setBars] = useState(['run', '', '', ''])
+  const [progW, setProgW] = useState(0)
   const timerRef = useRef(null)
+  const progRef = useRef(null)
+  const tickRef = useRef(null)
+  const tickPos = useRef(0)
 
   useEffect(() => {
-    axios.get(`${API}/products/recent`).then(res => setProducts(res.data)).catch(() => {})
+    axios.get(`${API}/products/recent`).then(r => setProducts(r.data)).catch(() => {})
   }, [])
 
-  // slider auto-advance
-  useEffect(() => {
-    timerRef.current = setTimeout(() => goTo((current + 1) % SLIDES.length), 4200)
-    return () => clearTimeout(timerRef.current)
-  }, [current])
-
-  // inject keyframes once — only the animations we need
-  useEffect(() => {
-    const id = 'volt-hero-kf'
-    if (!document.getElementById(id)) {
-      const s = document.createElement('style')
-      s.id = id
-      s.textContent = `
-        @keyframes vHeroFadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes vHeroBar    { from{width:0} to{width:100%} }
-        @keyframes vHeroFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
-        @keyframes voltTicker  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-      `
-      document.head.appendChild(s)
-    }
-  }, [])
-
-  function goTo(n) {
+  const goTo = (n) => {
     clearTimeout(timerRef.current)
-    setCurrent(n)
+    clearInterval(progRef.current)
+    setCur(n)
     setAnimKey(k => k + 1)
-    setBars(SLIDES.map((_, i) => i < n ? 'done' : i === n ? 'run' : ''))
+    setProgW(0)
+    let p = 0
+    progRef.current = setInterval(() => {
+      p += 0.4
+      setProgW(Math.min(p, 100))
+      if (p >= 100) clearInterval(progRef.current)
+    }, 20)
+    timerRef.current = setTimeout(() => goTo((n + 1) % SLIDES.length), 5000)
   }
 
-  const handleOrder = (productId) => {
-    if (user) navigate(`/order/${productId}`)
-    else navigate('/login')
-  }
+  useEffect(() => {
+    goTo(0)
+    return () => { clearTimeout(timerRef.current); clearInterval(progRef.current) }
+  }, [])
 
-  const bgs = ['#e8ecf6', '#e8f2ee', '#ece8f6']
+  // ticker
+  useEffect(() => {
+    const el = document.getElementById('ticker-inner')
+    if (!el) return
+    const run = () => {
+      tickPos.current += 0.55
+      if (tickPos.current >= el.scrollWidth / 2) tickPos.current = 0
+      el.style.transform = `translateX(-${tickPos.current}px)`
+      tickRef.current = requestAnimationFrame(run)
+    }
+    tickRef.current = requestAnimationFrame(run)
+    return () => cancelAnimationFrame(tickRef.current)
+  }, [])
+
+  const s = SLIDES[cur]
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
 
-      {/* hero section*/}
-      <section style={{ position: 'relative', height: 650, overflow: 'hidden', background: '#080c16' }}>
-        {SLIDES.map((s, i) => (
-          <div key={i} style={{
-            position: 'absolute', inset: 0, display: 'flex', alignItems: 'center',
-            opacity: current === i ? 1 : 0,
-            transition: 'opacity 0.7s',
-            pointerEvents: current === i ? 'all' : 'none',
-          }}>
-            {/* gradient bg */}
-            <div style={{ position: 'absolute', inset: 0, background: s.bg }} />
-            {/* glow blob */}
-            <div style={{
-              position: 'absolute', borderRadius: '50%', filter: 'blur(75px)',
-              width: 300, height: 300, right: '6%', top: '-25%',
-              background: s.blob, opacity: 0.12,
-              animation: 'vHeroFloat 4s ease-in-out infinite',
-            }} />
-            {/* left-to-right dark overlay */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.04) 100%)',
-            }} />
+      {/* ── HERO ── */}
+      <section style={{ position: 'relative', height: '760px', overflow: 'hidden', display: 'flex' }}>
 
-            {/* slide text */}
-            <div
-              key={current === i ? animKey : i}
-              style={{
-                position: 'relative', zIndex: 2,
-                padding: '0 106px', maxWidth: 530,
-                animation: current === i ? 'vHeroFadeUp .55s ease both' : 'none',
-              }}
-            >
-              <div style={{
-                fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,.3)', marginBottom: 20,
-                display: 'flex', alignItems: 'center', gap: 10,
-              }}>
-                <span style={{ display: 'block', width: 22, height: 1, background: 'rgba(255,255,255,.3)', flexShrink: 0 }} />
-                {s.num}
-              </div>
-              <h1 style={{
-                fontFamily: 'var(--serif)', fontSize: 50, fontWeight: 200,
-                color: '#fff', lineHeight: 1.03, letterSpacing: '-0.025em', marginBottom: 16,
-              }}>
-                {s.heading[0]}<br />
-                <i style={{ fontStyle: 'italic', fontWeight: 500 }}>{s.heading[1]}</i>
-              </h1>
-              <p style={{
-                fontSize: 11, color: 'rgba(255,255,255,.45)', lineHeight: 1.9,
-                maxWidth: 330, marginBottom: 30, fontWeight: 300,
-              }}>{s.body}</p>
-              <div style={{ display: 'flex', gap: 10 }}>
-                <button
-                  onClick={() => navigate(s.cta1.path)}
-                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-                  style={{
-                    fontSize: 9, padding: '12px 28px', borderRadius: 100,
-                    background: '#fff', color: '#0c1628', border: 'none', cursor: 'pointer',
-                    letterSpacing: '0.09em', textTransform: 'uppercase', fontWeight: 600,
-                    transition: 'transform .22s',
-                  }}
-                >{s.cta1.label}</button>
-                <button
-                  onClick={() => navigate(s.cta2.path)}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.5)'; e.currentTarget.style.color = '#fff' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.22)'; e.currentTarget.style.color = 'rgba(255,255,255,.6)' }}
-                  style={{
-                    fontSize: 9, padding: '12px 28px', borderRadius: 100,
-                    background: 'transparent', color: 'rgba(255,255,255,.6)',
-                    border: '1px solid rgba(255,255,255,.22)', cursor: 'pointer',
-                    letterSpacing: '0.09em', textTransform: 'uppercase', transition: 'all .22s',
-                  }}
-                >{s.cta2.label}</button>
-              </div>
-            </div>
+        {/* LEFT: dark text panel */}
+        <div style={{
+          width: '52%', background: 'var(--navy)',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          padding: '0 52px', position: 'relative', zIndex: 4, flexShrink: 0,
+        }}>
+          {/* diagonal cut */}
+          <div style={{ position: 'absolute', right: '-50px', top: 0, bottom: 0, width: '100px', background: 'var(--navy)', transform: 'skewX(-5deg)', zIndex: 1 }} />
 
-            {/* vape image area — replace the inner div/span with <img> when you have photos */}
+          <div key={animKey} style={{ position: 'relative', zIndex: 3 }}>
             <div style={{
-              position: 'absolute', right: 0, top: 0, bottom: 0, width: '40%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              zIndex: 1, gap: s.double ? 12 : 0,
+              fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)',
+              textTransform: 'uppercase', marginBottom: '13px',
+              display: 'flex', alignItems: 'center', gap: '8px',
+              animation: 'slideUpFade 0.5s ease both 0.1s', opacity: 0,
+              animationFillMode: 'forwards',
             }}>
-              {s.double ? (
-                <>
-                  {[0, 28].map((mt, idx) => (
-                    <div key={idx} onClick={() => navigate('/products')} style={{
-                      width: 76, height: 200, borderRadius: 22,
-                      background: 'rgba(255,255,255,.06)', border: '1px dashed rgba(255,255,255,.15)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      animation: `vHeroFloat 4s ease-in-out ${idx * 0.5}s infinite`,
-                      cursor: 'pointer', marginTop: mt,
-                    }}>
-                      <span style={{ fontSize: 8, color: 'rgba(255,255,255,.2)', textTransform: 'uppercase', writingMode: 'vertical-rl', letterSpacing: '0.08em' }}>product</span>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div onClick={() => navigate('/products')} style={{
-                  width: 90, height: 245, borderRadius: 22,
-                  background: 'rgba(255,255,255,.06)', border: '1px dashed rgba(255,255,255,.15)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  animation: 'vHeroFloat 4s ease-in-out infinite', cursor: 'pointer',
-                }}>
-                  <span style={{ fontSize: 8, color: 'rgba(255,255,255,.2)', textTransform: 'uppercase', writingMode: 'vertical-rl', letterSpacing: '0.08em' }}>your image</span>
-                </div>
-              )}
+              <span style={{ width: '20px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />
+              {s.tag}
+            </div>
+            <h1 style={{
+              fontFamily: 'var(--serif)', fontSize: 'clamp(42px, 5vw, 64px)',
+              fontWeight: 700, color: '#fff', lineHeight: 1.09, marginBottom: '13px',
+              animation: 'slideUpFade 0.55s ease both 0.22s', opacity: 0,
+              animationFillMode: 'forwards',
+            }}>
+              {s.h1}<br />
+              <em style={{ fontStyle: 'italic', color: '#f4868c' }}>{s.em}</em>
+            </h1>
+            <p style={{
+              fontSize: '1rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.75,
+              maxWidth: '330px', marginBottom: '26px',
+              animation: 'slideUpFade 0.5s ease both 0.34s', opacity: 0,
+              animationFillMode: 'forwards',
+            }}>
+              {s.sub}
+            </p>
+            <div style={{
+              display: 'flex', gap: '10px',
+              animation: 'slideUpFade 0.45s ease both 0.44s', opacity: 0,
+              animationFillMode: 'forwards',
+            }}>
+              <button
+                onClick={() => navigate(s.ctaPath)}
+                style={{ fontFamily: 'var(--sans)', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '14px 32px', cursor: 'pointer', transition: 'background 0.18s' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--red-dark)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--red)'}
+              >{s.cta}</button>
+              <button
+                onClick={() => navigate(s.cta2Path)}
+                style={{ fontFamily: 'var(--sans)', fontSize: '0.82rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '14px 28px', cursor: 'pointer', transition: 'all 0.18s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.24)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+              >{s.cta2}</button>
             </div>
           </div>
-        ))}
-
-        {/* progress bars */}
-        <div style={{ position: 'absolute', bottom: 26, left: 76, display: 'flex', alignItems: 'center', gap: 14, zIndex: 10 }}>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {bars.map((state, i) => (
-              <div
-                key={i} onClick={() => goTo(i)}
-                style={{ width: 38, height: 2, background: 'rgba(255,255,255,.15)', borderRadius: 1, overflow: 'hidden', cursor: 'pointer' }}
-              >
-                <div style={{
-                  height: '100%', borderRadius: 1, background: 'rgba(255,255,255,.8)',
-                  width: state === 'done' ? '100%' : 0,
-                  animation: state === 'run' ? 'vHeroBar 4.2s linear forwards' : 'none',
-                }} />
-              </div>
-            ))}
-          </div>
-          <span style={{ fontSize: 9, color: 'rgba(255,255,255,.22)', letterSpacing: '0.1em' }}>{SLIDES[current].num}</span>
         </div>
 
-        {/* prev / next arrows */}
-        <div style={{ position: 'absolute', bottom: 18, right: 60, display: 'flex', gap: 8, zIndex: 10 }}>
-          {['‹', '›'].map((ch, idx) => (
-            <button
-              key={ch}
-              onClick={() => goTo(idx === 0 ? (current - 1 + SLIDES.length) % SLIDES.length : (current + 1) % SLIDES.length)}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.14)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.4)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.05)'; e.currentTarget.style.color = 'rgba(255,255,255,.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.15)' }}
-              style={{
-                width: 36, height: 36, borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,.15)', background: 'rgba(255,255,255,.05)',
-                color: 'rgba(255,255,255,.5)', fontSize: 14, cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: 'all .22s',
-              }}
-            >{ch}</button>
+        {/* RIGHT: dark bg + floating vape */}
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', transition: 'background 1.2s ease', background: s.bg }}>
+          {/* left blend */}
+          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', background: 'linear-gradient(to right, var(--navy), transparent)', zIndex: 4, pointerEvents: 'none' }} />
+
+          {/* smoke particles */}
+          {[
+            { w:18,h:18,l:'52%',t:'20%',d:'0s',dur:'3.5s' },
+            { w:12,h:12,l:'57%',t:'17%',d:'1s',dur:'4s' },
+            { w:9,h:9,l:'49%',t:'22%',d:'2s',dur:'3.2s' },
+          ].map((p,i) => (
+            <div key={i} style={{ position: 'absolute', borderRadius: '50%', background: 'rgba(255,255,255,0.06)', width: p.w, height: p.h, left: p.l, top: p.t, animation: `smokePuff ${p.dur} ease-out infinite`, animationDelay: p.d }} />
+          ))}
+
+          {/* glow shadow */}
+          <div style={{ position: 'absolute', bottom: '20%', left: '50%', transform: 'translateX(-45%)', width: '110px', height: '22px', borderRadius: '50%', filter: 'blur(18px)', opacity: 0.5, zIndex: 2, background: s.shadow, transition: 'background 1.2s ease' }} />
+
+          {/* vape SVG */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 3, animation: 'floatUD 2.8s ease-in-out infinite' }}>
+            <svg width="100" height="290" viewBox="0 0 100 290" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="42" y="0" width="16" height="10" rx="5" fill="url(#mt)"/>
+              <rect x="34" y="9" width="32" height="18" rx="7" fill="url(#mb)"/>
+              <rect x="16" y="25" width="68" height="242" rx="16" fill="url(#db)"/>
+              <rect x="78" y="34" width="3" height="200" rx="1.5" fill="rgba(255,255,255,.07)"/>
+              <rect x="18" y="34" width="4" height="150" rx="2" fill="rgba(255,255,255,.1)"/>
+              <rect x="24" y="40" width="52" height="48" rx="7" fill="rgba(0,0,0,.5)"/>
+              <rect x="27" y="43" width="46" height="42" rx="5" fill={`url(#${s.scrId})`}/>
+              <rect x="33" y="51" width="25" height="2.5" rx="1.2" fill="rgba(255,255,255,.6)"/>
+              <rect x="33" y="57" width="18" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
+              <rect x="33" y="62" width="22" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
+              <rect x="33" y="67" width="14" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
+              <rect x="33" y="72" width="19" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
+              <rect x="27" y="99" width="46" height="19" rx="4" fill="rgba(0,0,0,.32)"/>
+              <text x="50" y="112" fontSize="8" fill="rgba(255,255,255,.8)" textAnchor="middle" fontFamily="sans-serif" fontWeight="700" letterSpacing="3">VOLT</text>
+              <circle cx="50" cy="130" r="3.5" fill="#e8414a"/>
+              <circle cx="50" cy="130" r="7" fill="#e8414a" opacity=".14"/>
+              <rect x="24" y="146" width="52" height="1" rx=".5" fill="rgba(255,255,255,.06)"/>
+              <rect x="24" y="205" width="52" height="1" rx=".5" fill="rgba(255,255,255,.06)"/>
+              <rect x="10" y="112" width="7" height="32" rx="3.5" fill="url(#sb)"/>
+              <rect x="10" y="152" width="7" height="16" rx="3.5" fill="url(#sb)"/>
+              <rect x="35" y="258" width="30" height="5" rx="2.5" fill="rgba(0,0,0,.5)"/>
+              <rect x="41" y="259" width="18" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
+              <circle cx="34" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
+              <circle cx="40" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
+              <circle cx="50" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
+              <circle cx="60" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
+              <circle cx="66" cy="244" r="2" fill="rgba(0,0,0,.4)"/>
+              <defs>
+                <linearGradient id="mt" x1="42" y1="0" x2="58" y2="10" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#5a6478"/><stop offset="100%" stopColor="#2d3748"/></linearGradient>
+                <linearGradient id="mb" x1="34" y1="9" x2="66" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#4a5568"/><stop offset="100%" stopColor="#2d3748"/></linearGradient>
+                <linearGradient id="db" x1="16" y1="25" x2="84" y2="267" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2d3748"/><stop offset="35%" stopColor="#1e2535"/><stop offset="100%" stopColor="#0d1117"/></linearGradient>
+                <linearGradient id="sb" x1="10" y1="112" x2="17" y2="144" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#4a5568"/><stop offset="100%" stopColor="#1e2535"/></linearGradient>
+                <linearGradient id="sc_g0" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#3b6ccc"/><stop offset="100%" stopColor="#1e3a7a"/></linearGradient>
+                <linearGradient id="sc_g1" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#2da05a"/><stop offset="100%" stopColor="#145a2e"/></linearGradient>
+                <linearGradient id="sc_g2" x1="27" y1="43" x2="73" y2="85" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#8b3db8"/><stop offset="100%" stopColor="#4a1a6e"/></linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+
+        {/* Right counter panel */}
+        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '58px', background: 'rgba(0,0,0,0.38)', borderLeft: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '9px', zIndex: 10 }}>
+          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{String(cur+1).padStart(2,'0')}</span>
+          <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.15)' }} />
+          <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>03</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '5px' }}>
+            {SLIDES.map((_,i) => (
+              <button key={i} onClick={() => goTo(i)} style={{ width: '4px', height: i === cur ? '14px' : '4px', borderRadius: i === cur ? '2px' : '50%', background: i === cur ? 'var(--red)' : 'rgba(255,255,255,0.22)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s' }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Slide indicators bottom */}
+        <div style={{ position: 'absolute', bottom: '20px', right: '70px', display: 'flex', gap: '5px', zIndex: 10 }}>
+          {SLIDES.map((_,i) => (
+            <button key={i} onClick={() => goTo(i)} style={{ width: i === cur ? '36px' : '22px', height: '3px', borderRadius: '2px', background: i === cur ? 'var(--red)' : 'rgba(255,255,255,0.22)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s' }} />
+          ))}
+        </div>
+
+        {/* Progress bar */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: '58px', height: '3px', background: 'rgba(255,255,255,0.08)', zIndex: 11 }}>
+          <div style={{ height: '100%', background: 'var(--red)', width: `${progW}%`, transition: 'width 0.08s linear' }} />
+        </div>
+      </section>
+
+      {/* ── TICKER ── */}
+      <div style={{ background: 'var(--red)', padding: '8px 0', overflow: 'hidden' }}>
+        <div id="ticker-inner" style={{ display: 'flex', whiteSpace: 'nowrap' }}>
+          {[...TICKER, ...TICKER].map((t, i) => (
+            <span key={i} style={{
+              fontSize: '0.66rem', fontWeight: i % 2 === 0 ? 600 : 400,
+              color: '#fff', padding: '0 22px',
+              letterSpacing: '0.07em',
+              borderRight: '1px solid rgba(255,255,255,0.28)',
+              opacity: i % 2 === 0 ? 1 : 0.8,
+              flexShrink: 0,
+            }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── NEW ARRIVALS ── */}
+      <section style={{ padding: '80px 40px', background: 'var(--bg)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '18px', paddingBottom: '12px', borderBottom: '2px solid var(--border)' }}>
+          <div>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '3px' }}>Just dropped</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--ink)' }}>
+              New <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>Arrivals</em>
+            </div>
+          </div>
+          <button onClick={() => navigate('/products')} style={{ fontSize: '0.72rem', color: 'var(--red)', fontWeight: 600, border: '1px solid var(--red)', borderRadius: '3px', padding: '6px 13px', background: '#fff', cursor: 'pointer' }}>
+            View all →
+          </button>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px' }}>
+          {(products.length === 0 ? [{},{},{},{}] : products.slice(0,4)).map((p, i) => (
+            <div key={p._id || i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
+              <div style={{ height: '130px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: '0.72rem', color: '#bbb' }}>
+                {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : 'Product photo'}
+                {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
+              </div>
+              <div style={{ padding: '11px 13px 13px' }}>
+                {(p.flavour || p.puffs) && (
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '5px' }}>
+                    {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((t,ti) => (
+                      <span key={ti} style={{ fontSize: '0.56rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '2px 6px', borderRadius: '2px' }}>{t}</span>
+                    ))}
+                  </div>
+                )}
+                <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '9px', lineHeight: 1.3 }}>{p.name || 'Product name'}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '9px', borderTop: '1px solid #f0f2f5' }}>
+                  <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price || '—'}</span>
+                  {p._id && (
+                    <button
+                      onClick={() => user ? navigate(`/order/${p._id}`) : navigate('/login')}
+                      style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
+                    >Add to cart</button>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          Everything below is UNCHANGED from your
-          original Home.jsx
-      ══════════════════════════════════════════ */}
-
-      {/* TICKER */}
-      <div style={{ overflow: 'hidden', padding: '12px 0', background: 'var(--navy)' }}>
-        <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'voltTicker 26s linear infinite', fontSize: '0.67rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-          {['Discreet delivery', 'eSewa · Khalti accepted', 'Same day dispatch · KTM', '20+ flavours in stock', 'Wholesale available', 'Track your order anytime',
-            'Discreet delivery', 'eSewa · Khalti accepted', 'Same day dispatch · KTM', '20+ flavours in stock', 'Wholesale available', 'Track your order anytime'
-          ].map((t, i) => (
-            <span key={i} style={{ padding: '0 28px', color: i % 2 === 0 ? 'rgba(255,255,255,.82)' : 'rgba(255,255,255,.38)', borderRight: '1px solid rgba(255,255,255,.1)', fontWeight: i % 2 === 0 ? 500 : 300 }}>{t}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* RECENTLY ADDED */}
-      <div style={{ padding: '88px 56px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', paddingBottom: '24px', borderBottom: '1px solid var(--border)' }}>
+      {/* ── TOP FLAVOURS ── */}
+      <section style={{ padding: '0 40px 80px', background: 'var(--bg)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '14px', paddingBottom: '12px', borderBottom: '2px solid var(--border)' }}>
           <div>
-            <div style={{ fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--light)', marginBottom: '8px', fontWeight: 500 }}>Just dropped</div>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 200, letterSpacing: '-0.02em', color: 'var(--ink)' }}>
-              Recently <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>added</i>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '3px' }}>Browse by taste</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--ink)' }}>
+              Top <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>Flavours</em>
             </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
-            <span style={{ fontSize: '0.7rem', color: 'var(--light)' }}>20+ flavours available</span>
-            <button className="btn btn-outline btn-sm" onClick={() => navigate('/products')}>View all →</button>
-          </div>
         </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '20px' }}>
-          {products.length === 0
-            ? bgs.map((bg, i) => (
-                <div key={i} style={{ borderRadius: '14px', overflow: 'hidden', background: '#fff', border: '1px solid var(--border)', height: '320px', opacity: 0.5 }}>
-                  <div style={{ height: '180px', background: bg }} />
-                </div>
-              ))
-            : products.map((p, i) => (
-                <div key={p._id}
-                  style={{ borderRadius: '14px', overflow: 'hidden', background: '#fff', border: '1px solid var(--border)', cursor: 'pointer', transition: 'all .3s cubic-bezier(.25,.8,.25,1)', display: 'flex', flexDirection: 'column' }}
-                  onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 20px 56px rgba(15,31,61,0.11)'; e.currentTarget.style.borderColor = 'transparent' }}
-                  onMouseOut={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = 'var(--border)' }}
-                >
-                  <div style={{ height: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: bgs[i % bgs.length], position: 'relative' }}>
-                    {p.image
-                      ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      : <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(255,255,255,0.7)', border: '1px dashed rgba(15,31,61,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>📦</div>
-                        </div>
-                    }
-                    {p.badge && (
-                      <div style={{ position: 'absolute', top: '14px', left: '14px', background: 'var(--navy)', color: '#fff', padding: '4px 12px', borderRadius: '100px', fontSize: '0.58rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 500 }}>
-                        {p.badge}
-                      </div>
-                    )}
-                  </div>
-                  <div style={{ padding: '20px 22px 24px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                    {(p.flavour || p.puffs || p.nicotine) && (
-                      <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
-                        {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((tag, ti) => (
-                          <span key={ti} style={{ fontSize: '0.6rem', color: 'var(--mid)', background: 'var(--soft)', padding: '3px 10px', borderRadius: '100px', border: '1px solid var(--border)' }}>{tag}</span>
-                        ))}
-                      </div>
-                    )}
-                    <div style={{ fontFamily: 'var(--serif)', fontSize: '1rem', fontWeight: 200, fontStyle: 'italic', lineHeight: 1.3, color: 'var(--ink)' }}>{p.name}</div>
-                    {p.description && <div style={{ fontSize: '0.74rem', color: 'var(--mid)', lineHeight: 1.6 }}>{p.description}</div>}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid var(--border)' }}>
-                      <span style={{ fontSize: '0.92rem', fontWeight: 600, color: 'var(--navy)' }}>Rs. {p.price}</span>
-                      <button
-                        onClick={() => handleOrder(p._id)}
-                        style={{ fontSize: '0.64rem', fontFamily: 'var(--sans)', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer', padding: '8px 18px', borderRadius: '100px', background: 'var(--navy)', color: '#fff', border: '1.5px solid var(--navy)', transition: 'all .18s' }}
-                        onMouseOver={e => e.currentTarget.style.background = 'var(--navy2)'}
-                        onMouseOut={e => e.currentTarget.style.background = 'var(--navy)'}
-                      >
-                        Order now
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-          }
-        </div>
-      </div>
-
-      {/* VIEW ALL BANNER */}
-      <div style={{ padding: '0 56px 88px' }}>
-        <div style={{ background: 'var(--navy)', borderRadius: '16px', padding: '40px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px' }}>
-          <div>
-            <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', fontWeight: 200, fontStyle: 'italic', color: '#fff', marginBottom: '6px' }}>See all flavours & devices</h3>
-            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)' }}>Strawberry, mango, watermelon, tobacco and more — all in one place.</p>
-          </div>
-          <button className="btn btn-white" onClick={() => navigate('/products')}>Browse all products →</button>
-        </div>
-      </div>
-
-      {/* WHOLESALE */}
-      <div style={{ padding: '0 56px 88px', borderTop: '1px solid var(--border)', paddingTop: '88px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', border: '1px solid var(--border)', borderRadius: '20px', overflow: 'hidden' }}>
-          <div style={{ background: 'var(--navy)', padding: '56px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div style={{ fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '16px', fontWeight: 500 }}>For businesses & resellers</div>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: '2.2rem', fontWeight: 200, color: '#fff', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '16px' }}>
-              Buy in bulk,<br /><i style={{ fontStyle: 'italic', fontWeight: 500 }}>save more.</i>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: '10px' }}>
+          {FLAVOURS.map(f => (
+            <div key={f.label}
+              onClick={() => navigate('/products')}
+              style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', textAlign: 'center', transition: 'border-color 0.18s' }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--red)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+            >
+              <div style={{ height: '120px', background: f.bg }} />
+              <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)' }}>{f.label}</div>
             </div>
-            <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, marginBottom: '32px', maxWidth: '320px' }}>
-              Running a shop? Stocking up for resale? We offer wholesale pricing on all products. Just reach out.
-            </p>
-            <button className="btn btn-white" style={{ width: 'fit-content' }} onClick={() => window.open('mailto:volt@gmail.com?subject=Wholesale Inquiry')}>
-              Get wholesale pricing →
-            </button>
-          </div>
-          <div style={{ background: '#fff', padding: '48px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '26px' }}>
-            {[
-              { icon: '📦', title: 'Bulk order discounts', desc: 'The more you order, the less you pay per unit. Tiered pricing on all products.' },
-              { icon: '🚚', title: 'Priority dispatch', desc: 'Wholesale orders get priority handling and same day dispatch before 2 PM.' },
-              { icon: '🤝', title: 'Dedicated support', desc: "A direct line to our team. We'll help you figure out what to stock and how much." },
-            ].map((perk, i) => (
-              <div key={i}>
-                {i > 0 && <div style={{ height: '1px', background: 'var(--border)', marginBottom: '26px' }} />}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'var(--soft)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>{perk.icon}</div>
-                  <div>
-                    <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' }}>{perk.title}</div>
-                    <div style={{ fontSize: '0.76rem', color: 'var(--mid)', lineHeight: 1.65 }}>{perk.desc}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* PAYMENT BAND */}
-      <div style={{ padding: '48px 56px', background: 'var(--soft)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px' }}>
-        <div>
-          <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 200, fontStyle: 'italic', marginBottom: '5px', color: 'var(--ink)' }}>Simple, discreet payments</h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--mid)' }}>Scan, pay, upload your screenshot. That's all we need.</p>
-        </div>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-          {['eSewa', 'Khalti', 'Bank transfer', 'Same day dispatch', 'Wholesale available'].map(tag => (
-            <div key={tag} style={{ padding: '9px 18px', borderRadius: '100px', border: '1.5px solid var(--border)', fontSize: '0.68rem', color: 'var(--mid)', letterSpacing: '0.06em', background: '#fff', fontWeight: 500 }}>{tag}</div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* TRUST */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', borderTop: '1px solid var(--border)' }}>
+      {/* ── ABOUT + CONTACT BANNERS ── */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '0 40px 80px', background: 'var(--bg)' }}>
         {[
-          { n: '01', title: '100% authentic products', desc: 'Every device we sell is genuine. No fakes, no knockoffs — we stand behind every product.' },
-          { n: '02', title: 'Discreet packaging', desc: 'All orders ship in plain, unmarked packaging. Your privacy is our priority.' },
-          { n: '03', title: 'Same day dispatch', desc: 'Order before 3 PM and we dispatch same day. Most Kathmandu orders arrive next day.' },
-        ].map((item, i) => (
+          {
+            bg: 'linear-gradient(135deg,#111827,#1a2744)',
+            tag: 'Our story',
+            h: 'Who is',
+            em: 'Volt Vapour?',
+            sub: 'Built in KTM out of frustration with fakes. Learn our story, mission and why authenticity is everything.',
+            cta: 'Read about us →',
+            cta2: 'Our values',
+            path: '/about',
+          },
+          {
+            bg: 'linear-gradient(135deg,#0f3460,#111827)',
+            tag: 'Get in touch',
+            h: 'Questions or',
+            em: 'Wholesale?',
+            sub: "We're a small team and we actually read every message. Orders, feedback, bulk pricing  just reach out.",
+            cta: 'Contact us →',
+            cta2: 'Wholesale pricing',
+            path: '/contact',
+          },
+        ].map((b, i) => (
           <div key={i}
-            style={{ padding: '52px 48px', borderRight: i < 2 ? '1px solid var(--border)' : 'none', background: 'var(--bg)', transition: 'background .2s' }}
-            onMouseOver={e => e.currentTarget.style.background = 'var(--soft)'}
-            onMouseOut={e => e.currentTarget.style.background = 'var(--bg)'}
+            onClick={() => navigate(b.path)}
+            style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg }}
+            onMouseEnter={e => e.currentTarget.querySelector('img') && (e.currentTarget.querySelector('img').style.transform = 'scale(1.05)')}
+            onMouseLeave={e => e.currentTarget.querySelector('img') && (e.currentTarget.querySelector('img').style.transform = 'scale(1)')}
           >
-            <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: '2.2rem', fontWeight: 200, color: 'var(--border)', marginBottom: '16px', lineHeight: 1 }}>{item.n}</div>
-            <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '8px' }}>{item.title}</div>
-            <div style={{ fontSize: '0.76rem', color: 'var(--mid)', lineHeight: 1.75 }}>{item.desc}</div>
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.97) 0%, rgba(10,14,22,.4) 60%, transparent 100%)' }} />
+            <div style={{ position: 'absolute', bottom: '22px', left: '24px', right: '24px', zIndex: 2 }}>
+              <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '7px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '13px', height: '1px', background: 'var(--red)' }} />
+                {b.tag}
+              </div>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '1.25rem', fontWeight: 700, color: '#fff', lineHeight: 1.2, marginBottom: '7px' }}>
+                {b.h} <em style={{ fontStyle: 'italic' }}>{b.em}</em>
+              </div>
+              <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, marginBottom: '12px', maxWidth: '260px' }}>{b.sub}</p>
+              <button style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '8px 16px', cursor: 'pointer' }}>{b.cta}</button>
+              <button style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.65)', background: 'transparent', border: '1px solid rgba(255,255,255,0.28)', borderRadius: '3px', padding: '8px 14px', cursor: 'pointer', marginLeft: '7px' }}>{b.cta2}</button>
+            </div>
           </div>
         ))}
-      </div>
+      </section>
 
-      {/* LOGIN CALLOUT */}
+      {/* ── WHOLESALE PROMO ── */}
+      <WholesalePromo navigate={navigate} />
+
+      {/* ── WHY VOLT — interactive trust cards ── */}
+      <WhyVolt navigate={navigate} />
+
+
+
+      {/* ── LOGIN CALLOUT ── */}
       {!user && (
-        <div style={{ padding: '48px 56px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
-          <div style={{ background: '#fff', border: '1.5px solid var(--border)', borderRadius: '14px', padding: '32px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '32px' }}>
+        <section style={{ background: 'var(--bg)', padding: '80px 40px' }}>
+          <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', padding: '22px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px' }}>
             <div>
-              <h4 style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', fontWeight: 200, fontStyle: 'italic', marginBottom: '6px', color: 'var(--ink)' }}>Have an account? Your orders are waiting.</h4>
-              <p style={{ fontSize: '0.8rem', color: 'var(--mid)', lineHeight: 1.6 }}>Log in to view order history, track all orders, and reorder your favourites in seconds.</p>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '4px' }}>
+                Track your orders & reorder <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>fast</em>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'var(--light)', lineHeight: 1.6 }}>Create an account to view order history, track deliveries, and check out faster.</p>
             </div>
-            <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
-              <button className="btn btn-outline" onClick={() => navigate('/login')}>Log in</button>
-              <button className="btn btn-navy" onClick={() => navigate('/signup')}>Create account</button>
+            <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+              <button onClick={() => navigate('/login')} style={{ fontSize: '0.72rem', fontWeight: 500, background: 'transparent', color: 'var(--light)', border: '1px solid var(--border)', borderRadius: '3px', padding: '9px 18px', cursor: 'pointer' }}>Log in</button>
+              <button onClick={() => navigate('/signup')} style={{ fontSize: '0.72rem', fontWeight: 700, background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '9px 18px', cursor: 'pointer' }}>Create account</button>
             </div>
           </div>
-        </div>
+        </section>
       )}
 
-      {/* FOOTER */}
-      <footer style={{ background: 'var(--navy)', padding: '68px 56px 32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '48px' }}>
-          <div>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 500, color: '#fff', marginBottom: '10px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-              VOLT <span style={{ fontStyle: 'italic', fontWeight: 200, textTransform: 'none', fontSize: '0.9rem', color: 'rgba(255,255,255,0.3)', marginLeft: '3px' }}>vapour</span>
-            </div>
-            <div style={{ fontSize: '0.77rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, maxWidth: '210px' }}>
-              Premium disposable vapes delivered discreetly across Nepal. Retail and wholesale available.
-            </div>
-          </div>
-          {[
-            { title: 'Shop', links: ['All products', 'Disposables', 'Pods', 'Flavours'] },
-            { title: 'Account', links: ['Log in', 'Sign up', 'My orders', 'Track order'] },
-            { title: 'Contact', links: ['volt@gmail.com', '+977 98XXXXXXXX', 'Kathmandu, Nepal', 'Instagram'] },
-          ].map(col => (
-            <div key={col.title}>
-              <div style={{ fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: '14px', fontWeight: 500 }}>{col.title}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
-                {col.links.map(link => (
-                  <span key={link} style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.75)', cursor: 'pointer', fontWeight: 300, transition: 'color .15s' }}
-                    onMouseOver={e => e.currentTarget.style.color = '#fff'}
-                    onMouseOut={e => e.currentTarget.style.color = 'rgba(255,255,255,0.75)'}
-                  >{link}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '22px', display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: 'rgba(255,255,255,0.4)' }}>
-          <span>© 2025 VOLT Vapour · Kathmandu, Nepal</span>
-          <span>Retail & Wholesale</span>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

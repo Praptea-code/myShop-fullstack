@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Account from './pages/Account'
 import Admin from './pages/Admin'
+import AboutUs from './pages/AboutUs'
+import ContactUs from './pages/Contactus'
 
 export const AuthContext = createContext(null)
 export function useAuth() { return useContext(AuthContext) }
@@ -29,13 +31,15 @@ export default function App() {
   const [token, setToken] = useState(() => localStorage.getItem('volt_token') || null)
 
   const login = (userData, tokenData) => {
-    setUser(userData); setToken(tokenData)
+    setUser(userData)
+    setToken(tokenData)
     localStorage.setItem('volt_user', JSON.stringify(userData))
     localStorage.setItem('volt_token', tokenData)
   }
 
   const logout = () => {
-    setUser(null); setToken(null)
+    setUser(null)
+    setToken(null)
     localStorage.removeItem('volt_user')
     localStorage.removeItem('volt_token')
   }
@@ -52,6 +56,8 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
           <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
