@@ -96,9 +96,7 @@ export default function App() {
               </div>
               <div style={{ fontSize: '0.65rem', color: 'var(--light)', lineHeight: 1.3 }}>{cartToast.name}</div>
             </div>
-            <a href="/cart" style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', borderRadius: '4px', padding: '6px 10px', textDecoration: 'none', flexShrink: 0, whiteSpace: 'nowrap' }}>
-              View cart
-            </a>
+          
           </div>
         )}
 
