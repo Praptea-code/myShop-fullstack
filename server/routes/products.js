@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
   res.json(products)
 })
 
+// ⚠️ /recent MUST come before /:id — otherwise Express treats "recent" as an _id param
 router.get('/recent', async (req, res) => {
   const products = await Product.find().sort({ createdAt: -1 }).limit(4)
   res.json(products)

@@ -46,18 +46,67 @@ export default function Products() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
 
-     
+      <style>{`
+        .prod-card {
+          background: #fff;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          overflow: hidden;
+          cursor: pointer;
+          transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+        }
+        .prod-card:hover {
+          box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+          transform: translateY(-4px);
+          border-color: #cdd1da;
+        }
+        .prod-card .pcard-img-inner {
+          transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .prod-card:hover .pcard-img-inner { transform: scale(1.06); }
+        .prod-card .pcard-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(10,14,22,0.22) 0%, transparent 55%);
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        .prod-card:hover .pcard-overlay { opacity: 1; }
+        .prod-card .pcard-quick {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          transform: translateX(-50%) translateY(10px);
+          opacity: 0;
+          transition: opacity 0.25s, transform 0.25s;
+          white-space: nowrap;
+          font-family: var(--sans);
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          background: #fff;
+          color: var(--ink);
+          border: none;
+          border-radius: 4px;
+          padding: 6px 13px;
+          cursor: pointer;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+          z-index: 3;
+        }
+        .prod-card:hover .pcard-quick { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .pcard-quick:hover { background: var(--red) !important; color: #fff !important; }
+      `}</style>
 
       <div style={{ padding: '32px 48px', display: 'grid', gridTemplateColumns: '260px 1fr', gap: '28px', alignItems: 'start' }}>
 
-        {/* Filter sidebar */}
+        {/* Filter sidebar — unchanged width */}
         <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '10px', padding: '24px', position: 'sticky', top: '80px' }}>
           <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '18px', paddingBottom: '14px', borderBottom: '1px solid #f0f2f5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             Filters
             <span style={{ fontSize: '0.62rem', color: 'var(--red)', cursor: 'pointer', fontWeight: 600 }} onClick={() => setFilters({ flavours:[], maxPrice:5000, puffs:[], nicotine:[] })}>Clear all</span>
           </div>
 
-          {/* Flavour */}
           <div style={{ marginBottom: '22px' }}>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Flavour</div>
             {['Strawberry','Mango','Blueberry','Menthol','Watermelon','Grape'].map(opt => (
@@ -68,7 +117,6 @@ export default function Products() {
             ))}
           </div>
 
-          {/* Price Range */}
           <div style={{ marginBottom: '22px' }}>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Price Range</div>
             <input type="range" min="500" max="5000" value={filters.maxPrice} onChange={e => setFilters(f => ({ ...f, maxPrice: Number(e.target.value) }))} style={{ width: '100%', accentColor: 'var(--red)', marginBottom: '8px' }} />
@@ -78,7 +126,6 @@ export default function Products() {
             </div>
           </div>
 
-          {/* Puffs */}
           <div style={{ marginBottom: '22px' }}>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Puffs</div>
             {['5000','6000','10000','12000'].map(opt => (
@@ -89,7 +136,6 @@ export default function Products() {
             ))}
           </div>
 
-          {/* Nicotine */}
           <div>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Nicotine</div>
             {['2%','5%'].map(opt => (
@@ -103,7 +149,6 @@ export default function Products() {
 
         {/* Products area */}
         <div>
-          {/* Toolbar */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <span style={{ fontSize: '0.75rem', color: '#888' }}>Showing {filtered.length} product{filtered.length !== 1 ? 's' : ''}</span>
             <div style={{ display: 'flex', gap: 0, alignItems: 'center' }}>
@@ -127,43 +172,50 @@ export default function Products() {
           {filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--light)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>No products match your filters.</div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
+            /* 4 columns, tighter gap so cards are narrower */
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
               {filtered.map((p, i) => (
-                <div key={p._id}
-                  onClick={() => navigate(`/products/${p._id}`)}
-                  style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', transition: 'box-shadow 0.18s' }}
-                  onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
-                  onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
-                >
-                  <div style={{ height: '155px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                    {p.image
-                      ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      : <span style={{ fontSize: '0.68rem', color: '#bbb' }}>Product photo</span>
-                    }
+                <div key={p._id} className="prod-card" onClick={() => navigate(`/products/${p._id}`)}>
+
+                  {/* Tall image — same height, card is just narrower */}
+                  <div style={{ height: '240px', background: CARD_BG[i % CARD_BG.length], position: 'relative', overflow: 'hidden' }}>
+                    <div className="pcard-img-inner" style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {p.image
+                        ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        : <span style={{ fontSize: '0.65rem', color: '#bbb' }}>Product photo</span>
+                      }
+                    </div>
+                    <div className="pcard-overlay" />
                     {p.badge && (
-                      <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>
+                      <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '3px', zIndex: 2 }}>{p.badge}</span>
                     )}
+                    <button
+                      className="pcard-quick"
+                      onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
+                    >+ Add to cart</button>
                   </div>
-                  <div style={{ padding: '12px 14px 14px' }}>
+
+                  {/* Compact info */}
+                  <div style={{ padding: '10px 11px 12px' }}>
                     {(p.flavour || p.puffs) && (
-                      <div style={{ display: 'flex', gap: '3px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                      <div style={{ display: 'flex', gap: '3px', flexWrap: 'wrap', marginBottom: '5px' }}>
                         {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((t, ti) => (
-                          <span key={ti} style={{ fontSize: '0.52rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '2px 5px', borderRadius: '2px' }}>{t}</span>
+                          <span key={ti} style={{ fontSize: '0.5rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '1px 5px', borderRadius: '2px' }}>{t}</span>
                         ))}
                       </div>
                     )}
-                    <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '4px', lineHeight: 1.35 }}>{p.name}</div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '3px', lineHeight: 1.3 }}>{p.name}</div>
                     {p.description && (
-                      <div style={{ fontSize: '0.64rem', color: 'var(--mid)', lineHeight: 1.5, marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.description}</div>
+                      <div style={{ fontSize: '0.6rem', color: 'var(--mid)', lineHeight: 1.5, marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.description}</div>
                     )}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid #f0f2f5' }}>
-                      <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price}</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '8px', borderTop: '1px solid #f0f2f5' }}>
+                      <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price}</span>
                       <button
-                        onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
-                        style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 10px', cursor: 'pointer', transition: 'background 0.18s', whiteSpace: 'nowrap' }}
-                        onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
-                        onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
-                      >Add to cart</button>
+                        onClick={e => { e.stopPropagation(); navigate(`/products/${p._id}`) }}
+                        style={{ fontSize: '0.56rem', fontWeight: 600, color: 'var(--mid)', background: 'transparent', border: '1px solid var(--border)', borderRadius: '3px', padding: '4px 8px', cursor: 'pointer', transition: 'all 0.15s' }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.color = 'var(--ink)' }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--mid)' }}
+                      >View</button>
                     </div>
                   </div>
                 </div>

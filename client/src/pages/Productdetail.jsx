@@ -111,7 +111,7 @@ export default function ProductDetail() {
 
             {/* Sold by */}
             <div style={{ fontSize: '0.78rem', color: 'var(--mid)', marginBottom: '16px' }}>
-              Sold by: <span style={{ color: 'var(--red)', fontWeight: 700 }}>Volt Vapour</span>
+              Sold by: <span style={{ color: 'var(--red)', fontWeight: 700 }}>Puff Diaries</span>
             </div>
 
             {/* Short description */}

@@ -26,14 +26,14 @@ const TIMELINE = [
   {
     year: '2023',
     title: 'Word got out.',
-    body: 'Started with a WhatsApp group. Then Instagram. Then orders from people we\'d never met, referred by people who trusted us. Launched same-day dispatch in KTM. Added 15 new flavours. Started supplying shops wholesale.',
+    body: 'Started with a WhatsApp group. Then Instagram. Then orders from people we\'d never met, referred by people who trusted us. Launched same-day dispatch in Dhangadhi. Added 15 new flavours. Started supplying shops wholesale.',
     highlight: 'Still answering every DM ourselves.',
   },
   {
     year: 'Today',
     title: 'Still the same rule.',
     body: 'Bigger catalogue, faster shipping, more payment options — but the rule hasn\'t changed. If we wouldn\'t use it ourselves, it doesn\'t go on the shelf. That\'s not a slogan. It\'s how we actually operate.',
-    highlight: 'KTM\'s most trusted vape shop.',
+    highlight: 'Nepal\'s most trusted vape shop.',
   },
 ]
 
@@ -372,7 +372,7 @@ export default function AboutUs() {
               Come see what all<br /><em style={{ fontStyle: 'italic', color: '#f9a8ac' }}>the fuss is about.</em>
             </div>
             <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.75, maxWidth: '400px' }}>
-              20+ authentic flavours. Same day dispatch in KTM. eSewa, Khalti, bank transfer. No account needed to browse.
+              20+ authentic flavours. Same day dispatch in Dhangadhi. eSewa, Khalti, bank transfer. No account needed to browse.
             </p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flexShrink: 0, position: 'relative', zIndex: 2 }}>

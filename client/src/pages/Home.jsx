@@ -288,8 +288,6 @@ function WholesalePromo({ navigate }) {
 }
 
 function Footer() {
-  const navigate = typeof window !== 'undefined' ? null : null
-
   const shopLinks = [
     { label: 'All Products', path: '/products' },
     { label: 'Disposables', path: '/products' },
@@ -329,7 +327,6 @@ function Footer() {
           </div>
         </div>
 
-        {/* Shop */}
         <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Shop</div>
           {shopLinks.map(l => (
@@ -341,7 +338,6 @@ function Footer() {
           ))}
         </div>
 
-        {/* Company */}
         <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Company</div>
           {companyLinks.map(l => (
@@ -353,7 +349,6 @@ function Footer() {
           ))}
         </div>
 
-        {/* Help */}
         <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', marginBottom: '11px' }}>Help</div>
           {helpItems.map(l => (
@@ -391,7 +386,7 @@ export default function Home() {
   const tickPos = useRef(0)
 
   useEffect(() => {
-    axios.get(`${API}/products/recent`).then(r => setProducts(r.data)).catch(() => {})
+    axios.get(`${API}/products`).then(r => setProducts(r.data.slice(0, 4))).catch(() => {})
   }, [])
 
   const goTo = (n) => {
@@ -432,6 +427,42 @@ export default function Home() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
+
+      {/* Global interaction styles */}
+      <style>{`
+        .prod-card { transition: box-shadow 0.28s, transform 0.28s; border-radius: 12px; overflow: hidden; }
+        .prod-card:hover { box-shadow: 0 14px 40px rgba(0,0,0,0.14); transform: translateY(-5px); }
+        .prod-card:hover .prod-img { transform: scale(1.07); }
+        .prod-img { transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); width: 100%; height: 100%; object-fit: cover; }
+        .prod-overlay-btn {
+          position: absolute; bottom: 12px; right: 12px;
+          font-size: 0.58rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+          background: var(--ink); color: #fff; border: none; border-radius: 4px;
+          padding: 7px 12px; cursor: pointer; z-index: 2;
+          opacity: 0; transform: translateY(6px);
+          transition: opacity 0.22s, transform 0.22s, background 0.18s;
+        }
+        .prod-card:hover .prod-overlay-btn { opacity: 1; transform: translateY(0); }
+        .prod-overlay-btn:hover { background: var(--red) !important; }
+
+        .flavour-card { transition: box-shadow 0.28s, transform 0.28s, border-color 0.22s; border-radius: 12px; overflow: hidden; }
+        .flavour-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.14); transform: translateY(-6px); border-color: var(--red) !important; }
+        .flavour-card:hover .flavour-img { transform: scale(1.08); }
+        .flavour-img { transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); width: 100%; height: 100%; object-fit: cover; }
+
+        .banner-card { transition: box-shadow 0.35s; border-radius: 12px; overflow: hidden; }
+        .banner-card:hover { box-shadow: 0 24px 64px rgba(0,0,0,0.38); }
+        .banner-card:hover .banner-bg-img { transform: scale(1.06); }
+        .banner-bg-img { transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); position: absolute; inset: 0; background-size: cover; background-position: center; }
+        .banner-card:hover .banner-overlay { background: linear-gradient(to top, rgba(10,14,22,1) 0%, rgba(10,14,22,0.6) 50%, rgba(10,14,22,0.2) 100%) !important; }
+        .banner-overlay { transition: background 0.4s; }
+        .banner-cta { transition: background 0.18s, transform 0.15s; }
+        .banner-cta:hover { background: var(--red-dark) !important; transform: translateX(3px); }
+        .banner-outline { transition: all 0.18s; }
+        .banner-outline:hover { background: rgba(255,255,255,0.12) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important; }
+        .banner-card:hover .banner-tag { letter-spacing: 0.22em; }
+        .banner-tag { transition: letter-spacing 0.35s; }
+      `}</style>
 
       {/* ── HERO ── */}
       <section style={{ position: 'relative', height: '760px', overflow: 'hidden', display: 'flex' }}>
@@ -557,7 +588,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── NEW ARRIVALS ── */}
+      {/* ── NEW ARRIVALS — tall cards ── */}
       <section style={{ padding: '80px 40px', background: 'var(--bg)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '18px', paddingBottom: '12px', borderBottom: '2px solid var(--border)' }}>
           <div>
@@ -570,35 +601,42 @@ export default function Home() {
             View all →
           </button>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px' }}>
           {(products.length === 0 ? [{},{},{},{}] : products.slice(0,4)).map((p, i) => (
-            <div key={p._id || i} onClick={() => p._id && navigate(`/products/${p._id}`)} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: p._id ? 'pointer' : 'default', transition: 'box-shadow 0.18s' }}
-              onMouseEnter={e => { if (p._id) e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)' }}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+            <div
+              key={p._id || i}
+              className="prod-card"
+              onClick={() => p._id && navigate(`/products/${p._id}`)}
+              style={{ background: '#fff', border: '1px solid var(--border)', cursor: p._id ? 'pointer' : 'default' }}
             >
-              <div style={{ height: '220px', background: CARD_BG[i % CARD_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: '0.72rem', color: '#bbb' }}>
-                {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : 'Product photo'}
-                {p.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '2px' }}>{p.badge}</span>}
+              {/* Tall image — same height, card just narrower from 4-col tighter gap */}
+              <div style={{ height: '240px', background: CARD_BG[i % CARD_BG.length], position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', color: '#bbb' }}>
+                {p.image
+                  ? <img src={p.image} alt={p.name} className="prod-img" />
+                  : <span style={{ display: 'block' }}>Product photo</span>
+                }
+                {p.badge && (
+                  <span style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--red)', color: '#fff', fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: '3px', zIndex: 2 }}>{p.badge}</span>
+                )}
+                {p._id && (
+                  <button
+                    className="prod-overlay-btn"
+                    onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
+                  >+ Add to cart</button>
+                )}
               </div>
-              <div style={{ padding: '11px 13px 13px' }}>
+              <div style={{ padding: '10px 11px 12px' }}>
                 {(p.flavour || p.puffs) && (
-                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '5px' }}>
+                  <div style={{ display: 'flex', gap: '3px', flexWrap: 'wrap', marginBottom: '5px' }}>
                     {[p.flavour, p.puffs, p.nicotine].filter(Boolean).map((t,ti) => (
-                      <span key={ti} style={{ fontSize: '0.56rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '2px 6px', borderRadius: '2px' }}>{t}</span>
+                      <span key={ti} style={{ fontSize: '0.5rem', color: '#888', background: 'var(--soft)', border: '1px solid var(--border)', padding: '1px 5px', borderRadius: '2px' }}>{t}</span>
                     ))}
                   </div>
                 )}
-                <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '9px', lineHeight: 1.3 }}>{p.name || 'Product name'}</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '9px', borderTop: '1px solid #f0f2f5' }}>
-                  <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price || '—'}</span>
-                  {p._id && (
-                    <button
-                      onClick={e => { e.stopPropagation(); user ? addToCart(p) : navigate('/login') }}
-                      style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--ink)', color: '#fff', border: 'none', borderRadius: '3px', padding: '6px 13px', cursor: 'pointer', transition: 'background 0.18s' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'var(--red)'}
-                      onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}
-                    >Add to cart</button>
-                  )}
+                <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '8px', lineHeight: 1.35 }}>{p.name || 'Product name'}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '8px', borderTop: '1px solid #f0f2f5' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {p.price || '—'}</span>
+                  {p._id && <span style={{ fontSize: '0.58rem', color: 'var(--red)', fontWeight: 600 }}>View →</span>}
                 </div>
               </div>
             </div>
@@ -606,7 +644,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TOP FLAVOURS ── */}
+      {/* ── TOP FLAVOURS — 8 small cards in a row ── */}
       <section style={{ padding: '0 40px 80px', background: 'var(--bg)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '14px', paddingBottom: '12px', borderBottom: '2px solid var(--border)' }}>
           <div>
@@ -618,27 +656,24 @@ export default function Home() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: '10px' }}>
           {FLAVOURS.map(f => (
-            <div key={f.label}
-              onClick={() => navigate('/products')}
-              style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', textAlign: 'center', transition: 'border-color 0.18s' }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--red)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+            <div key={f.label} className="flavour-card" onClick={() => navigate('/products')}
+              style={{ background: '#fff', border: '1px solid var(--border)', cursor: 'pointer' }}
             >
               <div style={{ height: '160px', background: f.bg, overflow: 'hidden' }}>
-                {f.img && <img src={f.img} alt={f.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                {f.img && <img src={f.img} alt={f.label} className="flavour-img" />}
               </div>
-              <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)' }}>{f.label}</div>
+              <div style={{ padding: '12px 4px', fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink)', textAlign: 'center' }}>{f.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── ABOUT + CONTACT BANNERS ── */}
+      {/* ── ABOUT + CONTACT BANNERS — interactive ── */}
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', padding: '0 40px 80px', background: 'var(--bg)' }}>
         {[
           {
-            bg: 'linear-gradient(135deg,#111827,#1a2744)',
             bgImg: '/vapebg1.jpg',
+            fallbackBg: 'linear-gradient(135deg,#111827,#1a2744)',
             tag: 'Our story',
             h: 'Who is',
             em: 'Puff Diaries?',
@@ -648,8 +683,8 @@ export default function Home() {
             path: '/about',
           },
           {
-            bg: 'linear-gradient(135deg,#0f3460,#111827)',
             bgImg: '/vapebg2.jpg',
+            fallbackBg: 'linear-gradient(135deg,#0f3460,#111827)',
             tag: 'Get in touch',
             h: 'Questions or',
             em: 'Wholesale?',
@@ -659,22 +694,47 @@ export default function Home() {
             path: '/contact',
           },
         ].map((b, i) => (
-          <div key={i}
+          <div
+            key={i}
+            className="banner-card"
             onClick={() => navigate(b.path)}
-            style={{ borderRadius: '10px', overflow: 'hidden', height: '420px', position: 'relative', cursor: 'pointer', background: b.bg, backgroundImage: `url(${b.bgImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            style={{ height: '440px', position: 'relative', cursor: 'pointer', background: b.fallbackBg }}
           >
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.97) 0%, rgba(10,14,22,.4) 60%, transparent 100%)' }} />
-            <div style={{ position: 'absolute', bottom: '22px', left: '24px', right: '24px', zIndex: 2 }}>
-              <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '7px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '13px', height: '1px', background: 'var(--red)' }} />
+            {/* BG image layer — zooms on hover via CSS class */}
+            <div
+              className="banner-bg-img"
+              style={{ backgroundImage: `url(${b.bgImg})` }}
+            />
+            {/* Dark overlay */}
+            <div
+              className="banner-overlay"
+              style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.95) 0%, rgba(10,14,22,.38) 55%, transparent 100%)', zIndex: 1 }}
+            />
+            {/* Content */}
+            <div style={{ position: 'absolute', bottom: '28px', left: '28px', right: '28px', zIndex: 2 }}>
+              <div
+                className="banner-tag"
+                style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '9px', display: 'flex', alignItems: 'center', gap: '7px' }}
+              >
+                <span style={{ width: '14px', height: '1px', background: 'var(--red)', flexShrink: 0 }} />
                 {b.tag}
               </div>
-              <div style={{ fontFamily: 'var(--serif)', fontSize: '1.25rem', fontWeight: 700, color: '#fff', lineHeight: 1.2, marginBottom: '7px' }}>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', fontWeight: 700, color: '#fff', lineHeight: 1.18, marginBottom: '10px' }}>
                 {b.h} <em style={{ fontStyle: 'italic' }}>{b.em}</em>
               </div>
-              <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, marginBottom: '12px', maxWidth: '260px' }}>{b.sub}</p>
-              <button style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '8px 16px', cursor: 'pointer' }}>{b.cta}</button>
-              <button style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.65)', background: 'transparent', border: '1px solid rgba(255,255,255,0.28)', borderRadius: '3px', padding: '8px 14px', cursor: 'pointer', marginLeft: '7px' }}>{b.cta2}</button>
+              <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.56)', lineHeight: 1.7, marginBottom: '16px', maxWidth: '290px' }}>{b.sub}</p>
+              <div style={{ display: 'flex', gap: '9px', flexWrap: 'wrap' }}>
+                <button
+                  className="banner-cta"
+                  style={{ fontSize: '0.64rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '4px', padding: '10px 20px', cursor: 'pointer' }}
+                  onClick={e => { e.stopPropagation(); navigate(b.path) }}
+                >{b.cta}</button>
+                <button
+                  className="banner-outline"
+                  style={{ fontSize: '0.64rem', fontWeight: 500, color: 'rgba(255,255,255,0.62)', background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '4px', padding: '10px 16px', cursor: 'pointer' }}
+                  onClick={e => { e.stopPropagation(); navigate(b.path) }}
+                >{b.cta2}</button>
+              </div>
             </div>
           </div>
         ))}
@@ -683,7 +743,7 @@ export default function Home() {
       {/* ── WHOLESALE PROMO ── */}
       <WholesalePromo navigate={navigate} />
 
-      {/* ── WHY PUFF DIARIES — interactive trust cards ── */}
+      {/* ── WHY PUFF DIARIES ── */}
       <WhyVolt navigate={navigate} />
 
       {/* ── LOGIN CALLOUT ── */}
