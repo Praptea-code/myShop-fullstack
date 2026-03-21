@@ -423,7 +423,7 @@ export default function Home() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: '10px' }}>
           {FLAVOURS.map(f => (
-            <div key={f.label} className="flavour-card" onClick={() => navigate('/products')} style={{ background: '#fff', border: '1px solid var(--border)', cursor: 'pointer' }}>
+            <div key={f.label} className="flavour-card" onClick={() => navigate(`/products?flavour=${f.label}`)} style={{ background: '#fff', border: '1px solid var(--border)', cursor: 'pointer' }}>
               <div style={{ height: '160px', background: f.bg, overflow: 'hidden' }}>
                 {f.img && <img src={f.img} alt={f.label} className="flavour-img" />}
               </div>

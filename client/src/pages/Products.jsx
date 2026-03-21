@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
@@ -13,6 +15,13 @@ export default function Products() {
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('newest')
   const [filters, setFilters] = useState({ flavours: [], maxPrice: 5000, puffs: [], nicotine: [] })
+  const [searchParams] = useSearchParams()
+  useEffect(() => {
+    const flavour = searchParams.get('flavour')
+    if (flavour) {
+      setFilters(f => ({ ...f, flavours: [flavour] }))
+    }
+  }, [])
   const navigate = useNavigate()
   const { user } = useAuth()
   const { addToCart } = useCart()
@@ -80,7 +89,7 @@ export default function Products() {
           </div>
           <div style={{ marginBottom: '22px' }}>
             <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#aaa', marginBottom: '12px' }}>Puffs</div>
-            {['5000','6000','10000','12000'].map(opt => (
+            {['3k','5k','18k','25k','30k','35k'].map(opt => (
               <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.78rem', color: '#555', marginBottom: '10px', cursor: 'pointer' }}>
                 <input type="checkbox" checked={filters.puffs.includes(opt)} onChange={() => toggleFilter('puffs', opt)} style={{ accentColor: 'var(--red)', width: '14px', height: '14px' }} />
                 {opt} puffs
