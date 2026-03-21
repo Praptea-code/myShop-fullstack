@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
 import { useAuth } from '../App'
+import API_BASE from '../api'
 
 export default function OrderForm() {
   const { productId } = useParams()
@@ -16,7 +17,7 @@ export default function OrderForm() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/${productId}`).then(res => setProduct(res.data))
+    axios.get(`${API_BASE}/api/products/${productId}`).then(res => setProduct(res.data))
   }, [productId])
 
   const handleFile = (e) => {
@@ -35,7 +36,7 @@ export default function OrderForm() {
     Object.entries(form).forEach(([k, v]) => data.append(k, v))
     data.append('product', productId)
     data.append('screenshot', screenshot)
-    await axios.post('http://localhost:5000/api/orders', data, {
+    await axios.post(`${API_BASE}/api/orders`, data, {
       headers: { Authorization: `Bearer ${token}` }
     })
     setSubmitted(true)
@@ -69,34 +70,27 @@ export default function OrderForm() {
           </div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: '1.2rem', fontWeight: 600, color: 'var(--navy)' }}>Rs. {product.price}</div>
         </div>
-
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
           <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--light)', fontWeight: 500 }}>Your details</div>
           <input style={inp} placeholder="Full name" value={form.customerName} onChange={e => setForm({...form, customerName: e.target.value})} />
           <input style={inp} placeholder="Phone number" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
           <input style={inp} placeholder="Delivery address" value={form.address} onChange={e => setForm({...form, address: e.target.value})} />
         </div>
-
         <div style={{ background: 'var(--soft)', border: '1px solid var(--border)', borderRadius: '14px', padding: '28px', textAlign: 'center', marginBottom: '22px' }}>
           <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--light)', marginBottom: '14px', fontWeight: 500 }}>Scan & pay</div>
-          {/* Replace div below with: <img src="/qr.png" style={{width:'180px',borderRadius:'12px'}} /> */}
           <div style={{ width: '180px', height: '180px', background: 'var(--border)', borderRadius: '10px', margin: '0 auto 14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--light)', fontSize: '0.78rem' }}>Your QR here</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', color: 'var(--navy)', fontWeight: 600 }}>Rs. {product.price}</div>
           <div style={{ fontSize: '0.72rem', color: 'var(--light)', marginTop: '5px' }}>eSewa · Khalti · Bank transfer</div>
         </div>
-
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--light)', marginBottom: '10px', fontWeight: 500 }}>Upload payment screenshot</div>
           <label style={{ display: 'block', background: 'var(--soft)', border: `1.5px dashed ${preview ? 'var(--navy)' : 'var(--border)'}`, borderRadius: '12px', padding: '28px', textAlign: 'center', cursor: 'pointer' }}>
             <input type="file" accept="image/*" onChange={handleFile} style={{ display: 'none' }} />
-            {preview
-              ? <img src={preview} alt="preview" style={{ maxHeight: '160px', borderRadius: '8px', objectFit: 'contain' }} />
-              : <><div style={{ fontSize: '1.4rem', marginBottom: '6px', color: 'var(--mid)' }}>↑</div><div style={{ fontSize: '0.8rem', color: 'var(--mid)' }}>Click to upload screenshot</div></>
-            }
+            {preview ? <img src={preview} alt="preview" style={{ maxHeight: '160px', borderRadius: '8px', objectFit: 'contain' }} />
+              : <><div style={{ fontSize: '1.4rem', marginBottom: '6px', color: 'var(--mid)' }}>↑</div><div style={{ fontSize: '0.8rem', color: 'var(--mid)' }}>Click to upload screenshot</div></>}
           </label>
         </div>
-
-        <button onClick={handleSubmit} disabled={loading} className={`btn btn-navy`} style={{ width: '100%', justifyContent: 'center', padding: '16px', opacity: loading ? 0.7 : 1 }}>
+        <button onClick={handleSubmit} disabled={loading} className="btn btn-navy" style={{ width: '100%', justifyContent: 'center', padding: '16px', opacity: loading ? 0.7 : 1 }}>
           {loading ? 'Submitting...' : 'Place order'}
         </button>
       </div>

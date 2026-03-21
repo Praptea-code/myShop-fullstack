@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useAuth } from '../App'
 import Navbar from '../components/Navbar'
+import API_BASE from '../api'
 
 export default function Login() {
   const [identifier, setIdentifier] = useState('')
@@ -16,7 +17,7 @@ export default function Login() {
     e.preventDefault()
     setLoading(true); setError('')
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { identifier, password })
+      const res = await axios.post(`${API_BASE}/api/auth/login`, { identifier, password })
       login(res.data.user, res.data.token)
       navigate('/')
     } catch (err) {

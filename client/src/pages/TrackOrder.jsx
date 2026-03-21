@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
+import API_BASE from '../api'
 
 const STATUSES = ['pending', 'verified', 'dispatched', 'delivered']
 const LABELS = { pending: 'Order placed', verified: 'Verified', dispatched: 'Dispatched', delivered: 'Delivered' }
@@ -16,7 +17,7 @@ export default function TrackOrder() {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await axios.get(`http://localhost:5000/api/orders/track?identifier=${encodeURIComponent(identifier)}`)
+      const res = await axios.get(`${API_BASE}/api/orders/track?identifier=${encodeURIComponent(identifier)}`)
       setOrders(res.data)
     } catch { setOrders([]) }
     setSearched(true); setLoading(false)
@@ -31,22 +32,16 @@ export default function TrackOrder() {
           <h1 style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 200, marginBottom: '10px', color: 'var(--ink)' }}>
             Track your <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>order</i>
           </h1>
-          <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px', lineHeight: 1.7 }}>
-            Enter your phone number or email to see the live status of your delivery.
-          </p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px', lineHeight: 1.7 }}>Enter your phone number or email to see the live status of your delivery.</p>
           <form onSubmit={track} style={{ display: 'flex', border: '1.5px solid var(--border)', borderRadius: '100px', overflow: 'hidden', background: '#fff', marginBottom: '48px', boxShadow: '0 4px 20px rgba(15,31,61,0.07)' }}>
-            <input
-              value={identifier} onChange={e => setIdentifier(e.target.value)}
-              placeholder="Phone number or email address"
-              style={{ flex: 1, padding: '14px 24px', border: 'none', outline: 'none', fontSize: '0.85rem', color: 'var(--ink)', background: 'transparent' }}
-            />
+            <input value={identifier} onChange={e => setIdentifier(e.target.value)} placeholder="Phone number or email address"
+              style={{ flex: 1, padding: '14px 24px', border: 'none', outline: 'none', fontSize: '0.85rem', color: 'var(--ink)', background: 'transparent' }} />
             <button type="submit" disabled={loading} style={{ background: 'var(--navy)', color: '#fff', border: 'none', padding: '10px 26px', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', borderRadius: '100px', margin: '4px' }}>
               {loading ? '...' : 'Track →'}
             </button>
           </form>
         </div>
       </div>
-
       {searched && (
         <div style={{ padding: '56px', maxWidth: '800px', margin: '0 auto' }}>
           {orders.length === 0 ? (
@@ -64,7 +59,6 @@ export default function TrackOrder() {
                       </div>
                       <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--navy)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{order.status}</div>
                     </div>
-                    {/* Timeline */}
                     <div style={{ display: 'flex', position: 'relative' }}>
                       <div style={{ position: 'absolute', top: '19px', left: '12.5%', right: '12.5%', height: '1.5px', background: 'var(--border)' }} />
                       {STATUSES.map((s, i) => (

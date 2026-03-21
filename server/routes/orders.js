@@ -4,10 +4,9 @@ const auth = require('../middleware/auth')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
 
-// ✅ Use memory storage — Vercel filesystem is read-only
+// ✅ Memory storage — Vercel filesystem is read-only
 const upload = multer({ storage: multer.memoryStorage() })
 
-// Helper: upload buffer directly to Cloudinary (no temp file needed)
 function uploadToCloudinary(buffer) {
   return new Promise((resolve, reject) => {
     cloudinary.uploader
@@ -51,7 +50,6 @@ router.post('/', auth, upload.single('screenshot'), async (req, res) => {
   try {
     let screenshotUrl = ''
     if (req.file) {
-      // ✅ Upload from buffer, no disk file to delete
       const result = await uploadToCloudinary(req.file.buffer)
       screenshotUrl = result.secure_url
     }

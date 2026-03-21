@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useAuth } from '../App'
 import Navbar from '../components/Navbar'
+import API_BASE from '../api'
 
 export default function Admin() {
   const { token } = useAuth()
@@ -15,25 +16,25 @@ export default function Admin() {
   const headers = { Authorization: `Bearer ${token}` }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/orders', { headers }).then(res => setOrders(res.data)).catch(() => navigate('/'))
-    axios.get('http://localhost:5000/api/products').then(res => setProducts(res.data))
+    axios.get(`${API_BASE}/api/orders`, { headers }).then(res => setOrders(res.data)).catch(() => navigate('/'))
+    axios.get(`${API_BASE}/api/products`).then(res => setProducts(res.data))
   }, [])
 
   const updateStatus = async (id, status) => {
-    await axios.patch(`http://localhost:5000/api/orders/${id}`, { status }, { headers })
+    await axios.patch(`${API_BASE}/api/orders/${id}`, { status }, { headers })
     setOrders(orders.map(o => o._id === id ? { ...o, status } : o))
   }
 
   const addProduct = async () => {
     if (!newProduct.name || !newProduct.price) return alert('Name and price required')
-    const res = await axios.post('http://localhost:5000/api/products', newProduct, { headers })
+    const res = await axios.post(`${API_BASE}/api/products`, newProduct, { headers })
     setProducts([...products, res.data])
     setNewProduct({ name: '', description: '', price: '', image: '', flavour: '', puffs: '', nicotine: '', badge: '' })
   }
 
   const deleteProduct = async (id) => {
     if (!confirm('Delete this product?')) return
-    await axios.delete(`http://localhost:5000/api/products/${id}`, { headers })
+    await axios.delete(`${API_BASE}/api/products/${id}`, { headers })
     setProducts(products.filter(p => p._id !== id))
   }
 
@@ -74,9 +75,9 @@ export default function Admin() {
                     <span style={{ background: statusBgs[o.status] || '#f3f4f6', color: statusColors[o.status] || '#6b7280', padding: '4px 12px', borderRadius: '100px', fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>{o.status}</span>
                     {o.paymentScreenshot && <a href={o.paymentScreenshot} target="_blank" rel="noreferrer" style={{ fontSize: '0.75rem', color: 'var(--navy)', textDecoration: 'underline' }}>View screenshot</a>}
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      {o.status === 'pending' && <button className="btn btn-sm" onClick={() => updateStatus(o._id, 'verified')} style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #86efac', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px' }}>Verify ✓</button>}
-                      {o.status === 'verified' && <button className="btn btn-sm" onClick={() => updateStatus(o._id, 'dispatched')} style={{ background: '#dbeafe', color: '#1d4ed8', border: '1px solid #93c5fd', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px' }}>Mark dispatched</button>}
-                      {o.status === 'dispatched' && <button className="btn btn-sm" onClick={() => updateStatus(o._id, 'delivered')} style={{ background: 'var(--soft)', color: 'var(--mid)', border: '1px solid var(--border)', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px' }}>Mark delivered</button>}
+                      {o.status === 'pending' && <button onClick={() => updateStatus(o._id, 'verified')} style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #86efac', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px', cursor: 'pointer' }}>Verify ✓</button>}
+                      {o.status === 'verified' && <button onClick={() => updateStatus(o._id, 'dispatched')} style={{ background: '#dbeafe', color: '#1d4ed8', border: '1px solid #93c5fd', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px', cursor: 'pointer' }}>Mark dispatched</button>}
+                      {o.status === 'dispatched' && <button onClick={() => updateStatus(o._id, 'delivered')} style={{ background: 'var(--soft)', color: 'var(--mid)', border: '1px solid var(--border)', borderRadius: '100px', fontSize: '0.67rem', padding: '6px 14px', cursor: 'pointer' }}>Mark delivered</button>}
                     </div>
                   </div>
                 </div>
