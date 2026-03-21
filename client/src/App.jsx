@@ -27,6 +27,7 @@ function AdminRoute({ children }) {
   return user?.isAdmin ? children : <Navigate to="/" />
 }
 
+
 export default function App() {
   const [user, setUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem('volt_user')) } catch { return null }
