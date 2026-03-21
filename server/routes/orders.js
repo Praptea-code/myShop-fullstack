@@ -3,9 +3,21 @@ const Order = require('../models/Order')
 const auth = require('../middleware/auth')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
-const fs = require('fs')
 
-const upload = multer({ dest: 'uploads/' })
+// ✅ Use memory storage — Vercel filesystem is read-only
+const upload = multer({ storage: multer.memoryStorage() })
+
+// Helper: upload buffer directly to Cloudinary (no temp file needed)
+function uploadToCloudinary(buffer) {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({ resource_type: 'image', folder: 'puffdiaries' }, (error, result) => {
+        if (error) reject(error)
+        else resolve(result)
+      })
+      .end(buffer)
+  })
+}
 
 // public: track by phone or email
 router.get('/track', async (req, res) => {
@@ -39,9 +51,9 @@ router.post('/', auth, upload.single('screenshot'), async (req, res) => {
   try {
     let screenshotUrl = ''
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path)
+      // ✅ Upload from buffer, no disk file to delete
+      const result = await uploadToCloudinary(req.file.buffer)
       screenshotUrl = result.secure_url
-      fs.unlinkSync(req.file.path)
     }
     const order = await Order.create({
       ...req.body,

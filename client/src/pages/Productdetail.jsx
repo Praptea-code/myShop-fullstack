@@ -56,7 +56,7 @@ export default function ProductDetail() {
     <div style={{ minHeight: '100vh', background: '#fff' }}>
       <Navbar />
 
-      <div style={{ padding: '16px 32px 80px' }}>
+      <div style={{ padding: '16px 120px 80px' }}>
 
         {/* Back button */}
         <button
@@ -69,109 +69,121 @@ export default function ProductDetail() {
           Back to products
         </button>
 
-        {/* ── MAIN PRODUCT LAYOUT ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '52px', alignItems: 'start' }}>
+        <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden', marginBottom: '52px', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
-          {/* LEFT — image */}
-          <div style={{ background: bgColor, borderRadius: '12px', border: '1px solid var(--border)', height: '460px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-            {product.badge && (
-              <span style={{ position: 'absolute', top: '16px', left: '16px', background: 'var(--red)', color: '#fff', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '5px 10px', borderRadius: '3px', zIndex: 2 }}>{product.badge}</span>
-            )}
-            {product.image
-              ? <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '32px' }} />
-              : (
-                <div style={{ textAlign: 'center' }}>
-                  <svg width="72" height="72" viewBox="0 0 24 24" fill="rgba(0,0,0,0.08)"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                  <div style={{ fontSize: '0.72rem', color: 'rgba(0,0,0,0.2)', marginTop: '12px' }}>No image available</div>
-                </div>
-              )
-            }
-          </div>
-
-          {/* RIGHT — info */}
-          <div style={{ paddingTop: '8px' }}>
-
-            <h1 style={{ fontSize: '1.55rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.25, marginBottom: '10px' }}>{product.name}</h1>
-
-            {/* Tags */}
-            {(product.flavour || product.puffs || product.nicotine) && (
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '18px' }}>
-                {[product.flavour, product.puffs, product.nicotine].filter(Boolean).map((t, i) => (
-                  <span key={i} style={{ fontSize: '0.7rem', color: 'var(--red)', fontWeight: 700 }}>{t}</span>
-                ))}
-              </div>
-            )}
-
-            {/* Price */}
-            <div style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '18px', letterSpacing: '-0.01em' }}>
-              Rs {product.price?.toLocaleString()}.00
-            </div>
-
-            <div style={{ height: '1px', background: 'var(--border)', marginBottom: '18px' }} />
-
-            {/* Sold by */}
-            <div style={{ fontSize: '0.78rem', color: 'var(--mid)', marginBottom: '16px' }}>
-              Sold by: <span style={{ color: 'var(--red)', fontWeight: 700 }}>Puff Diaries</span>
-            </div>
-
-            {/* Short description */}
-            {product.description && (
-              <p style={{ fontSize: '0.82rem', color: '#555', lineHeight: 1.85, marginBottom: '24px' }}>
-                {product.description}
-              </p>
-            )}
-
-            <div style={{ height: '1px', background: 'var(--border)', marginBottom: '24px' }} />
-
-            {/* Qty + buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              {/* Qty stepper */}
-              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border)', borderRadius: '6px', overflow: 'hidden', flexShrink: 0 }}>
-                <button
-                  onClick={() => setQty(q => Math.max(1, q - 1))}
-                  style={{ width: '40px', height: '50px', background: '#fff', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--mid)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.15s' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'var(--soft)'}
-                  onMouseLeave={e => e.currentTarget.style.background = '#fff'}
-                >−</button>
-                <div style={{ width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', fontWeight: 700, color: 'var(--ink)', borderLeft: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}>
-                  {qty}
-                </div>
-                <button
-                  onClick={() => setQty(q => q + 1)}
-                  style={{ width: '40px', height: '50px', background: '#fff', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--mid)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.15s' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'var(--soft)'}
-                  onMouseLeave={e => e.currentTarget.style.background = '#fff'}
-                >+</button>
-              </div>
-
-              {/* Add to cart */}
-              <button
-                onClick={handleAddToCart}
-                style={{ flex: 1, height: '50px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: added ? '#15803d' : 'var(--ink)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'background 0.2s' }}
-                onMouseEnter={e => { if (!added) e.currentTarget.style.background = '#2d3748' }}
-                onMouseLeave={e => { if (!added) e.currentTarget.style.background = added ? '#15803d' : 'var(--ink)' }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-14.83-3h14.83l1.68-8H5.21L4.17 3H1v2h2l3.6 7.59L5.25 15c-.16.28-.25.61-.25.96C5 17.1 5.9 18 7 18h13v-2H7.42c-.13 0-.25-.11-.25-.25l.03-.12.9-1.63z"/></svg>
-                {added ? '✓ Added!' : 'Add to cart'}
-              </button>
-
-              {/* Buy now */}
-              <button
-                onClick={handleOrderNow}
-                style={{ flex: 1, height: '50px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', transition: 'background 0.18s' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--red-dark)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'var(--red)'}
-              >Buy Now</button>
-            </div>
-
-            {/* Payment methods */}
-            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px' }}>
-              {['eSewa', 'Khalti', 'Bank Transfer'].map(p => (
-                <span key={p} style={{ fontSize: '0.6rem', fontWeight: 600, color: 'var(--light)', background: 'var(--soft)', border: '1px solid var(--border)', padding: '3px 9px', borderRadius: '3px' }}>{p}</span>
-              ))}
-            </div>
-          </div>
+  {/* LEFT — image */}
+  <div style={{ width: '100%', aspectRatio: '1 / 1', background: bgColor, position: 'relative', overflow: 'hidden', cursor: 'zoom-in' }}
+    onMouseMove={e => {
+      const rect = e.currentTarget.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width) * 100
+      const y = ((e.clientY - rect.top) / rect.height) * 100
+      const img = e.currentTarget.querySelector('img')
+      if (img) { img.style.transformOrigin = `${x}% ${y}%`; img.style.transform = 'scale(1.5)' }
+    }}
+    onMouseLeave={e => {
+      const img = e.currentTarget.querySelector('img')
+      if (img) { img.style.transform = 'scale(1)'; img.style.transformOrigin = 'center center' }
+    }}
+  >
+    {product.badge && (
+      <span style={{ position: 'absolute', top: '16px', left: '16px', background: 'var(--red)', color: '#fff', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '5px 10px', borderRadius: '3px', zIndex: 2 }}>{product.badge}</span>
+    )}
+    {product.image
+      ? <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, transition: 'transform 0.25s ease' }} />
+      : (
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="rgba(0,0,0,0.08)"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <div style={{ fontSize: '0.72rem', color: 'rgba(0,0,0,0.2)', marginTop: '12px' }}>No image available</div>
         </div>
+      )
+    }
+  </div>
+
+  {/* RIGHT — info */}
+  <div style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '20px', borderLeft: '1px solid var(--border)' }}>
+
+    <div>
+      <h1 style={{ fontSize: '1.55rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.25, marginBottom: '10px' }}>{product.name}</h1>
+      {(product.flavour || product.puffs || product.nicotine) && (
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          {[product.flavour, product.puffs, product.nicotine].filter(Boolean).map((t, i) => (
+            <span key={i} style={{ fontSize: '0.7rem', color: 'var(--red)', fontWeight: 700 }}>{t}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
+      Rs {product.price?.toLocaleString()}.00
+    </div>
+
+    <div style={{ height: '1px', background: 'var(--border)' }} />
+
+    <div style={{ fontSize: '0.78rem', color: 'var(--mid)' }}>
+      Sold by: <span style={{ color: 'var(--red)', fontWeight: 700 }}>Puff Diaries</span>
+    </div>
+
+    {product.description && (
+      <p style={{ fontSize: '0.82rem', color: '#555', lineHeight: 1.85 }}>{product.description}</p>
+    )}
+
+    {/* Key specs */}
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+      {[
+        { label: 'Puffs', value: product.puffs },
+        { label: 'Nicotine', value: product.nicotine },
+        { label: 'Flavour', value: product.flavour },
+      ].filter(s => s.value).map((s, i) => (
+        <div key={i} style={{ background: 'var(--soft)', border: '1px solid var(--border)', borderRadius: '8px', padding: '12px 14px' }}>
+          <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--light)', marginBottom: '4px' }}>{s.label}</div>
+          <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--ink)' }}>{s.value}</div>
+        </div>
+      ))}
+    </div>
+
+    <div style={{ height: '1px', background: 'var(--border)' }} />
+
+    {/* Qty + buttons */}
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border)', borderRadius: '6px', overflow: 'hidden', flexShrink: 0 }}>
+        <button onClick={() => setQty(q => Math.max(1, q - 1))}
+          style={{ width: '40px', height: '50px', background: '#fff', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--mid)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.15s' }}
+          onMouseEnter={e => e.currentTarget.style.background = 'var(--soft)'}
+          onMouseLeave={e => e.currentTarget.style.background = '#fff'}
+        >−</button>
+        <div style={{ width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', fontWeight: 700, color: 'var(--ink)', borderLeft: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}>
+          {qty}
+        </div>
+        <button onClick={() => setQty(q => q + 1)}
+          style={{ width: '40px', height: '50px', background: '#fff', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--mid)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.15s' }}
+          onMouseEnter={e => e.currentTarget.style.background = 'var(--soft)'}
+          onMouseLeave={e => e.currentTarget.style.background = '#fff'}
+        >+</button>
+      </div>
+      <button onClick={handleAddToCart}
+        style={{ flex: 1, height: '50px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: added ? '#15803d' : 'var(--ink)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'background 0.2s' }}
+        onMouseEnter={e => { if (!added) e.currentTarget.style.background = '#2d3748' }}
+        onMouseLeave={e => { if (!added) e.currentTarget.style.background = added ? '#15803d' : 'var(--ink)' }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-14.83-3h14.83l1.68-8H5.21L4.17 3H1v2h2l3.6 7.59L5.25 15c-.16.28-.25.61-.25.96C5 17.1 5.9 18 7 18h13v-2H7.42c-.13 0-.25-.11-.25-.25l.03-.12.9-1.63z"/></svg>
+        {added ? '✓ Added!' : 'Add to cart'}
+      </button>
+      <button onClick={handleOrderNow}
+        style={{ flex: 1, height: '50px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', transition: 'background 0.18s' }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--red-dark)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'var(--red)'}
+      >Buy Now</button>
+    </div>
+
+    {/* Payment methods */}
+    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+      {['eSewa', 'Khalti', 'Bank Transfer'].map(p => (
+        <span key={p} style={{ fontSize: '0.6rem', fontWeight: 600, color: 'var(--light)', background: 'var(--soft)', border: '1px solid var(--border)', padding: '3px 9px', borderRadius: '3px' }}>{p}</span>
+      ))}
+    </div>
+
+  </div>
+</div>
 
         {/* ── TABS ── */}
         <div style={{ borderBottom: '2px solid var(--border)', marginBottom: '36px', display: 'flex', gap: '0' }}>
