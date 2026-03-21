@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const app = express()
 app.use(cors({
-  origin: 'https://my-shop-fullstack-nd4c.vercel.app'
+  origin: 'https://puffdiaries.vercel.app'
 }))
 app.use(express.json())
 
