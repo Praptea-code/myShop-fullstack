@@ -18,6 +18,7 @@ export default function Cart() {
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [qrOpen, setQrOpen] = useState(false)
 
   const total = cartItems.reduce((s, i) => s + i.price * i.qty, 0)
 
@@ -88,6 +89,59 @@ export default function Cart() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
+
+      {/* QR Popup Modal */}
+      {qrOpen && (
+        <div
+          onClick={() => setQrOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            background: 'rgba(0,0,0,0.72)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(4px)',
+            animation: 'fadeIn 0.18s ease',
+          }}
+        >
+          <style>{`@keyframes fadeIn { from { opacity:0; } to { opacity:1; } } @keyframes popIn { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }`}</style>
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#fff',
+              borderRadius: '16px',
+              padding: '28px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '14px',
+              boxShadow: '0 24px 64px rgba(0,0,0,0.32)',
+              animation: 'popIn 0.2s ease',
+              maxWidth: '340px',
+              width: '90%',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <div>
+                <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--light)' }}>Scan &amp; Pay</div>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--ink)' }}>Rs. {total.toLocaleString()}</div>
+              </div>
+              <button
+                onClick={() => setQrOpen(false)}
+                style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border)', background: 'var(--soft)', cursor: 'pointer', fontSize: '1rem', color: 'var(--light)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+              >×</button>
+            </div>
+            <img
+              src="/qr.png"
+              alt="Payment QR Code"
+              style={{ width: '260px', height: '260px', objectFit: 'contain', borderRadius: '8px', border: '1px solid var(--border)' }}
+            />
+            <div style={{ fontSize: '0.68rem', color: 'var(--light)', textAlign: 'center', lineHeight: 1.6 }}>
+              eSewa · Khalti · Bank Transfer<br />
+              <span style={{ color: 'var(--red)', fontWeight: 600 }}>Upload your screenshot below after paying</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{ flex: 1, padding: '32px 40px', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '960px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'start' }}>
           <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '12px', padding: '18px 20px' }}>
@@ -154,9 +208,48 @@ export default function Cart() {
             {user && (
               <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px 18px', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--light)', marginBottom: '10px' }}>Scan &amp; Pay</div>
-                <div style={{ width: '140px', height: '140px', background: 'var(--soft)', border: '1px solid var(--border)', borderRadius: '8px', margin: '0 auto 8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', color: 'var(--light)' }}>Your QR here</div>
+                {/* QR Code — click to enlarge */}
+                <div
+                  onClick={() => setQrOpen(true)}
+                  title="Click to enlarge"
+                  style={{
+                    width: '140px', height: '140px',
+                    margin: '0 auto 8px',
+                    cursor: 'pointer',
+                    borderRadius: '10px',
+                    overflow: 'hidden',
+                    border: '2px solid var(--border)',
+                    position: 'relative',
+                    transition: 'border-color 0.18s, transform 0.18s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--red)'; e.currentTarget.style.transform = 'scale(1.03)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'scale(1)' }}
+                >
+                  <img src="/qr.png" alt="Payment QR" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'rgba(232,65,74,0)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'background 0.18s',
+                    borderRadius: '8px',
+                  }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(232,65,74,0.08)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(232,65,74,0)'}
+                  >
+                    <span style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--red)', background: 'rgba(255,255,255,0.9)', padding: '3px 8px', borderRadius: '4px', opacity: 0, transition: 'opacity 0.18s' }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+                      onMouseLeave={e => e.currentTarget.style.opacity = '0'}
+                    >Tap to enlarge</span>
+                  </div>
+                </div>
                 <div style={{ fontFamily: 'var(--serif)', fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '2px' }}>Rs. {total.toLocaleString()}</div>
                 <div style={{ fontSize: '0.62rem', color: 'var(--light)' }}>eSewa · Khalti · Bank transfer</div>
+                <button
+                  onClick={() => setQrOpen(true)}
+                  style={{ marginTop: '8px', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'transparent', color: 'var(--red)', border: '1px solid var(--red)', borderRadius: '4px', padding: '5px 12px', cursor: 'pointer' }}
+                >
+                  Enlarge QR ↗
+                </button>
               </div>
             )}
 
