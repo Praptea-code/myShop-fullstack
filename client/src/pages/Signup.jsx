@@ -19,22 +19,20 @@ export default function Signup() {
       const res = await axios.post(`${API_BASE}/api/auth/signup`, form)
       login(res.data.user, res.data.token)
       navigate('/')
-    } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed')
-    }
+    } catch (err) { setError(err.response?.data?.message || 'Signup failed') }
     setLoading(false)
   }
 
-  const inp = { width: '100%', padding: '14px 18px', background: 'var(--soft)', border: '1.5px solid var(--border)', borderRadius: '10px', color: 'var(--ink)', fontSize: '0.9rem', outline: 'none' }
+  const inp = { width: '100%', padding: '14px 18px', background: 'var(--soft)', border: '1.5px solid var(--border)', borderRadius: '10px', color: 'var(--ink)', fontSize: '16px', outline: 'none' }
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth: '420px', margin: '80px auto', padding: '0 24px' }}>
+      <div style={{ maxWidth: '420px', margin: '48px auto', padding: '0 20px 60px' }}>
         <div style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 200, marginBottom: '8px', color: 'var(--ink)' }}>
           Create your <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>account.</i>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px' }}>Track orders, reorder favourites, and more</p>
+        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '32px' }}>Track orders, reorder favourites, and more</p>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <input style={inp} placeholder="Full name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
           <input style={inp} placeholder="Email address (optional if phone provided)" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
@@ -45,7 +43,7 @@ export default function Signup() {
             {loading ? 'Creating account...' : 'Create account'}
           </button>
         </form>
-        <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.82rem', color: 'var(--mid)' }}>
+        <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.82rem', color: 'var(--mid)' }}>
           Already have an account? <Link to="/login" style={{ color: 'var(--navy)', fontWeight: 500 }}>Sign in</Link>
         </p>
       </div>

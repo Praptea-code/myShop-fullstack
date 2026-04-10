@@ -15,9 +15,6 @@
   --soft: #f0f2f5;
   --red: #e8414a;
   --red-dark: #c0303a;
-  /* 
-  --serif: Georgia, 'Times New Roman', serif;
-  */
   --sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -26,7 +23,7 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
-  font-size: 28px;
+  font-size: 16px;
 }
 
 #root {
@@ -83,4 +80,29 @@ a { color: inherit; text-decoration: none; }
 @keyframes slideUpFade {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE UTILITIES ── */
+
+/* Mobile-first grid helpers */
+@media (max-width: 767px) {
+  .mob-stack { display: flex !important; flex-direction: column !important; }
+  .mob-full { width: 100% !important; max-width: 100% !important; }
+  .mob-pad { padding: 24px 16px !important; }
+  .mob-hide { display: none !important; }
+  .mob-grid-1 { grid-template-columns: 1fr !important; }
+  .mob-grid-2 { grid-template-columns: 1fr 1fr !important; }
+  .mob-text-center { text-align: center !important; }
+}
+
+@media (max-width: 1023px) {
+  .tab-stack { display: flex !important; flex-direction: column !important; }
+  .tab-grid-1 { grid-template-columns: 1fr !important; }
+  .tab-grid-2 { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 767px) {
+  button, a { min-height: 40px; }
+  input, select, textarea { font-size: 16px !important; } /* prevent iOS zoom */
 }

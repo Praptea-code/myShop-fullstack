@@ -20,22 +20,20 @@ export default function Login() {
       const res = await axios.post(`${API_BASE}/api/auth/login`, { identifier, password })
       login(res.data.user, res.data.token)
       navigate('/')
-    } catch (err) {
-      setError(err.response?.data?.message || 'Login failed')
-    }
+    } catch (err) { setError(err.response?.data?.message || 'Login failed') }
     setLoading(false)
   }
 
-  const inp = { width: '100%', padding: '14px 18px', background: 'var(--soft)', border: '1.5px solid var(--border)', borderRadius: '10px', color: 'var(--ink)', fontSize: '0.9rem', outline: 'none' }
+  const inp = { width: '100%', padding: '14px 18px', background: 'var(--soft)', border: '1.5px solid var(--border)', borderRadius: '10px', color: 'var(--ink)', fontSize: '16px', outline: 'none' }
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <Navbar />
-      <div style={{ maxWidth: '420px', margin: '80px auto', padding: '0 24px' }}>
+      <div style={{ maxWidth: '420px', margin: '48px auto', padding: '0 20px 60px' }}>
         <div style={{ fontFamily: 'var(--serif)', fontSize: '2rem', fontWeight: 200, marginBottom: '8px', color: 'var(--ink)' }}>
           Welcome <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>back.</i>
         </div>
-        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '36px' }}>Sign in to your Puff Diaries account</p>
+        <p style={{ fontSize: '0.85rem', color: 'var(--mid)', marginBottom: '32px' }}>Sign in to your Puff Diaries account</p>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <input style={inp} placeholder="Email or phone number" value={identifier} onChange={e => setIdentifier(e.target.value)} required />
           <input style={inp} type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
@@ -44,7 +42,7 @@ export default function Login() {
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-        <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.82rem', color: 'var(--mid)' }}>
+        <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.82rem', color: 'var(--mid)' }}>
           No account? <Link to="/signup" style={{ color: 'var(--navy)', fontWeight: 500 }}>Sign up</Link>
         </p>
       </div>
