@@ -311,14 +311,8 @@ export default function Home() {
       </section>
 
       {/* SIGNATURE SHOWCASE */}
-      <section style={{ background: 'var(--bg)', padding: isMobile ? '48px 16px' : '80px 40px', overflow: 'hidden' }}>
-        <div style={{ marginBottom: isMobile ? '28px' : '40px' }}>
-          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
-          <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
-            A signature <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>line-up</em>
-          </div>
-        </div>
-        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: '0 auto', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+      <section style={{ background: 'var(--bg)', padding: isMobile ? '0 16px 48px' : '0 40px 80px', position: 'relative', zIndex: 5 }}>
+        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: isMobile ? '-64px auto 0' : '-150px auto 0', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
           <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
             {SHOWCASE.map((p, i) => (
               <div key={p.name} style={{
@@ -341,6 +335,12 @@ export default function Home() {
                 <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
               </div>
             ))}
+          </div>
+        </div>
+        <div style={{ marginTop: isMobile ? '36px' : '64px' }}>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
+            A signature <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>line-up</em>
           </div>
         </div>
       </section>
