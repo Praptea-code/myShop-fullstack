@@ -257,7 +257,7 @@ export default function Home() {
   const prodCols = isMobile ? 'repeat(2,1fr)' : isTablet ? 'repeat(3,1fr)' : 'repeat(4,1fr)'
   const flavourCols = isMobile ? 'repeat(4,1fr)' : isTablet ? 'repeat(4,1fr)' : 'repeat(8,1fr)'
   const showCardW = 600
-  const showGap = 40
+  const showGap = 70
   const showRowW = SHOWCASE.length * showCardW + (SHOWCASE.length - 1) * showGap
   const showOffset = showRowW / 2 - (showIdx * (showCardW + showGap) + showCardW / 2)
 
@@ -307,13 +307,13 @@ export default function Home() {
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
             <button onClick={() => navigate('/about')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>About Us</button>
           </div>
-          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: isMobile ? 'none' : '920px', height: isMobile ? '250px' : '485px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: isMobile ? 'none' : '1280px', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
             <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
               {SHOWCASE.map((p, i) => (
                 <div key={p.name} style={{
                   flexShrink: 0,
-                  marginLeft: i === 0 ? 0 : (isMobile ? '16px' : '40px'),
-                  transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 0.92})`,
+                  marginLeft: i === 0 ? 0 : (isMobile ? '16px' : '70px'),
+                  transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 1})`,
                   transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
                   zIndex: i === showIdx ? 3 : 1,
                 }}>
@@ -336,7 +336,7 @@ export default function Home() {
       </section>
 
       {/* SIGNATURE SHOWCASE */}
-      <section style={{ background: 'var(--bg)', padding: isMobile ? 'max(0px, calc(415px - 46vh)) 16px 48px' : 'max(0px, calc(610px - 50vh)) 40px 80px' }}>
+      <section style={{ background: 'var(--bg)', padding: isMobile ? 'max(0px, calc(415px - 46vh)) 16px 48px' : 'max(0px, calc(645px - 50vh)) 40px 80px' }}>
         <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
