@@ -238,7 +238,7 @@ export default function Home() {
     if (!isMobile) return
     const el = showRef.current
     if (!el) return
-    el.scrollTo({ left: Math.max(0, showIdx * 136 + 75 - el.clientWidth / 2), behavior: 'smooth' })
+    el.scrollTo({ left: Math.max(0, showIdx * 272 + 150 - el.clientWidth / 2), behavior: 'smooth' })
   }, [isMobile, showIdx])
 
   useEffect(() => {
@@ -256,8 +256,8 @@ export default function Home() {
 
   const prodCols = isMobile ? 'repeat(2,1fr)' : isTablet ? 'repeat(3,1fr)' : 'repeat(4,1fr)'
   const flavourCols = isMobile ? 'repeat(4,1fr)' : isTablet ? 'repeat(4,1fr)' : 'repeat(8,1fr)'
-  const showCardW = 250
-  const showOverlap = 56
+  const showCardW = 520
+  const showOverlap = 180
   const showRowW = SHOWCASE.length * showCardW - (SHOWCASE.length - 1) * showOverlap
   const showOffset = showRowW / 2 - (showIdx * (showCardW - showOverlap) + showCardW / 2)
 
@@ -307,19 +307,19 @@ export default function Home() {
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
             <button onClick={() => navigate('/about')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>About Us</button>
           </div>
-          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: isMobile ? 'none' : '720px', height: isMobile ? '230px' : '350px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: isMobile ? 'none' : '1200px', height: isMobile ? '385px' : '660px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
             <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
               {SHOWCASE.map((p, i) => (
                 <div key={p.name} style={{
                   flexShrink: 0,
-                  marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
+                  marginLeft: i === 0 ? 0 : (isMobile ? '-28px' : '-180px'),
                   transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 0.92})`,
                   transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
                   zIndex: i === showIdx ? 3 : 1,
                 }}>
                   <div style={{
-                    width: isMobile ? '150px' : '250px',
-                    height: isMobile ? '180px' : '300px',
+                    width: isMobile ? '300px' : '520px',
+                    height: isMobile ? '360px' : '620px',
                     borderRadius: '14px', overflow: 'hidden',
                     background: p.bg,
                     border: '1px solid var(--border)',
@@ -336,7 +336,7 @@ export default function Home() {
       </section>
 
       {/* SIGNATURE SHOWCASE */}
-      <section style={{ background: 'var(--bg)', padding: isMobile ? 'max(0px, calc(410px - 46vh)) 16px 48px' : 'max(0px, calc(550px - 50vh)) 40px 80px' }}>
+      <section style={{ background: 'var(--bg)', padding: isMobile ? 'max(0px, calc(565px - 46vh)) 16px 48px' : 'max(0px, calc(860px - 50vh)) 40px 80px' }}>
         <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
