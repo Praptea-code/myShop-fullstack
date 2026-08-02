@@ -30,9 +30,9 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false)
 
-  return (
+  const header = (
     <>
-      <div style={{ background:'var(--navy-dark)', padding:'7px 20px', textAlign:'center', fontSize:'0.65rem', color:'rgba(255,255,255,0.45)', letterSpacing:'0.05em' }}>
+      <div style={{ background: isHome && !isScrolled ? 'transparent' : 'var(--navy-dark)', transition: 'background-color 0.3s ease, transform 0.3s ease', transform: isHome && isScrolled ? 'translateY(-100%)' : 'translateY(0)', padding:'7px 20px', textAlign:'center', fontSize:'0.65rem', color:'rgba(255,255,255,0.45)', letterSpacing:'0.05em', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}>
         Same day dispatch in Dhangadhi &nbsp;·&nbsp; eSewa &amp; Khalti accepted &nbsp;·&nbsp; 100% authentic
       </div>
 
@@ -99,6 +99,16 @@ export default function Navbar() {
           )}
         </div>
       </nav>
+    </>
+  )
+
+  return (
+    <>
+      {isHome ? (
+        <div style={{ position:'fixed', top:0, left:0, right:0, zIndex:100 }}>{header}</div>
+      ) : (
+        header
+      )}
 
       {/* Mobile drawer */}
       {isMobile && menuOpen && (
