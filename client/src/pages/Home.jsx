@@ -221,10 +221,25 @@ export default function Home() {
   const isTablet = useIsTablet()
   const tickRef = useRef(null)
   const tickPos = useRef(0)
+  const [showIdx, setShowIdx] = useState(0)
+  const showRef = useRef(null)
+  const showIntervalRef = useRef(null)
 
   useEffect(() => {
     axios.get(`${API}/products`).then(r => setProducts(r.data.slice(0, 4))).catch(() => {})
   }, [])
+
+  useEffect(() => {
+    showIntervalRef.current = setInterval(() => setShowIdx(i => (i + 1) % SHOWCASE.length), 3500)
+    return () => clearInterval(showIntervalRef.current)
+  }, [])
+
+  useEffect(() => {
+    if (!isMobile) return
+    const el = showRef.current
+    if (!el) return
+    el.scrollTo({ left: Math.max(0, showIdx * 136 + 75 - el.clientWidth / 2), behavior: 'smooth' })
+  }, [isMobile, showIdx])
 
   useEffect(() => {
     const el = document.getElementById('ticker-inner')
@@ -241,6 +256,10 @@ export default function Home() {
 
   const prodCols = isMobile ? 'repeat(2,1fr)' : isTablet ? 'repeat(3,1fr)' : 'repeat(4,1fr)'
   const flavourCols = isMobile ? 'repeat(4,1fr)' : isTablet ? 'repeat(4,1fr)' : 'repeat(8,1fr)'
+  const showCardW = 250
+  const showOverlap = 56
+  const showRowW = SHOWCASE.length * showCardW - (SHOWCASE.length - 1) * showOverlap
+  const showOffset = showRowW / 2 - (showIdx * (showCardW - showOverlap) + showCardW / 2)
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
@@ -274,17 +293,17 @@ export default function Home() {
         {/* Readability overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.55)' }} />
 
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px' }}>
-          <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center' }}>
+          <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <span style={{ width: '18px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />Nepal's no.1 vape shop
           </div>
-          <h1 style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? 'clamp(34px,9vw,48px)' : 'clamp(54px,6.5vw,84px)', fontWeight: 600, color: '#fff', lineHeight: 1.05, marginBottom: '16px', maxWidth: '640px' }}>
+          <h1 style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? 'clamp(34px,9vw,48px)' : 'clamp(54px,6.5vw,84px)', fontWeight: 600, color: '#fff', lineHeight: 1.05, maxWidth: '640px', margin: '0 auto 16px' }}>
             Premium Vapes,<br /><em style={{ fontStyle: 'italic', color: '#f9a8ac' }}>Discreetly Delivered.</em>
           </h1>
-          <p style={{ fontSize: isMobile ? '0.85rem' : '1rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: '400px', marginBottom: '28px' }}>
+          <p style={{ fontSize: isMobile ? '0.85rem' : '1rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: '400px', margin: '0 auto 28px' }}>
             Authentic disposables with 20+ flavours. eSewa &amp; Khalti accepted. Same day dispatch.
           </p>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
             <button onClick={() => navigate('/about')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>About Us</button>
           </div>
@@ -299,27 +318,30 @@ export default function Home() {
             A signature <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>line-up</em>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', overflowX: 'auto', WebkitOverflowScrolling: 'touch', padding: '28px 24px 44px', margin: '-28px -24px' }}>
-          {SHOWCASE.map((p, i) => (
-            <div key={p.name} style={{
-              flexShrink: 0,
-              marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
-              transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px)`,
-              transition: 'transform 0.25s',
-            }}>
-              <div style={{
-                width: isMobile ? '150px' : '250px',
-                height: isMobile ? '180px' : '300px',
-                borderRadius: '14px', overflow: 'hidden',
-                background: p.bg,
-                border: '1px solid var(--border)',
-                boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: '0 auto', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+            {SHOWCASE.map((p, i) => (
+              <div key={p.name} style={{
+                flexShrink: 0,
+                marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
+                transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 0.92})`,
+                transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
+                zIndex: i === showIdx ? 3 : 1,
               }}>
-                <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                <div style={{
+                  width: isMobile ? '150px' : '250px',
+                  height: isMobile ? '180px' : '300px',
+                  borderRadius: '14px', overflow: 'hidden',
+                  background: p.bg,
+                  border: '1px solid var(--border)',
+                  boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+                }}>
+                  <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </div>
+                <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
               </div>
-              <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
