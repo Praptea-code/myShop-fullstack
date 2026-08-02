@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../App'
 import { useCart } from '../App'
 import { useIsMobile } from '../hooks/useWindowWidth'
@@ -11,6 +11,15 @@ export default function Navbar() {
   const { cartCount } = useCart()
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
+  const isHome = location.pathname === '/'
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 30)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const links = [
     ['/','Home'],
@@ -27,8 +36,8 @@ export default function Navbar() {
         Same day dispatch in Dhangadhi &nbsp;·&nbsp; eSewa &amp; Khalti accepted &nbsp;·&nbsp; 100% authentic
       </div>
 
-      <nav style={{ background:'var(--navy)', padding:`0 ${isMobile ? '16px' : '40px'}`, display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>
-        <Link to="/" onClick={closeMenu} style={{ fontFamily:'var(--serif)', fontSize:'1.35rem', fontWeight:700, color:'#fff', letterSpacing:'0.02em' }}>
+      <nav style={{ background: isHome && !isScrolled ? 'transparent' : 'var(--navy)', transition: 'background-color 0.3s ease', padding:`0 ${isMobile ? '16px' : '40px'}`, display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>
+        <Link to="/" onClick={closeMenu} style={{ fontFamily:'var(--serif)', fontSize:'1.35rem', fontWeight:700, color:'#fff', letterSpacing:'0.02em', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}>
           Puff<span style={{ color:'var(--red)', fontStyle:'italic' }}>Diaries</span>
         </Link>
 
@@ -38,14 +47,14 @@ export default function Navbar() {
             {links.map(([to, label]) => {
               const active = location.pathname === to
               return (
-                <Link key={to} to={to} style={{ fontSize:'0.82rem', fontWeight:500, color: active ? '#fff' : 'rgba(255,255,255,0.6)', padding:'0 16px', display:'flex', alignItems:'center', borderBottom: active ? '3px solid var(--red)' : '3px solid transparent', transition:'color 0.15s' }}
+                <Link key={to} to={to} style={{ fontSize:'0.82rem', fontWeight:500, color: active ? '#fff' : 'rgba(255,255,255,0.6)', padding:'0 16px', display:'flex', alignItems:'center', borderBottom: active ? '3px solid var(--red)' : '3px solid transparent', transition:'color 0.15s', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}
                   onMouseEnter={e => { if (!active) e.currentTarget.style.color='#fff' }}
                   onMouseLeave={e => { if (!active) e.currentTarget.style.color='rgba(255,255,255,0.6)' }}
                 >{label}</Link>
               )
             })}
             {user?.isAdmin && (
-              <Link to="/admin" style={{ fontSize:'0.82rem', fontWeight:500, color:'rgba(255,255,255,0.4)', padding:'0 16px', display:'flex', alignItems:'center', borderBottom:'3px solid transparent' }}>Admin</Link>
+              <Link to="/admin" style={{ fontSize:'0.82rem', fontWeight:500, color:'rgba(255,255,255,0.4)', padding:'0 16px', display:'flex', alignItems:'center', borderBottom:'3px solid transparent', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}>Admin</Link>
             )}
           </div>
         )}

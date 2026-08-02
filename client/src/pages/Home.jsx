@@ -293,7 +293,7 @@ export default function Home() {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Readability overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.55)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.22)' }} />
 
         <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(calc(-6vh - 40px))' : 'translateY(calc(-14vh - 90px))' }}>
           <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
