@@ -293,7 +293,7 @@ export default function Home() {
         {/* Readability overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.55)' }} />
 
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(-6vh)' : 'translateY(-14vh)' }}>
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(calc(-6vh - 40px))' : 'translateY(calc(-14vh - 90px))' }}>
           <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <span style={{ width: '18px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />Nepal's no.1 vape shop
           </div>
@@ -303,14 +303,14 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
           </div>
-          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: 'none', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 70px)' : 'calc(100% + 100px)', transform: 'translateX(-50%)', width: '100%', maxWidth: 'none', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
             <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
               {SHOWCASE.map((p, i) => (
                 <div key={p.name} style={{
                   flexShrink: 0,
                   marginLeft: i === 0 ? 0 : (isMobile ? '16px' : '70px'),
-                  transform: isMobile ? 'none' : `rotate(${i < showIdx ? -5 : i > showIdx ? 5 : 0}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 1})`,
-                  transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
+                  transform: isMobile ? 'none' : `rotate(${i < showIdx ? -5 : i > showIdx ? 5 : 0}deg) translateY(${i === showIdx ? -20 : (i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 1})`,
+                  transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease',
                   zIndex: i === showIdx ? 3 : 1,
                 }}>
                   <div style={{
@@ -320,6 +320,7 @@ export default function Home() {
                     background: p.bg,
                     border: '1px solid var(--border)',
                     boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+                    filter: i === showIdx ? 'none' : 'brightness(0.85)',
                   }}>
                     <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   </div>
