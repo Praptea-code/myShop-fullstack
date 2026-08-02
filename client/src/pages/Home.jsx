@@ -279,7 +279,7 @@ export default function Home() {
       `}</style>
 
       {/* HERO */}
-      <section style={{ position: 'relative', height: isMobile ? '92vh' : '100vh', minHeight: '540px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+      <section style={{ position: 'relative', height: isMobile ? '92vh' : '100vh', minHeight: '540px', display: 'flex', alignItems: 'center', zIndex: 6 }}>
         {/* Fallback dark gradient — visible while the video loads or if it fails */}
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 40%, #1e2d55 0%, var(--navy) 55%, var(--navy-dark) 100%)' }} />
         {/* Video background — TODO: drop the real clip at client/public/hero-video.mp4 */}
@@ -307,37 +307,37 @@ export default function Home() {
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
             <button onClick={() => navigate('/about')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>About Us</button>
           </div>
+          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 8px)' : 'calc(100% + 12px)', transform: 'translateX(-50%)', width: '100%', maxWidth: isMobile ? 'none' : '720px', height: isMobile ? '230px' : '350px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+            <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+              {SHOWCASE.map((p, i) => (
+                <div key={p.name} style={{
+                  flexShrink: 0,
+                  marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
+                  transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 0.92})`,
+                  transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
+                  zIndex: i === showIdx ? 3 : 1,
+                }}>
+                  <div style={{
+                    width: isMobile ? '150px' : '250px',
+                    height: isMobile ? '180px' : '300px',
+                    borderRadius: '14px', overflow: 'hidden',
+                    background: p.bg,
+                    border: '1px solid var(--border)',
+                    boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+                  }}>
+                    <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  </div>
+                  <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* SIGNATURE SHOWCASE */}
-      <section style={{ background: 'var(--bg)', padding: isMobile ? '0 16px 48px' : '0 40px 80px', position: 'relative', zIndex: 5 }}>
-        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: isMobile ? '-8vh auto 0' : '-20vh auto 0', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
-          <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
-            {SHOWCASE.map((p, i) => (
-              <div key={p.name} style={{
-                flexShrink: 0,
-                marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
-                transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 0.92})`,
-                transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
-                zIndex: i === showIdx ? 3 : 1,
-              }}>
-                <div style={{
-                  width: isMobile ? '150px' : '250px',
-                  height: isMobile ? '180px' : '300px',
-                  borderRadius: '14px', overflow: 'hidden',
-                  background: p.bg,
-                  border: '1px solid var(--border)',
-                  boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
-                }}>
-                  <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                </div>
-                <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div style={{ marginTop: isMobile ? '36px' : '64px' }}>
+      <section style={{ background: 'var(--bg)', padding: isMobile ? 'max(0px, calc(410px - 46vh)) 16px 48px' : 'max(0px, calc(550px - 50vh)) 40px 80px' }}>
+        <div>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
             A signature <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>line-up</em>
