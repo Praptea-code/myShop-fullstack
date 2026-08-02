@@ -8,46 +8,21 @@ import API_BASE from '../api'
 
 const API = `${API_BASE}/api`
 
-const SLIDES = [
-  {
-    tag: "Nepal's no.1 vape shop",
-    h1: 'Premium Vapes,',
-    em: 'Discreetly Delivered.',
-    sub: 'Authentic disposables with 20+ flavours. eSewa & Khalti accepted. Same day dispatch in KTM.',
-    cta: 'Shop Collection',
-    ctaPath: '/products',
-    cta2: 'About Us',
-    cta2Path: '/about',
-    bg: 'radial-gradient(ellipse at 65% 45%, #1e2d55 0%, #111827 55%, #080c14 100%)',
-    shadow: '#3b6ccc',
-    img: '/blueVape.png',
-  },
-  {
-    tag: '20+ flavours in stock',
-    h1: 'Every Flavour',
-    em: 'You Crave.',
-    sub: 'Mango, strawberry, menthol, blueberry — all 100% authentic, ready to ship today.',
-    cta: 'Browse Flavours',
-    ctaPath: '/products',
-    cta2: 'Contact Us',
-    cta2Path: '/contact',
-    bg: 'radial-gradient(ellipse at 65% 45%, #122a1e 0%, #0d1f14 55%, #060e09 100%)',
-    shadow: '#2da05a',
-    img: '/greenVape.png',
-  },
-  {
-    tag: 'Wholesale available',
-    h1: 'Buy in Bulk,',
-    em: 'Save More.',
-    sub: 'Tiered wholesale pricing for shops and resellers. Priority dispatch. Best prices in KTM.',
-    cta: 'Get Pricing',
-    ctaPath: '/contact',
-    cta2: 'Our Story',
-    cta2Path: '/about',
-    bg: 'radial-gradient(ellipse at 65% 45%, #22103a 0%, #160920 55%, #0a0510 100%)',
-    shadow: '#8b3db8',
-    img: '/purpleVape.png',
-  },
+const SHOWCASE = [
+  { img: '/strawberry.jpg', name: 'Strawberry', bg: 'linear-gradient(135deg,#ffd6d6,#ff8a8a)' },
+  { img: '/mango.jpg', name: 'Mango', bg: 'linear-gradient(135deg,#ffe8b3,#ffb347)' },
+  { img: '/blueberry.jpg', name: 'Blueberry', bg: 'linear-gradient(135deg,#d6d6ff,#8a8aff)' },
+  { img: '/menthol.jpg', name: 'Menthol', bg: 'linear-gradient(135deg,#d6f5e8,#4CAF7D)' },
+  { img: '/watermelon.jpg', name: 'Watermelon', bg: 'linear-gradient(135deg,#ffd6e8,#ff6699)' },
+  { img: '/grape.jpg', name: 'Grape', bg: 'linear-gradient(135deg,#e8d6ff,#9966ff)' },
+  { img: '/lemon.jpg', name: 'Lemon', bg: 'linear-gradient(135deg,#fffbd6,#ffe066)' },
+  { img: '/coolmint.jpg', name: 'Cool Mint', bg: 'linear-gradient(135deg,#d6f5ff,#66ccff)' },
+]
+
+const STATS = [
+  { n: '20+', label: 'Flavours Available' },
+  { n: '100%', label: 'Authentic Guaranteed' },
+  { n: 'Thousands of', label: 'Happy Customers' },
 ]
 
 const TICKER = [
@@ -244,31 +219,12 @@ export default function Home() {
   const { addToCart } = useCart()
   const isMobile = useIsMobile()
   const isTablet = useIsTablet()
-  const [cur, setCur] = useState(0)
-  const [animKey, setAnimKey] = useState(0)
-  const [progW, setProgW] = useState(0)
-  const timerRef = useRef(null)
-  const progRef = useRef(null)
   const tickRef = useRef(null)
   const tickPos = useRef(0)
 
   useEffect(() => {
     axios.get(`${API}/products`).then(r => setProducts(r.data.slice(0, 4))).catch(() => {})
   }, [])
-
-  const goTo = (n) => {
-    clearTimeout(timerRef.current)
-    clearInterval(progRef.current)
-    setCur(n); setAnimKey(k => k + 1); setProgW(0)
-    let p = 0
-    progRef.current = setInterval(() => {
-      p += 0.4; setProgW(Math.min(p, 100))
-      if (p >= 100) clearInterval(progRef.current)
-    }, 20)
-    timerRef.current = setTimeout(() => goTo((n + 1) % SLIDES.length), 5000)
-  }
-
-  useEffect(() => { goTo(0); return () => { clearTimeout(timerRef.current); clearInterval(progRef.current) } }, [])
 
   useEffect(() => {
     const el = document.getElementById('ticker-inner')
@@ -283,7 +239,6 @@ export default function Home() {
     return () => cancelAnimationFrame(tickRef.current)
   }, [])
 
-  const s = SLIDES[cur]
   const prodCols = isMobile ? 'repeat(2,1fr)' : isTablet ? 'repeat(3,1fr)' : 'repeat(4,1fr)'
   const flavourCols = isMobile ? 'repeat(4,1fr)' : isTablet ? 'repeat(4,1fr)' : 'repeat(8,1fr)'
 
@@ -305,52 +260,78 @@ export default function Home() {
       `}</style>
 
       {/* HERO */}
-      <section style={{ position: 'relative', height: isMobile ? 'auto' : '760px', minHeight: isMobile ? '500px' : 'auto', overflow: 'hidden', display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
-        <div style={{
-          width: isMobile ? '100%' : '52%',
-          background: isMobile ? 'var(--navy)' : 'var(--navy)',
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          padding: isMobile ? '48px 20px 40px' : '0 52px',
-          position: 'relative', zIndex: 4, flexShrink: 0,
-          minHeight: isMobile ? 'auto' : 'auto',
-        }}>
-          {!isMobile && <div style={{ position: 'absolute', right: '-50px', top: 0, bottom: 0, width: '100px', background: 'var(--navy)', transform: 'skewX(-5deg)', zIndex: 1 }} />}
-          <div key={animKey} style={{ position: 'relative', zIndex: 3 }}>
-            <div style={{ fontSize: isMobile ? '0.6rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', animation: 'slideUpFade 0.5s ease both 0.1s', opacity: 0, animationFillMode: 'forwards' }}>
-              <span style={{ width: '18px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />{s.tag}
-            </div>
-            <h1 style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? 'clamp(28px,7vw,40px)' : 'clamp(42px,5vw,64px)', fontWeight: 700, color: '#fff', lineHeight: 1.09, marginBottom: '12px', animation: 'slideUpFade 0.55s ease both 0.22s', opacity: 0, animationFillMode: 'forwards' }}>
-              {s.h1}<br /><em style={{ fontStyle: 'italic', color: '#f4868c' }}>{s.em}</em>
-            </h1>
-            <p style={{ fontSize: isMobile ? '0.82rem' : '1rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: '330px', marginBottom: '24px', animation: 'slideUpFade 0.5s ease both 0.34s', opacity: 0, animationFillMode: 'forwards' }}>{s.sub}</p>
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', animation: 'slideUpFade 0.45s ease both 0.44s', opacity: 0, animationFillMode: 'forwards' }}>
-              <button onClick={() => navigate(s.ctaPath)} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>{s.cta}</button>
-              <button onClick={() => navigate(s.cta2Path)} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>{s.cta2}</button>
-            </div>
+      <section style={{ position: 'relative', height: isMobile ? '92vh' : '100vh', minHeight: '540px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+        {/* Fallback dark gradient — visible while the video loads or if it fails */}
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 40%, #1e2d55 0%, var(--navy) 55%, var(--navy-dark) 100%)' }} />
+        {/* Video background — TODO: drop the real clip at client/public/hero-video.mp4 */}
+        <video
+          autoPlay muted loop playsInline
+          poster="/vapebg1.jpg"
+          src="/hero-video.mp4"
+          onError={e => { e.currentTarget.style.display = 'none' }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        {/* Readability overlay */}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.55)' }} />
+
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px' }}>
+          <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: '18px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />Nepal's no.1 vape shop
+          </div>
+          <h1 style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? 'clamp(34px,9vw,48px)' : 'clamp(54px,6.5vw,84px)', fontWeight: 600, color: '#fff', lineHeight: 1.05, marginBottom: '16px', maxWidth: '640px' }}>
+            Premium Vapes,<br /><em style={{ fontStyle: 'italic', color: '#f9a8ac' }}>Discreetly Delivered.</em>
+          </h1>
+          <p style={{ fontSize: isMobile ? '0.85rem' : '1rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: '400px', marginBottom: '28px' }}>
+            Authentic disposables with 20+ flavours. eSewa &amp; Khalti accepted. Same day dispatch.
+          </p>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
+            <button onClick={() => navigate('/about')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 500, background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.24)', borderRadius: '3px', padding: '13px 20px', cursor: 'pointer' }}>About Us</button>
           </div>
         </div>
+      </section>
 
-        {!isMobile && (
-          <div style={{ flex: 1, position: 'relative', overflow: 'hidden', transition: 'background 1.2s ease', background: s.bg }}>
-            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '120px', background: 'linear-gradient(to right, var(--navy), transparent)', zIndex: 4, pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', top: '85%', left: '68%', zIndex: 3, animation: 'floatUD 7.8s ease-in-out infinite', transform: 'translateY(-50%)' }}>
-              <img key={cur} src={s.img} alt="vape" style={{ width: '300px', objectFit: 'contain' }} />
-            </div>
+      {/* SIGNATURE SHOWCASE */}
+      <section style={{ background: 'var(--bg)', padding: isMobile ? '48px 16px' : '80px 40px', overflow: 'hidden' }}>
+        <div style={{ marginBottom: isMobile ? '28px' : '40px' }}>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '6px' }}>The collection</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 600, color: 'var(--ink)' }}>
+            A signature <em style={{ fontStyle: 'italic', color: 'var(--red)' }}>line-up</em>
           </div>
-        )}
-
-        {isMobile && (
-          <div style={{ height: '200px', position: 'relative', overflow: 'hidden', background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img key={cur} src={s.img} alt="vape" style={{ height: '180px', objectFit: 'contain' }} />
-          </div>
-        )}
-
-        {/* Dots */}
-        <div style={{ position: 'absolute', bottom: '16px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '6px', zIndex: 10 }}>
-          {SLIDES.map((_,i) => <button key={i} onClick={() => goTo(i)} style={{ width: i === cur ? '28px' : '8px', height: '4px', borderRadius: '2px', background: i === cur ? 'var(--red)' : 'rgba(255,255,255,0.3)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s' }} />)}
         </div>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.08)', zIndex: 11 }}>
-          <div style={{ height: '100%', background: 'var(--red)', width: `${progW}%`, transition: 'width 0.08s linear' }} />
+        <div style={{ display: 'flex', justifyContent: 'center', overflowX: 'auto', WebkitOverflowScrolling: 'touch', padding: '28px 24px 44px', margin: '-28px -24px' }}>
+          {SHOWCASE.map((p, i) => (
+            <div key={p.name} style={{
+              flexShrink: 0,
+              marginLeft: i === 0 ? 0 : (isMobile ? '-14px' : '-56px'),
+              transform: isMobile ? 'none' : `rotate(${(i % 2 === 0 ? -1 : 1) * 2.2}deg) translateY(${(i % 3) * 6}px)`,
+              transition: 'transform 0.25s',
+            }}>
+              <div style={{
+                width: isMobile ? '150px' : '250px',
+                height: isMobile ? '180px' : '300px',
+                borderRadius: '14px', overflow: 'hidden',
+                background: p.bg,
+                border: '1px solid var(--border)',
+                boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+              }}>
+                <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section style={{ background: 'var(--navy)', padding: isMobile ? '40px 16px' : '56px 40px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'space-between', gap: isMobile ? '26px' : '0' }}>
+          {STATS.map((s, i) => (
+            <div key={s.label} style={{ flex: 1, textAlign: 'center', padding: isMobile ? '0' : '0 28px', borderLeft: isMobile || i === 0 ? 'none' : '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '2rem' : '2.6rem', fontWeight: 600, color: '#fff', lineHeight: 1 }}>{s.n}</div>
+              <div style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
