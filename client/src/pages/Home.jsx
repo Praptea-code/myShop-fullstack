@@ -312,7 +312,7 @@ export default function Home() {
 
       {/* SIGNATURE SHOWCASE */}
       <section style={{ background: 'var(--bg)', padding: isMobile ? '0 16px 48px' : '0 40px 80px', position: 'relative', zIndex: 5 }}>
-        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: isMobile ? '-64px auto 0' : '-150px auto 0', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+        <div ref={showRef} style={{ position: 'relative', height: isMobile ? '230px' : '350px', maxWidth: isMobile ? 'none' : '720px', margin: isMobile ? '-8vh auto 0' : '-20vh auto 0', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
           <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
             {SHOWCASE.map((p, i) => (
               <div key={p.name} style={{
