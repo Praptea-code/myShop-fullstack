@@ -238,7 +238,7 @@ export default function Home() {
     if (!isMobile) return
     const el = showRef.current
     if (!el) return
-    el.scrollTo({ left: Math.max(0, showIdx * 336 + 160 - el.clientWidth / 2), behavior: 'smooth' })
+    el.scrollTo({ left: Math.max(0, (SHOWCASE.length + showIdx) * 336 + 160 - el.clientWidth / 2), behavior: 'smooth' })
   }, [isMobile, showIdx])
 
   useEffect(() => {
@@ -258,8 +258,10 @@ export default function Home() {
   const flavourCols = isMobile ? 'repeat(4,1fr)' : isTablet ? 'repeat(4,1fr)' : 'repeat(8,1fr)'
   const showCardW = 600
   const showGap = 70
-  const showRowW = SHOWCASE.length * showCardW + (SHOWCASE.length - 1) * showGap
-  const showOffset = showRowW / 2 - (showIdx * (showCardW + showGap) + showCardW / 2)
+  const showLoop = [...SHOWCASE, ...SHOWCASE, ...SHOWCASE]
+  const showLoopIdx = SHOWCASE.length + showIdx
+  const showRowW = showLoop.length * showCardW + (showLoop.length - 1) * showGap
+  const showOffset = showRowW / 2 - (showLoopIdx * (showCardW + showGap) + showCardW / 2)
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
@@ -305,26 +307,24 @@ export default function Home() {
           </div>
           <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 70px)' : 'calc(100% + 100px)', transform: 'translateX(-50%)', width: '100%', maxWidth: 'none', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
             <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
-              {SHOWCASE.map((p, i) => (
-                <div key={p.name} style={{
+              {showLoop.map((p, i) => (
+                <div key={`${p.name}-${i}`} style={{
                   flexShrink: 0,
                   marginLeft: i === 0 ? 0 : (isMobile ? '16px' : '70px'),
-                  transform: isMobile ? 'none' : `rotate(${i < showIdx ? -5 : i > showIdx ? 5 : 0}deg) translateY(${i === showIdx ? -20 : (i % 3) * 6}px) scale(${i === showIdx ? 1.1 : 1})`,
+                  transform: isMobile ? 'none' : `rotate(${i < showLoopIdx ? -5 : i > showLoopIdx ? 5 : 0}deg) translateY(${i === showLoopIdx ? -20 : (i % 3) * 6}px) scale(${i === showLoopIdx ? 1.1 : 1})`,
                   transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease',
-                  zIndex: i === showIdx ? 3 : 1,
+                  zIndex: i === showLoopIdx ? 3 : 1,
                 }}>
                   <div style={{
                     width: isMobile ? '320px' : '600px',
                     height: isMobile ? '214px' : '400px',
-                    borderRadius: '14px', overflow: 'hidden',
+                    overflow: 'hidden',
                     background: p.bg,
-                    border: '1px solid var(--border)',
                     boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
-                    filter: i === showIdx ? 'none' : 'brightness(0.85)',
+                    filter: i === showLoopIdx ? 'none' : 'brightness(0.6)',
                   }}>
                     <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   </div>
-                  <div style={{ textAlign: 'center', marginTop: '10px', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.04em' }}>{p.name}</div>
                 </div>
               ))}
             </div>
