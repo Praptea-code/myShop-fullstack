@@ -288,7 +288,7 @@ export default function Home() {
         <video
           autoPlay muted loop playsInline
           poster="/vapebg1.jpg"
-          src="/hero-video.mp4"
+          src="/A_luxury_cinematic_perfume_com.mp4"
           onError={e => { e.currentTarget.style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
