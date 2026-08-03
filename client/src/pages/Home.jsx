@@ -295,7 +295,7 @@ export default function Home() {
         {/* Readability overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.22)' }} />
 
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(calc(-6vh - 40px))' : 'translateY(calc(-14vh - 90px))' }}>
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(calc(-6vh + 8px))' : 'translateY(calc(-14vh - 30px))' }}>
           <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <span style={{ width: '18px', height: '1.5px', background: 'var(--red)', flexShrink: 0 }} />Nepal's no.1 vape shop
           </div>
@@ -305,7 +305,7 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <button onClick={() => navigate('/products')} style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', background: 'var(--red)', color: '#fff', border: 'none', borderRadius: '3px', padding: '13px 24px', cursor: 'pointer' }}>Shop Collection</button>
           </div>
-          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 70px)' : 'calc(100% + 100px)', transform: 'translateX(-50%)', width: '100%', maxWidth: 'none', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          <div ref={showRef} style={{ position: 'absolute', left: '50%', top: isMobile ? 'calc(100% + 118px)' : 'calc(100% + 160px)', transform: 'translateX(-50%)', width: '100%', maxWidth: 'none', height: isMobile ? '250px' : '520px', overflowX: isMobile ? 'auto' : 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
             <div style={isMobile ? { display: 'flex', alignItems: 'center', height: '100%' } : { position: 'absolute', left: '50%', top: 0, height: '100%', marginLeft: -showRowW / 2, display: 'flex', alignItems: 'center', transform: `translateX(${showOffset}px)`, transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
               {showLoop.map((p, i) => (
                 <div key={`${p.name}-${i}`} style={{
