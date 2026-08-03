@@ -31,12 +31,7 @@ export default function Navbar() {
   const closeMenu = () => setMenuOpen(false)
 
   const header = (
-    <>
-      <div style={{ background: isHome && !isScrolled ? 'transparent' : 'var(--navy-dark)', transition: 'background-color 0.3s ease, transform 0.3s ease', transform: isHome && isScrolled ? 'translateY(-100%)' : 'translateY(0)', padding:'7px 20px', textAlign:'center', fontSize:'0.65rem', color:'rgba(255,255,255,0.45)', letterSpacing:'0.05em', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}>
-        Same day dispatch in Dhangadhi &nbsp;·&nbsp; eSewa &amp; Khalti accepted &nbsp;·&nbsp; 100% authentic
-      </div>
-
-      <nav style={{ background: isHome && !isScrolled ? 'transparent' : 'var(--navy)', transition: 'background-color 0.3s ease', padding:`0 ${isMobile ? '16px' : '40px'}`, display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>
+    <nav style={{ background: isHome && !isScrolled ? 'transparent' : '#0a0a0a', transition: 'background-color 0.3s ease', padding:`0 ${isMobile ? '16px' : '40px'}`, display:'flex', alignItems:'center', justifyContent:'space-between', height:'60px', borderBottom:'1px solid rgba(255,255,255,0.07)', position:'sticky', top:0, zIndex:100 }}>
         <Link to="/" onClick={closeMenu} style={{ fontFamily:'var(--serif)', fontSize:'1.35rem', fontWeight:700, color:'#fff', letterSpacing:'0.02em', textShadow: isHome && !isScrolled ? '0 1px 6px rgba(0,0,0,0.6)' : 'none' }}>
           Puff<span style={{ color:'var(--red)', fontStyle:'italic' }}>Diaries</span>
         </Link>
@@ -98,8 +93,7 @@ export default function Navbar() {
             </button>
           )}
         </div>
-      </nav>
-    </>
+    </nav>
   )
 
   return (
@@ -112,7 +106,7 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {isMobile && menuOpen && (
-        <div style={{ position:'fixed', top:'97px', left:0, right:0, bottom:0, zIndex:99, background:'rgba(0,0,0,0.5)' }} onClick={closeMenu}>
+        <div style={{ position:'fixed', top:'60px', left:0, right:0, bottom:0, zIndex:99, background:'rgba(0,0,0,0.5)' }} onClick={closeMenu}>
           <div style={{ background:'var(--navy)', borderBottom:'1px solid rgba(255,255,255,0.1)' }} onClick={e => e.stopPropagation()}>
             {links.map(([to, label]) => {
               const active = location.pathname === to
