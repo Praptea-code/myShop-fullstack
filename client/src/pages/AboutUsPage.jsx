@@ -65,7 +65,7 @@ export default function AboutUs() {
 
       {/* HERO */}
       <section style={{ position: 'relative', height: isMobile ? 'auto' : '580px', minHeight: isMobile ? '400px' : 'auto', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(125deg, #0d1117 0%, #111827 35%, #0a1628 70%, #0f3460 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(125deg, #0d0d0d 0%, #1a1a1a 35%, #121212 70%, #262626 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)', backgroundSize: '48px 48px', zIndex: 1 }} />
         <div style={{ position: 'absolute', top: '10%', right: '10%', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(232,65,74,0.07)', filter: 'blur(80px)', zIndex: 1 }} />
 

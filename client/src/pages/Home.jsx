@@ -283,7 +283,7 @@ export default function Home() {
       {/* HERO */}
       <section style={{ position: 'relative', height: isMobile ? '92vh' : '100vh', minHeight: '540px', display: 'flex', alignItems: 'center', zIndex: 6 }}>
         {/* Fallback dark gradient — visible while the video loads or if it fails */}
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 40%, #1e2d55 0%, var(--navy) 55%, var(--navy-dark) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 40%, #2a2a2a 0%, var(--navy) 55%, var(--navy-dark) 100%)' }} />
         {/* Video background — TODO: drop the real clip at client/public/hero-video.mp4 */}
         <video
           autoPlay muted loop playsInline
@@ -293,7 +293,7 @@ export default function Home() {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Readability overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(8, 11, 18, 0.22)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(13, 13, 13, 0.22)' }} />
 
         <div style={{ position: 'relative', zIndex: 2, width: '100%', padding: isMobile ? '48px 24px' : '0 72px', textAlign: 'center', transform: isMobile ? 'translateY(calc(-6vh + 8px))' : 'translateY(calc(-14vh - 30px))' }}>
           <div style={{ fontSize: isMobile ? '0.62rem' : '0.72rem', fontWeight: 700, letterSpacing: '0.22em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -320,7 +320,7 @@ export default function Home() {
                     height: isMobile ? '214px' : '400px',
                     overflow: 'hidden',
                     background: p.bg,
-                    boxShadow: '0 18px 44px rgba(17,24,39,0.18)',
+                    boxShadow: '0 18px 44px rgba(26,26,26,0.18)',
                     filter: i === showLoopIdx ? 'none' : 'brightness(0.6)',
                   }}>
                     <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -416,12 +416,12 @@ export default function Home() {
       {/* BANNERS */}
       <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '14px', padding: isMobile ? '0 16px 48px' : '0 40px 80px', background: 'var(--bg)' }}>
         {[
-          { bgImg: '/vapebg1.jpg', fallbackBg: 'linear-gradient(135deg,#111827,#1a2744)', tag: 'Our story', h: 'Who is', em: 'Puff Diaries?', sub: 'Built out of passion for authentic vapes.', cta: 'Read about us →', cta2: 'Our values', path: '/about' },
-          { bgImg: '/vapebg2.jpg', fallbackBg: 'linear-gradient(135deg,#0f3460,#111827)', tag: 'Get in touch', h: 'Questions or', em: 'Wholesale?', sub: "We're a small team and we actually read every message.", cta: 'Contact us →', cta2: 'Wholesale pricing', path: '/contact' },
+          { bgImg: '/vapebg1.jpg', fallbackBg: 'linear-gradient(135deg,#1a1a1a,#262626)', tag: 'Our story', h: 'Who is', em: 'Puff Diaries?', sub: 'Built out of passion for authentic vapes.', cta: 'Read about us →', cta2: 'Our values', path: '/about' },
+          { bgImg: '/vapebg2.jpg', fallbackBg: 'linear-gradient(135deg,#262626,#1a1a1a)', tag: 'Get in touch', h: 'Questions or', em: 'Wholesale?', sub: "We're a small team and we actually read every message.", cta: 'Contact us →', cta2: 'Wholesale pricing', path: '/contact' },
         ].map((b, i) => (
           <div key={i} onClick={() => navigate(b.path)} style={{ height: isMobile ? '280px' : '400px', position: 'relative', cursor: 'pointer', background: b.fallbackBg, borderRadius: '12px', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${b.bgImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,14,22,.95) 0%, rgba(10,14,22,.38) 55%, transparent 100%)', zIndex: 1 }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,13,13,.95) 0%, rgba(13,13,13,.38) 55%, transparent 100%)', zIndex: 1 }} />
             <div style={{ position: 'absolute', bottom: '22px', left: '22px', right: '22px', zIndex: 2 }}>
               <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '8px' }}>{b.tag}</div>
               <div style={{ fontFamily: 'var(--serif)', fontSize: isMobile ? '1.1rem' : '1.3rem', fontWeight: 700, color: '#fff', lineHeight: 1.18, marginBottom: '8px' }}>{b.h} <em style={{ fontStyle: 'italic' }}>{b.em}</em></div>

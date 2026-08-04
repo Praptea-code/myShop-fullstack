@@ -41,8 +41,8 @@ export default function ContactUs() {
       <Navbar />
 
       {/* Hero */}
-      <section style={{ position: 'relative', padding: isMobile ? '48px 16px' : '60px 48px', background: 'linear-gradient(135deg, #0f3460 0%, #111827 60%, #0d1117 100%)', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,14,22,0.82)' }} />
+      <section style={{ position: 'relative', padding: isMobile ? '48px 16px' : '60px 48px', background: 'linear-gradient(135deg, #262626 0%, #1a1a1a 60%, #0d0d0d 100%)', textAlign: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(13,13,13,0.82)' }} />
         <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', color: 'var(--red)', textTransform: 'uppercase', marginBottom: '9px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ width: '18px', height: '1px', background: 'var(--red)' }} />

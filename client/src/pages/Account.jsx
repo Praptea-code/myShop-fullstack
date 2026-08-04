@@ -45,8 +45,8 @@ export default function Account() {
       <Navbar />
 
       {/* Header */}
-      <section style={{ background: 'linear-gradient(135deg, #0d1117 0%, #111827 45%, #0f3460 100%)', padding: isMobile ? '36px 16px' : '52px 48px', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,14,22,0.7)' }} />
+      <section style={{ background: 'linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 45%, #262626 100%)', padding: isMobile ? '36px 16px' : '52px 48px', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(13,13,13,0.7)' }} />
         <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', border: '3px solid rgba(255,255,255,0.15)' }}>
             <span style={{ fontFamily: 'var(--serif)', fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>{user?.name?.charAt(0).toUpperCase()}</span>

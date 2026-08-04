@@ -36,7 +36,7 @@ export default function TrackOrder() {
             Track your <i style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--navy)' }}>order</i>
           </h1>
           <p style={{ fontSize: '0.82rem', color: 'var(--mid)', marginBottom: '28px', lineHeight: 1.7 }}>Enter your phone number or email to see the live status of your delivery.</p>
-          <form onSubmit={track} style={{ display: 'flex', border: '1.5px solid var(--border)', borderRadius: '100px', overflow: 'hidden', background: '#fff', marginBottom: '0', boxShadow: '0 4px 20px rgba(15,31,61,0.07)' }}>
+          <form onSubmit={track} style={{ display: 'flex', border: '1.5px solid var(--border)', borderRadius: '100px', overflow: 'hidden', background: '#fff', marginBottom: '0', boxShadow: '0 4px 20px rgba(26,26,26,0.07)' }}>
             <input value={identifier} onChange={e => setIdentifier(e.target.value)} placeholder="Phone number or email address"
               style={{ flex: 1, padding: '13px 20px', border: 'none', outline: 'none', fontSize: '0.85rem', color: 'var(--ink)', background: 'transparent', minWidth: 0 }} />
             <button type="submit" disabled={loading} style={{ background: 'var(--navy)', color: '#fff', border: 'none', padding: '10px 22px', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', borderRadius: '100px', margin: '4px', flexShrink: 0 }}>
@@ -73,7 +73,7 @@ export default function TrackOrder() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: isMobile ? '4px' : '8px' }}>
                       {STATUSES.map((s, i) => (
                         <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: isMobile ? '0 2px' : '0 8px' }}>
-                          <div style={{ width: isMobile ? '30px' : '38px', height: isMobile ? '30px' : '38px', borderRadius: '50%', border: `2px solid ${i <= statusIdx ? 'var(--navy)' : 'var(--border)'}`, background: i < statusIdx ? 'var(--navy)' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '8px', fontSize: '0.72rem', fontWeight: 600, color: i < statusIdx ? '#fff' : i === statusIdx ? 'var(--navy)' : 'var(--light)', boxShadow: i === statusIdx ? '0 0 0 4px rgba(15,31,61,0.1)' : 'none', flexShrink: 0 }}>
+                          <div style={{ width: isMobile ? '30px' : '38px', height: isMobile ? '30px' : '38px', borderRadius: '50%', border: `2px solid ${i <= statusIdx ? 'var(--navy)' : 'var(--border)'}`, background: i < statusIdx ? 'var(--navy)' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '8px', fontSize: '0.72rem', fontWeight: 600, color: i < statusIdx ? '#fff' : i === statusIdx ? 'var(--navy)' : 'var(--light)', boxShadow: i === statusIdx ? '0 0 0 4px rgba(26,26,26,0.1)' : 'none', flexShrink: 0 }}>
                             {i < statusIdx ? '✓' : i + 1}
                           </div>
                           <div style={{ fontSize: isMobile ? '0.55rem' : '0.72rem', fontWeight: 600, color: i <= statusIdx ? 'var(--ink)' : 'var(--light)', marginBottom: '2px', lineHeight: 1.2 }}>{LABELS[s]}</div>
